@@ -1,0 +1,48 @@
+:root{
+  --color-red: #EB5757; 
+  --color-green: #43D049; 
+  --color-blue: #22A2BD;
+  --color-gray:#5B6975;
+
+  //light-theme
+  --color-main-bg: #FCFCFC; 
+  --color-bg-input: #F2F2F2; 
+  --color-second-bg: #FFF;
+  --color-main-text: #0B1E2D;
+  --color-second-text: #828282;
+  --color-icons: #BDBDBD;
+  --color-active-icon: #22A2BD;
+}
+.App.dark{
+  :root{
+    --color-main-bg: #0B1E2D;
+    --color-bg-input:#152A3A; 
+    --color-second-bg: #152A3A;
+    --color-main-text: #FFF;
+    --color-second-text: #5B6975;;
+    --color-icons: #5B6975;
+    --color-active-icon: #43D049;
+  }
+}
+
+$red-color: var(--color-red);
+$green-color: var(--color-green);
+$blue-color: var(--color-blue);
+$gray-color: var(--color-gray);
+
+$main-bg-color: var(--color-main-bg);
+$bg-input-color: var(--color-bg-input);
+$second-bg-color: var(--color-second-bg);
+$main-text-color: var(--color-main-text);
+$second-text-color: var(--color-second-text);
+$icons-color: var(--color-icons);
+$active-icon-color: var(--color-active-icon);
+
+
+$text-default: 16px;
+$text-lg: 20px;
+$text-md: 14px;
+$text-sm: 12px;
+$text-xs: 10px;
+$font-medium:500;
+$font-regular:400;

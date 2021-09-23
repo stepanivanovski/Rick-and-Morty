@@ -1,0 +1,22 @@
+.input {
+  margin-top: 10px;
+  font-weight: normal;
+  input {
+    padding: 0 16px;
+    min-width: 319px;
+    height: 48px;
+    border: none;
+    background-color: $bg-input-color;
+    border-radius: 12px;
+    outline: none;
+    color: $main-text-color;
+    font-size: 20px;
+  }
+  label {
+    margin-bottom: 8px;
+    display: block;
+    font-size: 16px;
+
+    
+  }
+}
