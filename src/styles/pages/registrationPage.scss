@@ -1,0 +1,21 @@
+.registration {
+  padding: 20px 28px 25px;
+  &__title {
+    margin: 38px 0 0;
+    font-weight: bold;
+    font-size: 34px;
+    line-height: 36px;
+    color:$main-text-color;
+  }
+  &__form{
+    // margin: 0 auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    display: flex;
+    // max-width:320px;
+    flex-direction: column;
+  }
+  hr {
+    margin: 36px 0 26px;
+  }
+}

@@ -1,0 +1,37 @@
+.characters {
+  padding: 112px 16px 60px 16px;
+  &__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px 16px 0;
+    width: 100%;
+    background-color: $main-bg-color;
+  }
+  &__list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__wrapper {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__total {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $second-text-color;
+  }
+  &__view-switch {
+    padding: 0;
+    padding-right: 13px;
+    border: none;
+    background-color: $main-bg-color;
+  }
+}

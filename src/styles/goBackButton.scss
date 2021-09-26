@@ -1,0 +1,17 @@
+.goBack {
+  display: flex;
+  align-items: center;
+  &__title {
+    margin-left: 20px;
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: $main-text-color
+  }
+  button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+  }
+}

@@ -1,0 +1,55 @@
+.filter {
+  
+  hr {
+    margin: 0;
+  }
+  &__icons {
+    svg {
+      margin-left: 24px;
+    }
+  }
+  &__item {
+    margin: 36px 0;
+    &-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &-title {
+      margin-bottom: 24px;
+      font-weight: 500;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: $second-text-color;
+    }
+    
+    .check {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      input {
+        margin-right: 16px;
+      }
+    }
+  }
+  &__text{
+    margin: 0;
+    font-weight: normal;
+    font-size: 16px;
+  }
+  .select-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 16px;
+    background-color: #fff;
+    width: 100%;
+    hr {
+      margin: 24px 0;
+    }
+    p {
+      margin-bottom: 24px;
+    }
+  }
+}
+

@@ -1,8 +1,10 @@
 import React from 'react';
 
-const Button = ({label}) => {
+const Button = ({text, className=''}) => {
+  const classes = `btn ${className}`
+
   return (
-    <button className="btn">{label}</button>
+    <button className={classes}>{text}</button>
   );
 };
 

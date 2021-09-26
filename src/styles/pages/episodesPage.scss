@@ -1,0 +1,53 @@
+.episodes {
+  padding: 137px 16px 60px 16px;
+  &__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px 16px 0;
+    width: 100%;
+    background-color: $main-bg-color;
+  }
+  &__wrapper {
+    display: flex;
+    margin: 15px 0 0;
+    padding: 0;
+    overflow: auto;
+    list-style-type: none;
+    p {
+      margin-bottom: 5px;
+      flex-shrink: 0;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 24px;
+      letter-spacing: 1.5px;
+      text-align: center;
+      text-transform: uppercase;
+      color:$icons-color;  
+    }
+  }
+  &__season {
+    margin: 0 16px;
+  }
+  &__season-under {
+    width: 70px;
+    height: 2px;
+    border-radius: 100px;
+    background-color: transparent;
+    &_active {
+      background-color: $main-text-color;
+    }
+  }
+  .active {
+    color: $main-text-color;
+  }
+  &__list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+.episodes__wrapper::-webkit-scrollbar {
+  width: 0;
+}

@@ -1,0 +1,26 @@
+.message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(50%, 50%);
+  padding: 30px;
+  width: 319px;
+  height: 188px;
+  background-color: $second-bg-color;
+  border-radius: 12px;
+  &__title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: $main-text-color; 
+  }
+  &__text {
+    margin: 0;
+    margin-top: 20px;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: $main-text-color;
+  }
+}

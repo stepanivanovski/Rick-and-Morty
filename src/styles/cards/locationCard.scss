@@ -1,0 +1,29 @@
+.location {
+  margin: 0 0 24px;
+  max-width: 500px;
+  border: 1px solid #E0E0E0;
+  border-radius: 20px;
+  overflow: hidden;
+  &__img {
+    height: 150px;
+    background: center center/cover no-repeat;
+  }
+  &__text {
+    padding: 12px 16px;
+    height: 70px;
+    background-color: $second-bg-color;
+  }
+  &__title {
+    margin:0;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: $main-text-color;
+  }
+  &__descr {
+    margin:0;
+    font-size: 12px;
+    line-height: 16px;
+    color: $second-text-color;
+  }
+}

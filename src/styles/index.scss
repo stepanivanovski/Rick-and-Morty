@@ -1,7 +1,14 @@
-@import "libs/bootstrap-reboot.scss";
-
-@import "vars/variables.scss";
+@import "libs/bootstrap-reboot";
+@import "vars/variables";
+@import "./pages/";
 @import "./base";
+@import "./searchPanel";
+@import "./filter.scss";
+@import "./cards";
+@import "./navbar";
+@import "./goBackButton";
+@import "./not-found";
+@import "./message";
 
 * {
   font-family: Roboto;

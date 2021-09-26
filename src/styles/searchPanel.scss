@@ -1,0 +1,32 @@
+.search-panel {
+  // margin: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 100px;
+  background-color: $bg-input-color;
+  font-weight: normal;
+  font-size: 16px;
+  &__icon {
+    margin: 0 14px 0 18px; 
+  }
+  &__divider {
+    border-left: 1px solid $gray-color;
+    height: 24px;
+  }
+  &__filter {
+    margin: 0 18px 0 14px; 
+  }
+  input {
+    padding: 0;
+    width: calc(100% - 100px);
+    outline: none;
+    border: none;
+    background-color: $bg-input-color;
+    color: $main-text-color;
+  }
+
+}
