@@ -7,7 +7,7 @@ const ThemeChanging = () => {
       <div className="theme__radio-wrap">
         <input class="theme__radio" type="radio" id="theme-1" name="theme" value="on"/>
         <label htmlFor="theme-1">Выключенна</label>
-      </div>
+      </div> 
       <div className="theme__radio-wrap">
         <input class="theme__radio" type="radio" id="theme-2" name="theme" value="off"/>
         <label htmlFor="theme-2">Включенна</label>

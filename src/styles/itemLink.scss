@@ -1,0 +1,14 @@
+.item-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &_ml-16 {
+    margin-left: 16px;
+  }
+  &_mb-20 {
+    margin-bottom: 20px;
+  }
+  &_mb-36 {
+    margin-bottom: 36px;
+  }
+}

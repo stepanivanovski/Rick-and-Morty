@@ -1,0 +1,34 @@
+.text {
+  &_caption {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $second-text-color;
+  }
+  &_blue {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $blue-color;
+  }
+  &_main-16px {
+    font-size: 16px;
+    line-height: 24px;
+    color: $main-text-color;
+  }
+  &_main-13px {
+    font-weight: normal;
+    font-size: 13px;
+    color: $main-text-color;
+  }
+  &_second-14px {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color:$second-text-color;
+  }
+}
