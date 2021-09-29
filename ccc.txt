@@ -1,0 +1,26 @@
+initState = {
+  characters: [],
+  locations: [],
+  episodes: [],
+  character: {},
+  location:{},
+  loading: true,
+  error: false,
+  состояние глаза: true/false
+  состояние кнопки: "list"/"table" в зависимости от состояния меняются стили у компонентов
+  состояние 
+}
+
+character {
+  flex-direction: column
+}
+
+characters__img {
+  flex-shrink: 0;
+  width: 120;
+  height: 120;
+}
+
+Character__text {
+  text-align: center
+}

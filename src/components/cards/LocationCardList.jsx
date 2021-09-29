@@ -1,10 +1,15 @@
 import React from 'react';
+import LocationCard from './LocationCard'
 
 const LocationCardList = () => {
   return (
-    <div>
-      
-    </div>
+    <ul className="locations__list">
+     <LocationCard status/>
+     <LocationCard/>
+     <LocationCard status/>
+     <LocationCard/>
+     <LocationCard/>
+    </ul>
   );
 };
 

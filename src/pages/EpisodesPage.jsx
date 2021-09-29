@@ -1,5 +1,5 @@
 import React from 'react';
-import EpisodeCard from '../components/cards/EpisodeCard';
+import EpisodeCardList from '../components/cards/EpisodeCardList';
 import NavBar from '../components/NavBar';
 import SearchPanel from '../components/SearchPanel';
 
@@ -7,7 +7,9 @@ const EpisodesPage = () => {
   return (
     <div className="episodes">
     <div className="episodes__header">
-      <SearchPanel/>
+      <SearchPanel
+       placeholder="Найти эпизод"
+       />
       <ul className="episodes__wrapper">
         <li className="episodes__season">
           <p className="active">Сезон 1</p>
@@ -27,12 +29,7 @@ const EpisodesPage = () => {
         </li>
       </ul>
     </div>
-    <ul className="episodes__list">
-      <EpisodeCard/>
-      <EpisodeCard/>
-      <EpisodeCard/>
-      <EpisodeCard/>
-    </ul>
+    <EpisodeCardList/>
     <NavBar/>
   </div>  
   );

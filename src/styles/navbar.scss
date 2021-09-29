@@ -1,4 +1,7 @@
 .navbar {
+  a {
+    text-decoration: none;
+  }
   position: fixed;
   bottom: 0;
   left: 0;
@@ -23,5 +26,24 @@
     font-size: 12px;
     line-height: 16px;
     color: $icons-color
+  }
+
+  &__icon {
+    stroke: $icons-color;
+  }
+  &__char-icon {
+    fill: $icons-color;
+  }
+
+  &__active {
+    .navbar__icon {
+      stroke: $active-icon-color;
+    }
+    .navbar__char-icon {
+      fill: $active-icon-color;
+    }
+    .navbar__item-title {
+      color: $active-icon-color;
+    }
   }
 }

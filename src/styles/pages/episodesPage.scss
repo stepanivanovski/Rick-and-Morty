@@ -4,13 +4,13 @@
     position: fixed;
     top: 0;
     left: 0;
-    padding: 20px 16px 0;
+    padding: 20px 16px 10px;
     width: 100%;
     background-color: $main-bg-color;
   }
   &__wrapper {
     display: flex;
-    margin: 15px 0 0;
+    margin: 15px -16px 0;
     padding: 0;
     overflow: auto;
     list-style-type: none;

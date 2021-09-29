@@ -14,12 +14,10 @@ import CharacterFilter from './components/filters/CharacterFilter'
 import LocationFilter from './components/filters/LocationFilter';
 import TypeFilter from './components/filters/TypeFilter';
 
-import "./App.scss";
-
 
 function App() {
   return (
-    <div className='App' style={{backgroundColor: `#FCFCFC`}}>
+    <div className='App dark'>
       <Route path='/login' component={LoginPage}/>  
       <Route path='/registration' component={RegistrationPage}/>   
       <Route path='/characters' component={CharactersPage}/>
@@ -31,9 +29,9 @@ function App() {
       <Route path='/options' component={OptionsPage}/>
       <Route path='/edit' component={EditProfilePage}/>
       <Route path='/name' component={ChangeNamePage}/> 
-      <Route path="/filter" component={CharacterFilter}/>   
-      <Route path="/filterl" component={LocationFilter}/>   
-      <Route path="/filtert" component={TypeFilter}/>   
+      <Route path="/filterChar" component={CharacterFilter}/>   
+      <Route path="/filterLoc" exact component={LocationFilter}/>   
+      <Route path="/filterLoc/:type" component={TypeFilter}/>   
     </div>
   );
 } 

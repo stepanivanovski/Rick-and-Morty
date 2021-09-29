@@ -7,7 +7,7 @@ import NavBar from '../components/NavBar';
 const OptionsPage = () => {
   return (
     <div className="options">
-      <GoBackButton text="Настройки"/>
+      <GoBackButton text="Настройки" className="options__goBack"/>
       <div className="options__user">
         <div 
           style={{backgroundImage:`url("http://173.249.20.184:7001/images/Пилот_001.jpg")`}}
@@ -23,13 +23,13 @@ const OptionsPage = () => {
       <h3 className="options__subtitle text_caption">Внешний вид</h3>
       <div className="item-link">
           <div className="item-link">
-            <IconPaints/>
+            <IconPaints className="item-link__svg"/>
             <div className="item-link_ml-16" >
               <div className="text_main-16px">Темная тема</div>
               <div className="text_second-14px">Включена</div>
             </div>
           </div>
-          <IconMoreThen/>
+          <IconMoreThen className="item-link__svg"/>
       </div>
       <hr/>
       <h3 className="options__subtitle text_caption">О приложении</h3>
@@ -38,10 +38,10 @@ const OptionsPage = () => {
       </p>
       <hr/>
       <h3 className="options__subtitle text_caption">Версия приложения</h3>
-      <div>Rick & Morty  v1.0.0</div>
+      <div className="text_main-13px">Rick & Morty  v1.0.0</div>
       <NavBar/>
     </div>
   );
 };
-
+ 
 export default OptionsPage;

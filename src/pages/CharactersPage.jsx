@@ -1,29 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchPanel from "../components/SearchPanel"
-import CharacterCard from "../components/cards/CharacterCard"
+import CharacterCardList from "../components/cards/CharacterCardList"
 import NavBar from "../components/NavBar"
-import { IconListView } from '../icons/';
+import { IconListView, IconTableView } from '../icons/';
 
 const CharactersPage = () => {
+  const [view, toggleView] = useState(true);
+
   return (
     <div className="characters">
       <div className="characters__header">
-        <SearchPanel filter/>
+        <SearchPanel 
+        filter
+        placeholder="Найти персонажа"/>
         <div className="characters__wrapper">
           <div class="characters__total">
             Всего персонажей: 200
           </div>
-          <button className="characters__view-switch"><IconListView/></button>
+          <button 
+            className="characters__view-switch"
+            onClick={() => toggleView(!view)}>
+            <IconListView/>
+          </button>
         </div>
       </div>
-      <ul className="characters__list">
-        <CharacterCard status/>
-        <CharacterCard/>
-        <CharacterCard/>
-        <CharacterCard status/>
-        <CharacterCard/>
-        <CharacterCard/>
-      </ul>
+      <CharacterCardList/>
       <NavBar/>
     </div>
   );

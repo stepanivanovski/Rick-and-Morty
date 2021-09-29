@@ -12,17 +12,17 @@
   --color-second-text: #828282;
   --color-icons: #BDBDBD;
   --color-active-icon: #22A2BD;
+  --color-location-border: #E5E5E5;
 }
-.App.dark{
-  :root{
-    --color-main-bg: #0B1E2D;
-    --color-bg-input:#152A3A; 
-    --color-second-bg: #152A3A;
-    --color-main-text: #FFF;
-    --color-second-text: #5B6975;;
-    --color-icons: #5B6975;
-    --color-active-icon: #43D049;
-  }
+.dark{
+  --color-main-bg: #0B1E2D;
+  --color-bg-input:#152A3A; 
+  --color-second-bg: #152A3A;
+  --color-main-text: #FFF;
+  --color-second-text: #5B6975;;
+  --color-icons: #5B6975;
+  --color-active-icon: #43D049;
+  --color-location-border: #0B1E2D;
 }
 
 $red-color: var(--color-red);
@@ -37,6 +37,7 @@ $main-text-color: var(--color-main-text);
 $second-text-color: var(--color-second-text);
 $icons-color: var(--color-icons);
 $active-icon-color: var(--color-active-icon);
+$location-border-color: var(--color-location-border);
 
 
 $text-default: 16px;

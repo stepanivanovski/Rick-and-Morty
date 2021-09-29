@@ -1,0 +1,37 @@
+.char-page {
+  padding: 20px 16px 20px;
+  &__header {
+    margin: -20px -16px 0;
+    padding: 20px 16px 0;
+  }
+  &__goBack {
+    stroke: #fff;
+  }
+  &__avatar {
+    margin: 0 auto;
+    transform: translateY(50%);
+    width:146px;
+    height: 146px;
+    border-radius: 100%;
+    border: 10px solid $main-bg-color;
+    background: center center/cover no-repeat;
+  }
+  &__title {
+    margin: 90px 0 4px;
+    font-weight: normal;
+    font-size: 34px;
+    line-height: 40px;
+    color: $main-text-color;
+  }
+  &__descr {
+    margin: 36px 0 0;
+  }
+  &__wrapper {
+    margin: 24px 0;
+    display:flex;
+    
+  }
+  &__wrapper>div {
+    width: 50%
+  }
+}

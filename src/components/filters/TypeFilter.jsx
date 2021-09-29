@@ -10,6 +10,7 @@ const types = [
   'Здание',
   'Неопределенно',
 ];
+
 const measurements = [
   'Измерение 35-C',
   'Измерение C-137',
@@ -19,32 +20,49 @@ const measurements = [
   'Измерение подмены',
 ];
 
-const LocationFilter = () => {
+const InputRadio = ({ label, id, handleInput, className }) => {
+  const Id = `filter-${id}`;
+
+  return (
+    <div className={className}>
+      <input 
+        onChange={handleInput} 
+        type="radio" 
+        id={Id} 
+        name="filter" 
+        value={label}
+      />
+      <label htmlFor={Id}>{label}</label>
+    </div> 
+  )
+}
+
+const TypeFilter = ({ type }) => {
+
+  const handleInput = (e) => {
+    console.log(e.target.value);
+  }
+
   return (
     <div className="filter">
-      <GoBackButton text="Фильтры"/>
-      <div className="">
-        <p className="__title">Темная тема</p>
-        <div className="__radio-wrap">
-          <input class="__radio" type="radio" id="theme-1" name="theme" value="on"/>
-          <label htmlFor="theme-1">Выключенна</label>
-        </div> 
-        <div className="__radio-wrap">
-          <input class="__radio" type="radio" id="theme-2" name="theme" value="off"/>
-          <label htmlFor="theme-2">Включенна</label>
-        </div>
-        <div className="__radio-wrap">
-          <input class="__radio" type="radio" id="theme-3" name="theme" value="option"/>
-          <label htmlFor="theme-3">Следовать настройкам системы</label>
-        </div>
-        <div className="__radio-wrap">
-          <input class="__radio" type="radio" id="theme-4" name="theme" value="saving"/>
-          <label htmlFor="theme-4">В режиме электросбережения</label>
-        </div>
-        <button className="theme__button">Отмена</button>
+      <div className="filter__header">
+        <GoBackButton text="Выберите тип" className="filter__goBack"/>
       </div>
+      <InputRadio 
+          className="filter__type-title"
+          label="Не выбрано" 
+          id="filter-no" 
+          handleInput={handleInput}/>
+      <hr/>
+      {types.map((item, i) => 
+        <InputRadio
+          className="filter__radio-wrap" 
+          label={item} 
+          key={i} 
+          id={i} 
+          handleInput={handleInput}/>)}
     </div>
   );
 };
 
-export default LocationFilter;
+export default TypeFilter;

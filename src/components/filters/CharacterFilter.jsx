@@ -1,11 +1,14 @@
 import React from 'react';
 import GoBackButton from '../GoBackButton'
-import { IconABC, IconCBA} from '../../icons'
+import { IconABC, IconCBA, IconRedFilter } from '../../icons'
 
 const CharacterFilter = () => {
   return (
     <div className="filter">
-      <GoBackButton text="Фильтры"/>
+      <div className="filter__header">
+        <GoBackButton text="Выберите тип" className="filter__goBack"/>
+        <IconRedFilter/>
+      </div>
       <div className="filter__item">
         <p className="filter__item-title text_caption">Сортировать</p>
         <div className="filter__item-wrapper">

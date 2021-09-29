@@ -1,11 +1,14 @@
 import React from 'react';
 import GoBackButton from '../GoBackButton';
-import { IconABC, IconCBA, IconMoreThen } from '../../icons';
+import { IconABC, IconCBA, IconMoreThen, IconRedFilter } from '../../icons';
 
 const LocationFilter = () => {
   return (
     <div className="filter">
-      <GoBackButton text="Фильтры"/>
+      <div className="filter__header">
+        <GoBackButton text="Выберите тип" className="filter__goBack"/>
+        <IconRedFilter/>
+      </div>
       <div className="filter__item">
         <p className="filter__item-title text_caption">Сортировать</p>
         <div className="filter__item-wrapper">
@@ -23,7 +26,7 @@ const LocationFilter = () => {
           <div className="text_main-16px">Тип</div>
           <div className="text_second-14px">Выберите тип локации</div>
         </div>
-        <IconMoreThen/>
+        <IconMoreThen className="item-link__svg"/>
       </div>
       <div className="item-link item-link_mb-36">
         <div>

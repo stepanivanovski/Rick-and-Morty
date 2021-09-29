@@ -28,5 +28,10 @@
     background-color: $bg-input-color;
     color: $main-text-color;
   }
+  &__btn {
+    padding: 0;
+    border: none;
+    background-color:transparent;
+  }
 
 }

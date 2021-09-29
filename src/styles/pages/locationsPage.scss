@@ -4,12 +4,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    padding: 20px 16px 0;
+    padding: 20px 16px 10px;
     width: 100%;
     background-color: $main-bg-color;
   }
   &__list {
-    margin: 0;
     padding: 0;
   }
   &__total {
