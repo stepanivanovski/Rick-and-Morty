@@ -1,16 +1,22 @@
 .epis-page {
-  
+  position: relative; 
+  hr {
+    margin: 36px 0;
+    border: 1px solid;
+    border-color: $bg-input-color;
+  } 
   &__header {
     padding: 34px 16px 0px;
-    height: 37vh;
-    background-origin: border-box;
+    height: 274px;
     background: center center/cover no-repeat;
   }
   &__content {
-    padding: 34px 16px 0;
-    transform: translateY(-40px);
-    border-radius: 26px;
-    background-color: $second-bg-color;
+    position: absolute;
+    padding: 82px 16px 0;
+    top: 251px;
+    width: 100%;
+    border-radius: 26px 26px 0 0;
+    background-color: $page-bg-color;
   }
   &__caption {
     margin-bottom: 32px;
@@ -45,5 +51,19 @@
     font-size: 20px;
     line-height: 28px;
     color: $main-text-color;
+  }
+  &__play {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 25%);
+    z-index: 1;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    background-color: $blue-color;  
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 
 const ThemeChanging = () => {
   return (
+    <div className="modal">
     <div className="theme">
       <p className="theme__title">Темная тема</p>
       <div className="theme__radio-wrap">
@@ -21,6 +22,7 @@ const ThemeChanging = () => {
         <label htmlFor="theme-4">В режиме электросбережения</label>
       </div>
       <button className="theme__button">Отмена</button>
+    </div>
     </div>
   );
 };

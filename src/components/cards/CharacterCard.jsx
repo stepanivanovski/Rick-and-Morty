@@ -1,5 +1,8 @@
-const CharacterCard = ({ status }) => {
+import { IconMoreThen } from "../../icons";
+
+const CharacterCard = ({ status, withArrow }) => {
   const style = `character__status  ${status ? "character__status_green" : "character__status_red" }`;
+  const arrow = withArrow ? <IconMoreThen className="character__arrow"/> : null;
 
   return (
     <li className="character">
@@ -9,6 +12,7 @@ const CharacterCard = ({ status }) => {
         <p className="character__title">Рик Санчез</p>
         <p className="character__descr">Человек, Мужской</p>
       </div>
+      {arrow}
     </li>
   );
 }

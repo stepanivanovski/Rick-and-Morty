@@ -7,15 +7,21 @@ const LocationFilter = () => {
     <div className="filter">
       <div className="filter__header">
         <GoBackButton text="Выберите тип" className="filter__goBack"/>
-        <IconRedFilter/>
+        <button className="filter__button">
+          <IconRedFilter/>
+        </button>
       </div>
       <div className="filter__item">
         <p className="filter__item-title text_caption">Сортировать</p>
         <div className="filter__item-wrapper">
           <p className="filter__text text_main-16px">По алфавиту</p>
           <div className="filter__icons">
-            <IconABC/>
-            <IconCBA/>
+            <button className="filter__button">
+              <IconABC className="filter__active-icon"/>
+            </button>
+            <button className="filter__button">
+              <IconCBA/>
+            </button>
           </div>
         </div>
       </div>
@@ -33,7 +39,7 @@ const LocationFilter = () => {
           <div className="text_main-16px">Измерение</div>
           <div className="text_second-14px">Выберите измерения локации</div>
         </div>
-        <IconMoreThen/>
+        <IconMoreThen  className="item-link__svg"/>
       </div>
       </div>  
     </div>

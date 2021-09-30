@@ -5,7 +5,7 @@ import { IconMoreThen } from '../icons';
 const EditProfilePage = () => {
   return (
     <div className="options">
-    <GoBackButton text="Редактировать профиль"/>
+    <GoBackButton text="Редактировать профиль" className="options__arrow"/>
     <div className="options__user options__user_edit-p">
       <div 
         style={{backgroundImage:`url("http://173.249.20.184:7001/images/Пилот_001.jpg")`}}
@@ -20,14 +20,14 @@ const EditProfilePage = () => {
         <div className="text_main-16px">Изменить ФИО</div>
         <div className="text_second-14px">Степан Иванов</div>
       </div>
-      <IconMoreThen/>
+      <IconMoreThen className="options__arrow"/>
     </div>
     <div className="item-link">
       <div>
         <div className="text_main-16px">Логин</div>
         <div className="text_second-14px">kamchatka</div>
       </div>
-      <IconMoreThen/>
+      <IconMoreThen className="options__arrow"/>
     </div>
   </div>
   );

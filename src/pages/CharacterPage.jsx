@@ -15,7 +15,7 @@ const CharacterPage = () => {
         </div>
       </div>
       <h1 className="char-page__title">Рик Санчез</h1>
-      <div className="character__status character__status_green">живой</div>
+      <div className="character__status character__status_green character__status_center">живой</div>
       <p className="char-page__descr text_main-13px">
       Главный протагонист мультсериала «Рик и Морти». Безумный ученый, чей алкоголизм, безрассудность
 и социопатия заставляют беспокоиться семью его дочери.
@@ -45,7 +45,11 @@ const CharacterPage = () => {
         <IconMoreThen className="item-link__svg"/>
       </div>
       <hr/>
-      <EpisodeCardList/>
+      <div className="char-page__subtitle-wrapper">
+        <h3 className="text_main-20px">Эпизоды</h3>
+        <div className="text_second-12px">Все эпизоды</div>
+      </div>
+      <EpisodeCardList withArrow/>
     </div>
   );
 };

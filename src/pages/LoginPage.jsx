@@ -2,7 +2,8 @@ import React from 'react';
 import Input from '../components/base/Input';
 import Button from '../components/base/Button';
 import { IconUser, IconPassword, IconEye } from '../icons';
-import { Link } from 'react-router-dom' 
+import { Link } from 'react-router-dom';
+import Message from '../components/Message';
 
 const LoginPage = () => {
   return (
@@ -36,6 +37,7 @@ const LoginPage = () => {
           Создать
         </Link>
       </div>
+      <Message/>
   </div>
   );
 };

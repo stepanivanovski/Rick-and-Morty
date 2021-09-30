@@ -32,7 +32,7 @@ const InputRadio = ({ label, id, handleInput, className }) => {
         name="filter" 
         value={label}
       />
-      <label htmlFor={Id}>{label}</label>
+      <label className="filter__option-label"htmlFor={Id}>{label}</label>
     </div> 
   )
 }

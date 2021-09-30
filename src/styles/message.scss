@@ -1,15 +1,22 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 .message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(50%, 50%);
   padding: 30px;
   width: 319px;
   height: 188px;
   background-color: $second-bg-color;
   border-radius: 12px;
   &__title {
-    margin: 0;
+    margin: 0 0 20px;
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;

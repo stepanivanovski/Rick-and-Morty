@@ -1,15 +1,23 @@
 .char-page {
-  padding: 20px 16px 20px;
+  padding: 20px 16px 0px;
+  hr {
+    margin: 36px 0;
+    border: 1px solid;
+    border-color: $bg-input-color;
+  }
   &__header {
     margin: -20px -16px 0;
     padding: 20px 16px 0;
+    height: 218px;
+    background: center center/cover no-repeat;
+
   }
   &__goBack {
     stroke: #fff;
   }
   &__avatar {
     margin: 0 auto;
-    transform: translateY(50%);
+    transform: translateY(70%);
     width:146px;
     height: 146px;
     border-radius: 100%;
@@ -21,6 +29,7 @@
     font-weight: normal;
     font-size: 34px;
     line-height: 40px;
+    text-align: center; 
     color: $main-text-color;
   }
   &__descr {
@@ -29,9 +38,19 @@
   &__wrapper {
     margin: 24px 0;
     display:flex;
-    
+    &_sb{
+      justify-content: space-between;
+    }
   }
   &__wrapper>div {
     width: 50%
+  }
+  h3 {
+    margin: 0;
+  }
+  &__subtitle-wrapper {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
   }
 }

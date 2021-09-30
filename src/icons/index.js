@@ -10,9 +10,13 @@ export * from './ListView';
 export * from './TableView';
 export * from './MoreThen';
 export * from './Paints';
-export * from './ABC'
-export * from './CBA'
-export * from './RedFilter'
+export * from './ABC';
+export * from './CBA';
+export * from './RedFilter';
+export * from './Play'
+export * from './Cross'
+
+
 
 
 

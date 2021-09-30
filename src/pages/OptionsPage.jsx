@@ -3,6 +3,7 @@ import Button from '../components/base/Button';
 import { IconMoreThen, IconPaints } from '../icons';
 import GoBackButton from '../components/GoBackButton';
 import NavBar from '../components/NavBar';
+import ThemeChanging from '../components/ThemeChanging';
 
 const OptionsPage = () => {
   return (
@@ -40,6 +41,7 @@ const OptionsPage = () => {
       <h3 className="options__subtitle text_caption">Версия приложения</h3>
       <div className="text_main-13px">Rick & Morty  v1.0.0</div>
       <NavBar/>
+      <ThemeChanging/>
     </div>
   );
 };

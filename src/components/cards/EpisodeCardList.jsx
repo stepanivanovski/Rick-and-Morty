@@ -1,14 +1,14 @@
 import React from 'react';
 import EpisodeCard from './EpisodeCard';
 
-const EpisodeCardList = () => {
+const EpisodeCardList = ({ withArrow }) => {
   return (
     <ul className="episodes__list">
-     <EpisodeCard/>
-     <EpisodeCard/>
-     <EpisodeCard/>
-     <EpisodeCard/>
-     <EpisodeCard/>
+     <EpisodeCard withArrow={withArrow}/>
+     <EpisodeCard withArrow={withArrow}/>
+     <EpisodeCard withArrow={withArrow}/>
+     <EpisodeCard withArrow={withArrow}/>
+     <EpisodeCard withArrow={withArrow}/>
     </ul>
   );
 };

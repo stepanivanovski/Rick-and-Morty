@@ -13,6 +13,7 @@ import ChangeNamePage from './pages/ChangeNamePage';
 import CharacterFilter from './components/filters/CharacterFilter'
 import LocationFilter from './components/filters/LocationFilter';
 import TypeFilter from './components/filters/TypeFilter';
+import SearchPage from './pages/SearchPage';
 
 
 function App() {
@@ -31,7 +32,8 @@ function App() {
       <Route path='/name' component={ChangeNamePage}/> 
       <Route path="/filterChar" component={CharacterFilter}/>   
       <Route path="/filterLoc" exact component={LocationFilter}/>   
-      <Route path="/filterLoc/:type" component={TypeFilter}/>   
+      <Route path="/filterLoc/:type" component={TypeFilter}/>
+      <Route path="/search" component={SearchPage}/>   
     </div>
   );
 } 

@@ -6,7 +6,7 @@ import Input from '../components/base/Input';
 const ChangeNamePage = () => {
   return (
     <div className="options options_name">
-    <GoBackButton text="Настройки"/>
+    <GoBackButton text="Настройки" className="options__arrow"/>
     <form className="options__form">
         <Input
             id="text"

@@ -2,7 +2,7 @@
   margin: 0 auto;
   padding: 20px;
   width: 343px;
-  height: 322px;
+  min-height: 322px;
   border-radius: 10px;
   background-color: $second-bg-color; 
   color: $main-text-color;
@@ -37,7 +37,8 @@
     margin-right: 20px;
   }
   input:checked+label::before {
-    border-color: $active-icon-color;
+    border: none;
+    background-image: url("./Object.svg");
   }
   &__button {
     margin-top: 24px;

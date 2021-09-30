@@ -1,14 +1,14 @@
 import React from 'react';
 import CharacterCard from "./CharacterCard"
 
-const CharacterCardList = () => {
+const CharacterCardList = ({ withArrow=null }) => {
   return (
     <ul className="characters__list">
-      <CharacterCard/>
-      <CharacterCard status/>
-      <CharacterCard/>
-      <CharacterCard status/>
-      <CharacterCard/>
+      <CharacterCard withArrow={withArrow}/>
+      <CharacterCard status withArrow={withArrow}/>
+      <CharacterCard withArrow={withArrow}/>
+      <CharacterCard withArrow={withArrow} status/>
+      <CharacterCard withArrow={withArrow}/>
     </ul>
   );
 };

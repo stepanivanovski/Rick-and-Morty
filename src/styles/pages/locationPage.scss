@@ -1,13 +1,18 @@
 .loc-page {
+  position: relative;
   &__header {
-    height: 37vh;
+    padding: 20px 16px 0;
+    height: 300px;
     background: center center/cover no-repeat;
   }
   &__content {
+    position: absolute;
+    top: 251px;
     padding: 34px 16px 0;
-    transform: translateY(-40px);
-    border-radius: 26px;
-    background-color: $second-bg-color;
+    margin-bottom: -40px;
+    width: 100%;
+    border-radius: 26px 26px 0 0;
+    background-color: $page-bg-color;
   }
   &__caption {
     margin-bottom: 32px;
@@ -28,17 +33,9 @@
   &__descr {
     margin: 0;
     margin-bottom: 36px;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 150%;
-    color: $main-text-color
   }
   h3 {
     margin: 0;
     margin-bottom: 24px;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 28px;
-    color: $main-text-color;
   }
 }
