@@ -1,43 +1,73 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import Input from '../components/base/Input';
 import Button from '../components/base/Button';
 import GoBackButton from '../components/GoBackButton';
 import { IconUser, IconPassword } from '../icons';
-import Message from '../components/Message';
   
 const RegistrationPage = () => {
+  const { register, handleSubmit, formState: {errors} } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data)
+    const request = JSON.stringify(data);
+    console.log(data)
+  }
+
   return (
     <div className="registration">
       <GoBackButton/>
       <h2 className="registration__title">Создать аккаунт</h2>
-      <form className="registration__form">
+      <form 
+        onSubmit={handleSubmit(onSubmit)}
+        className="registration__form">
         <Input
-            id="text"
+            id="firstName"
             type="text"
             title="Имя"
+            register={register}
+            errors={errors}
+            pattern={/^([а-яё]+|[a-z]+)$/i}
+            message={"Поле должно сожержать только буквы"}
           />
         <Input
-          id="text"
+          id="lastName"
           type="text"
           title="Фамилия"
+          register={register}
+          errors={errors}
+          pattern={/^([а-яё]+|[a-z]+)$/i}
+          message={"Поле должно сожержать только буквы"}
         />
         <Input
-          id="text"
+          id="patronymic"
           type="text"
           title="Отчество"
+          register={register}
+          errors={errors}
+          pattern={/^([а-яё]+|[a-z]+)$/i}
+          message={"Поле должно сожержать только буквы"}
         />
         <hr/>
         <Input
           Icon={IconUser}
-          id="text"
+          id="userName"
           type="text"
           title="Логин"
+          register={register}
+          errors={errors}
+          pattern={/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/}
+          message={"Поле должно сожержать коректный e-mail"}
         />
         <Input
           Icon={IconPassword}
           id="password"
-          type="password"
+          type="text"
           title="Пароль"
+          register={register}
+          errors={errors}
+          pattern={/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/}
+          message={"Поле должно содержать как минимум 8 символов, 1 латинскую букву и 1 цифру"}
         />
         <Button text="Войти" />
       </form>

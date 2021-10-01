@@ -1,4 +1,3 @@
-import axios from "axios";
 
 const baseApi = "http://173.249.20.184:7001/";
 

@@ -10,8 +10,11 @@ const getProfile = async () => {
   return res.data;
 }
 
-const createProfile = async (data) => request.post(`${apiVersion}/${route}/Register`, data);
 const userLogin = async (data) => request.post(`${apiVersion}/${route}/Login`, data);
+
+
+
+const createProfile = async (data) => request.post(`${apiVersion}/${route}/Register`, data);
 const updateProfile = async (data) => request.put(`${apiVersion}/${route}/UpdateProfile`, data);
 
 export { getProfile, updateProfile, createProfile, userLogin };
