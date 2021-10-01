@@ -28,6 +28,16 @@
     background-color: $bg-input-color;
     color: $main-text-color;
   }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus{
+    -webkit-text-fill-color: $main-text-color;
+    -webkit-box-shadow: 0 0 0px 10px  $bg-input-color inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  input::placeholder {
+    color: $icons-color;
+  }
   &__btn {
     padding: 0;
     border: none;

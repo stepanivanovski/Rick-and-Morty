@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SearchPanel from "../components/SearchPanel"
+import Spinner from '../components/Spinner';
 import CharacterCardList from "../components/cards/CharacterCardList"
 import NavBar from "../components/NavBar"
 import { getProfile } from '../services/api/profile.api';
@@ -15,7 +16,7 @@ const CharactersPage = () => {
     })
 
   return (
-    <div className="characters">
+    <div className="characters container">
       <div className="characters__header">
         <SearchPanel 
         filter
@@ -31,7 +32,8 @@ const CharactersPage = () => {
           </button>
         </div>
       </div>
-      <CharacterCardList/>
+      <Spinner/>
+      {/* <CharacterCardList/> */}
       <NavBar/>
     </div>
   );

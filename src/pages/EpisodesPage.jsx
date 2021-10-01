@@ -5,7 +5,7 @@ import SearchPanel from '../components/SearchPanel';
 
 const EpisodesPage = () => {
   return (
-    <div className="episodes">
+    <div className="episodes container">
     <div className="episodes__header">
       <SearchPanel
        placeholder="Найти эпизод"

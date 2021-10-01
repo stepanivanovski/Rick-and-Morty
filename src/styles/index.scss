@@ -12,9 +12,47 @@
 @import "./fonts";
 @import "./itemLink.scss";
 @import "./App";
+@import "./spinner.scss";
 
 * {
   font-family: Roboto;
   box-sizing: border-box;
 }
+
+@media (min-width: 576px) {
+  .container  {
+    margin: 0 auto;
+    width: 540px;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .container {
+    margin: 0 auto;
+    width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    margin: 0 auto;
+    width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    margin: 0 auto;
+    width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    margin: 0 auto;
+    width: 1320px;
+  }
+}
+
 

@@ -15,8 +15,8 @@ const RegistrationPage = () => {
   }
 
   return (
-    <div className="registration">
-      <GoBackButton/>
+    <div className="registration container">
+      <GoBackButton className="filter__goBack"/>
       <h2 className="registration__title">Создать аккаунт</h2>
       <form 
         onSubmit={handleSubmit(onSubmit)}
