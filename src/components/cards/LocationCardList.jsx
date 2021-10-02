@@ -1,14 +1,10 @@
 import React from 'react';
 import LocationCard from './LocationCard'
 
-const LocationCardList = () => {
+const LocationCardList = ({ locations }) => {
   return (
     <ul className="locations__list">
-     <LocationCard status/>
-     <LocationCard/>
-     <LocationCard status/>
-     <LocationCard/>
-     <LocationCard/>
+      {locations.map(item => <LocationCard key={item.id} {...item}/>)}
     </ul>
   );
 };

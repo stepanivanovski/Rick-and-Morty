@@ -1,14 +1,21 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import CharacterCard from "./CharacterCard"
 
-const CharacterCardList = ({ withArrow=null }) => {
+const CharacterCardList = ({ characters, withArrow=null }) => {
+  const history = useHistory();
+
   return (
     <ul className="characters__list">
-      <CharacterCard withArrow={withArrow}/>
-      <CharacterCard status withArrow={withArrow}/>
-      <CharacterCard withArrow={withArrow}/>
-      <CharacterCard withArrow={withArrow} status/>
-      <CharacterCard withArrow={withArrow}/>
+      {characters.map(item => {
+        return (
+          <CharacterCard
+            onItemSelected = {(id) => history.push(`/characters/${id}`)}  
+            key={item.id} 
+            {...item} 
+            withArrow={withArrow}/>
+        )
+      })}
     </ul>
   );
 };

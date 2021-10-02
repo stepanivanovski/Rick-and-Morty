@@ -5,7 +5,7 @@ import Input from '../components/base/Input';
 import Button from '../components/base/Button';
 import { IconUser, IconPassword, IconEye } from '../icons';
 import { Link } from 'react-router-dom';
-import Message from '../components/Message';
+import LoginPopup from '../components/LoginPopup';
 
 const LoginPage = () => {
   const { register, handleSubmit, formState: {errors} } = useForm();
@@ -60,7 +60,7 @@ const LoginPage = () => {
           Создать
         </Link>
       </div>
-      {/* <Message/> */}
+      {/* <LoginPopup/> */}
   </div>
   );
 };

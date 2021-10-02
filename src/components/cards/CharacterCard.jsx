@@ -1,16 +1,19 @@
 import { IconMoreThen } from "../../icons";
+import { defineGender, defineStatus, defineStyle } from "../../utils";
+const CharacterCard = ({race, id, status, gender, imageName, fullName, withArrow, onItemSelected }) => {
 
-const CharacterCard = ({ status, withArrow }) => {
-  const style = `character__status  ${status ? "character__status_green" : "character__status_red" }`;
+  const style = `character__status  ${!status ? "character__status_green" : "character__status_red" }`;
   const arrow = withArrow ? <IconMoreThen className="character__arrow"/> : null;
 
   return (
-    <li className="character">
-      <div className="character__img" style={{ backgroundImage: `url("http://173.249.20.184:7001/images/%D0%A0%D0%B8%D0%BA_%D0%A1%D0%B0%D0%BD%D1%87%D0%B5%D0%B7_001.jpg")` }} />
+    <li 
+      className="character"
+      onClick={() => onItemSelected(id)}>
+      <div className="character__img" style={{ backgroundImage: `url(${imageName})` }} />
       <div className="character__text">
-        <p className={style}>Живой</p>
-        <p className="character__title">Рик Санчез</p>
-        <p className="character__descr">Человек, Мужской</p>
+        <p className={defineStyle(status)}>{defineStatus(status)}</p>
+        <p className="character__title">{fullName}</p>
+        <p className="character__descr">{race}, {defineGender(gender)}</p>
       </div>
       {arrow}
     </li>

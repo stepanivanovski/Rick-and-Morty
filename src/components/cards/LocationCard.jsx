@@ -1,12 +1,12 @@
 import React from 'react';
 
-const LocationCard = () => {
+const LocationCard = ({ id, name, type, imageName, measurements }) => {
   return (
     <div className="location">
-      <div className="location__img" style={{ backgroundImage: `url("http://173.249.20.184:7001/images/Земля_001.jpg")` }} />
+      <div className="location__img" style={{ backgroundImage: `url(${imageName})` }} />
       <div className="location__text">
-        <p className="location__title">Земля С-137</p>
-        <p className="location__descr">Мир Изверение С-137</p>
+        <p className="location__title">{name}</p>
+        <p className="location__descr">{type} {measurements}</p>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import GoBackButton from '../components/GoBackButton';
 import CharacterCardList from '../components/cards/CharacterCardList';
 
-const LocationPage = () => {
+const LocationPage = ( {id} ) => {
   return (
     <div className="loc-page">
       <div className="loc-page__header"

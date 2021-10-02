@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from './base/Button';
 
-const Message = ({ active, set }) => {
+const LoginPopup = ({ active, set }) => {
   return (
     <div class="modal">
       <div class="message"> 
@@ -13,4 +13,4 @@ const Message = ({ active, set }) => {
   );
 };
 
-export default Message;
+export default LoginPopup;

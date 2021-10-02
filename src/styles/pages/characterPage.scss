@@ -9,6 +9,7 @@
     margin: -20px -16px 0;
     padding: 20px 16px 0;
     height: 218px;
+    background-color: $second-bg-color!important;
     background: center center/cover no-repeat;
 
   }
@@ -52,5 +53,6 @@
     margin-bottom: 24px;
     display: flex;
     justify-content: space-between;
+    align-items:center;
   }
 }

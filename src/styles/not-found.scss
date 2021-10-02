@@ -1,12 +1,14 @@
 .not-found {
-  position: absolute;
-  top:50%;
-  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 190px);
   text-align: center;
   &__text {
     margin: 0 auto;
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;
+    color: $second-text-color;
   }
 }

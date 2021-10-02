@@ -1,14 +1,10 @@
 import React from 'react';
 import EpisodeCard from './EpisodeCard';
 
-const EpisodeCardList = ({ withArrow }) => {
+const EpisodeCardList = ({ episodes, withArrow }) => {
   return (
     <ul className="episodes__list">
-     <EpisodeCard withArrow={withArrow}/>
-     <EpisodeCard withArrow={withArrow}/>
-     <EpisodeCard withArrow={withArrow}/>
-     <EpisodeCard withArrow={withArrow}/>
-     <EpisodeCard withArrow={withArrow}/>
+     {episodes.map(item => <EpisodeCard key={item.id} {...item} withArrow={withArrow}/>)}
     </ul>
   );
 };

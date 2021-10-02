@@ -21,11 +21,23 @@ function App() {
     <div className='App dark'>
       <Route path='/login' component={LoginPage}/>  
       <Route path='/registration' component={RegistrationPage}/>   
-      <Route path='/characters' component={CharactersPage}/>
-      <Route path='/character' component={CharacterPage}/>
+      <Route path='/characters' exact component={CharactersPage}/>
+      <Route path="/characters/:id" render={
+                  (match) => {
+                    const { id } = match.match.params
+                    console.log(id)
+                    return <CharacterPage id={id}/>
+                  }
+                }/>
+      <Route path='/locations' exact component={LocationsPage}/>
+      <Route path="/locations/:id" render={
+            (match) => {
+              const { id } = match.match.params
+              console.log(id)
+              return <LocationPage id={id}/>
+            }
+          }/>
       <Route path='/episodes' component={EpisodesPage}/>
-      <Route path='/locations' component={LocationsPage}/>
-      <Route path='/location' component={LocationPage}/>
       <Route path='/episode' component={EpisodePage}/>
       <Route path='/options' component={OptionsPage}/>
       <Route path='/edit' component={EditProfilePage}/>
