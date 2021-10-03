@@ -61,8 +61,8 @@ const View = ({character}) => {
     race, 
     about,
     episodes, 
-    placeOfBirth: { id:idP, name:nameP }, 
-    location: { id:idL, name:nameL } 
+    placeOfBirth, 
+    location
   } = character;
 
   return (
@@ -85,14 +85,14 @@ const View = ({character}) => {
       <div className="item-link item-link_mb-24">
         <div>
           <div className="text_second-12px">Место рождения</div>
-          <div className="text_main-14px">{nameP}</div>
+          <div className="text_main-14px">{placeOfBirth?.name || "нет данных"}</div>
         </div>
         <IconMoreThen className="item-link__svg"/>
       </div>
       <div className="item-link item-link_mb-24">
         <div>
           <div className="text_second-12px">Местоположение</div>
-          <div className="text_main-14px">{nameL}</div>
+          <div className="text_main-14px">{location?.name || "нет данных"}</div>
         </div>
         <IconMoreThen className="item-link__svg"/>
       </div>

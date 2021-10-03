@@ -38,7 +38,13 @@ function App() {
             }
           }/>
       <Route path='/episodes' component={EpisodesPage}/>
-      <Route path='/episode' component={EpisodePage}/>
+      <Route path="/episode/:id" render={
+            (match) => {
+              const { id } = match.match.params
+              console.log(id)
+              return <EpisodePage id={id}/>
+            }
+          }/>
       <Route path='/options' component={OptionsPage}/>
       <Route path='/edit' component={EditProfilePage}/>
       <Route path='/name' component={ChangeNamePage}/> 

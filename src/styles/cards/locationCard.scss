@@ -5,6 +5,7 @@
   border-color: $location-border-color; 
   border-radius: 20px;
   overflow: hidden;
+  cursor: pointer;
   &__img {
     height: 150px;
     background: center center/cover no-repeat;

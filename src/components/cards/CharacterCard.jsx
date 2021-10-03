@@ -2,8 +2,7 @@ import { IconMoreThen } from "../../icons";
 import { defineGender, defineStatus, defineStyle } from "../../utils";
 const CharacterCard = ({race, id, status, gender, imageName, fullName, withArrow, onItemSelected }) => {
 
-  const style = `character__status  ${!status ? "character__status_green" : "character__status_red" }`;
-  const arrow = withArrow ? <IconMoreThen className="character__arrow"/> : null;
+const arrow = withArrow ? <IconMoreThen className="character__arrow"/> : null;
 
   return (
     <li 

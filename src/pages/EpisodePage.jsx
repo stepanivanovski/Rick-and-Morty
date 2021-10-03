@@ -1,36 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Spinner from "../components/Spinner";
+import NotFound from "../components/NotFound";
 import GoBackButton from '../components/GoBackButton';
 import CharacterCardList from '../components/cards/CharacterCardList';
 import { IconPlay } from '../icons';
+import { getEpisodeById } from '../services/api/episodes.api';
+import { convertDate } from '../utils'; 
 
-const EpisodePage = () => {
+const EpisodePage = ({ id }) => {
+
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    getEpisodeById(id)
+      .then(res => {
+        console.log(res)
+        setData(res);
+        setLoading(false);
+      })
+      .catch(error => {
+        setLoading(false);
+        setError(true);
+      })
+  }, [data.id]) 
+  
+
+  const content = (loading) ? 
+    <Spinner/> : 
+    (error) ? 
+    <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
+    <View episode={data}/> 
+
   return (
     <div className="epis-page">
       <div className="epis-page__header"
-        style={{backgroundImage:`url("http://173.249.20.184:7001/images/Пилот_001.jpg")`}}>
+        style={{backgroundImage:`url(${data?.imageName})`}}>
         <GoBackButton className="char-page__goBack"/>
-        <div className="epis-page__play">
+        {(!loading) ? 
+          <div className="epis-page__play">
           <IconPlay/>
-        </div>
+          </div> :
+          null
+        }
       </div>
-      <div className="epis-page__content">
-        <div className="epis-page__caption">
-          <h2 className="epis-page__title">М. Найт Шьямал-Инопланетяне!</h2>
-          <p className="epis-page__subtitle">
-            серия 1
-          </p>
-        </div>
-        <p className="epis-page__descr">
-          Это планета, на которой проживает человеческая раса, и главное место для персонажей Рика и Морти. Возраст этой Земли более 4,6 миллиардов лет, и она является четвертой планетой от своей звезды.
-        </p>
-        <div className="text_second-12px">Премьера</div>
-        <div className="text_main-14px">2 декабря 2013</div>
-        <hr/>
-        <h3 className="text_main-20px">Персонажи</h3>
-        <CharacterCardList withArrow/>
-      </div>
-    </div>
+      {content}
+    </div>     
   );
 };
+
+const View = ({ episode }) => {
+  const { 
+    premiere, 
+    series, 
+    id, 
+    name,
+    plot="нет данных",
+    characters
+  } = episode;
+
+  return (
+    <div className="epis-page__content">
+      <div className="epis-page__caption">
+        <h2 className="epis-page__title">{name}</h2>
+        <p className="epis-page__subtitle">
+          серия {series}
+        </p>
+      </div>
+      <p className="epis-page__descr">
+       {plot}
+      </p>
+      <div className="text_second-12px">Премьера</div>
+      <div className="text_main-14px">{convertDate(premiere)}</div>
+      <hr/>
+      <h3 className="text_main-20px">Персонажи</h3>
+      <CharacterCardList characters={characters} withArrow/>
+    </div>
+  ) 
+}
 
 export default EpisodePage;

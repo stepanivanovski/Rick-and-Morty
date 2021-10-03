@@ -1,25 +1,15 @@
 import React from 'react';
 import { IconMoreThen } from "../../icons";
+import { convertDate } from '../../utils';
 
-const EpisodeCard = ({premiere, imageName, series , id, name, withArrow}) => {
+const EpisodeCard = ({premiere, imageName, series , id, name, onItemSelected, withArrow}) => {
   const arrow = withArrow ? 
     <IconMoreThen className="character__arrow"/> : 
     null;
 
-  const convertDate = (premiere) => {
-    const date = new Date(premiere);
-    const months = [
-      'января', 'февраля', 'марта',
-      'апреля', 'мая', 'июня',
-      'июля', 'августа', 'сентября',
-      'октября', 'ноября', 'декабря'
-    ];
-
-    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
-  }
-
   return (
-    <li className="episode">
+    <li className="episode"
+      onClick={() => onItemSelected(id)}>
       <div className="episode__img" style={{ backgroundImage: `url(${imageName})`}} />
       <div className="episode__text">
         <p className="episode__number">Серия {series}</p>

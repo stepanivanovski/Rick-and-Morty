@@ -7,14 +7,17 @@ import NavBar from '../components/NavBar';
 import { getEpisodes } from "../services/api/episodes.api";
 
 
-const SeasonButtons = ({ setSeason, setBtnClass }) => {
+const SeasonButtons = ({ setSeason, setBtnClass, setLoading }) => {
   return (
     <ul className="episodes__wrapper">
       {[...Array(4)].map((item, i) => {
         return (
           <li className="episodes__season">
             <button
-              onClick={() => {setSeason(i + 1)}} 
+              onClick={() => {
+                setLoading(true)
+                setSeason(i + 1)
+              }} 
               className={setBtnClass(i + 1)}>
               <p className="episodes__number">Сезон {i + 1}</p>
               <div className="episodes__season-under episodes__season-under_active"></div>
@@ -67,6 +70,7 @@ const EpisodesPage = () => {
         <SeasonButtons 
           setSeason={setSeason} 
           setBtnClass={setBtnClass}
+          setLoading={setLoading}
         />
       </div>
       {content}
