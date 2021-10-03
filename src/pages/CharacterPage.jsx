@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import EpisodeCardList from "../components/cards/EpisodeCardList"
@@ -12,6 +13,7 @@ const CharacterPage = ({ id }) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const history = useHistory();
   
   useEffect(() => {
     getCharacterById(id)
@@ -31,11 +33,10 @@ const CharacterPage = ({ id }) => {
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
-    <View character={data}/> 
+    <View character={data} history={history}/> 
 
   return (
     <div className="char-page">
-      <div>
       <div className="char-page__header"
         style={{backgroundImage:`url(${data?.imageName})`}}>
         <GoBackButton className="char-page__goBack"/>
@@ -47,13 +48,12 @@ const CharacterPage = ({ id }) => {
           null
         }
       </div>
-      </div>
       {content}
     </div>
   );
 };
 
-const View = ({character}) => {
+const View = ({character, history}) => {
   const {
     fullName, 
     status, 
@@ -66,7 +66,7 @@ const View = ({character}) => {
   } = character;
 
   return (
-    <>
+    <div className="container">
       <h1 className="char-page__title">{fullName}</h1>
       <div className={`character__status_center ${defineStyle(status)}`}>
         {defineStatus(status)}
@@ -82,14 +82,18 @@ const View = ({character}) => {
           <div className="text_main-14px">{race}</div>
         </div>
       </div>
-      <div className="item-link item-link_mb-24">
+      <div
+        onClick={() => history.push(`/locations/${placeOfBirth?.id}`)} 
+        className="item-link item-link_mb-24">
         <div>
           <div className="text_second-12px">Место рождения</div>
           <div className="text_main-14px">{placeOfBirth?.name || "нет данных"}</div>
         </div>
         <IconMoreThen className="item-link__svg"/>
       </div>
-      <div className="item-link item-link_mb-24">
+      <div 
+        onClick={() => history.push(`/locations/${location?.id}`)} 
+        className="item-link item-link_mb-24">
         <div>
           <div className="text_second-12px">Местоположение</div>
           <div className="text_main-14px">{location?.name || "нет данных"}</div>
@@ -102,7 +106,7 @@ const View = ({character}) => {
         <div className="text_second-12px">Все эпизоды</div>
       </div>
       <EpisodeCardList episodes={episodes} withArrow/>
-    </>
+    </div>
   )
 }
 

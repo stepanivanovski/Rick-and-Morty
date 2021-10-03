@@ -56,15 +56,17 @@ const View = ({location}) => {
 
   return (
     <div className="loc-page__content">
-      <div className="loc-page__caption">
-        <h2 className="loc-page__title">{name}</h2>
-        <p className="loc-page__subtitle">{type} {measurements}</p>
+      <div className="container">
+        <div className="loc-page__caption">
+          <h2 className="loc-page__title">{name}</h2>
+          <p className="loc-page__subtitle">{type} {measurements}</p>
+        </div>
+        <p className="loc-page__descr text_main-13px">
+          {about}
+        </p>
+        <h3 className="text_main-20px">Персонажи</h3>
+        <CharacterCardList characters={characters} withArrow/>
       </div>
-      <p className="loc-page__descr text_main-13px">
-        {about}
-      </p>
-      <h3 className="text_main-20px">Персонажи</h3>
-      <CharacterCardList characters={characters} withArrow/>
     </div>
   )
 }

@@ -62,20 +62,22 @@ const View = ({ episode }) => {
 
   return (
     <div className="epis-page__content">
-      <div className="epis-page__caption">
-        <h2 className="epis-page__title">{name}</h2>
-        <p className="epis-page__subtitle">
-          серия {series}
+      <div className="container">
+        <div className="epis-page__caption">
+          <h2 className="epis-page__title">{name}</h2>
+          <p className="epis-page__subtitle">
+            серия {series}
+          </p>
+        </div>
+        <p className="epis-page__descr">
+        {plot}
         </p>
+        <div className="text_second-12px">Премьера</div>
+        <div className="text_main-14px">{convertDate(premiere)}</div>
+        <hr/>
+        <h3 className="text_main-20px">Персонажи</h3>
+        <CharacterCardList characters={characters} withArrow/>
       </div>
-      <p className="epis-page__descr">
-       {plot}
-      </p>
-      <div className="text_second-12px">Премьера</div>
-      <div className="text_main-14px">{convertDate(premiere)}</div>
-      <hr/>
-      <h3 className="text_main-20px">Персонажи</h3>
-      <CharacterCardList characters={characters} withArrow/>
     </div>
   ) 
 }
