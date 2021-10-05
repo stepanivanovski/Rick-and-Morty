@@ -1,46 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import SearchPanel from "../components/SearchPanel";
 import LocationCardList from "../components/cards/LocationCardList";
 import NavBar from "../components/NavBar"
-import { getLocations } from "../services/api/locations.api";
+import { 
+  onLoading,
+  fetchData,
+} from "../store/getRequestsSlice"
 
 const LocationsPage = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const state = useSelector(state => state.fetchData)
+  
+  const { loading, error, locations} = state;
 
   useEffect(() => {
-    getLocations()
-      .then(res => {
-        console.log(res)
-        setData(res);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        setError(true);
-      })
-  }, data) 
-
-
-  const content = (loading) ? 
+    dispatch(fetchData("locations"));
+    return dispatch(onLoading());
+  },[]) 
+  
+  const content = (loading ) ? 
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так, проверьте подключение к интернету" 
       url="not-found.png"/>  : 
-    <LocationCardList locations={data}/> 
-
-
+    <LocationCardList locations={locations}/> 
+  
   return (
     <div className="locations">
       <div className="locations__header">
         <SearchPanel 
+          path="/filterLoc"
           placeholder={"Найти локацию"}
           filter/>
         <div className="locations__total">
-          Всего локаций: {data.length}
+          Всего локаций: {locations.length}
         </div>
       </div>
       {content}

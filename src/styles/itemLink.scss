@@ -5,6 +5,7 @@
   cursor: pointer;
   &_ml-16 {
     margin-left: 16px;
+    text-align: left;
   }
   &_mb-20 {
     margin-bottom: 20px;
@@ -17,5 +18,15 @@
   }
   &__svg {
     stroke:$main-text-color;
+  }
+  &__button {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
   }
 }

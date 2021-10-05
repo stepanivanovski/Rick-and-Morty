@@ -1,41 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import GoBackButton from '../components/GoBackButton';
 import CharacterCardList from '../components/cards/CharacterCardList';
-import { getLocationById } from '../services/api/locations.api';
+import {
+  onLoading, 
+  fetchData,
+} from "../store/getRequestsSlice";
 
 
 const LocationPage = ( {id} ) => {
   
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
   
+  const dispatch =useDispatch();
+  const state = useSelector(state => state.fetchData);
+
+  const { error, location } = state
+
   useEffect(() => {
-    getLocationById(id)
-      .then(res => {
-        console.log(res)
-        setData(res);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        setError(true);
-      })
-  }, [data.id]) 
+    dispatch(fetchData("location", id))
+    
+    return () => {
+      onLoading();
+    }
+  }, []) 
   
 
-  const content = (loading) ? 
+  const content = (!location?.name) ? 
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
-    <View location={data}/> 
+    <View location={location}/> 
 
   return (
     <div className="loc-page">
       <div className="loc-page__header"
-        style={{backgroundImage:`url(${data?.imageName})`}}>
+        style={{backgroundImage:`url(${location?.imageName})`}}>
         <GoBackButton className="char-page__goBack"/>
       </div>
       {content}

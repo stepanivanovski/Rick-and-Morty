@@ -1,5 +1,8 @@
 .options {
   padding: 20px 16px 120px;
+  a {
+    text-decoration: none;
+  }
   &_name {
     height: 100vh;
     display:flex;
@@ -56,5 +59,11 @@
   }
   &__arrow {
     stroke: $main-text-color;
+  }
+  &__goBack {
+    stroke: $main-text-color;
+  }
+  &_hidden {
+    overflow: hidden;
   }
 }

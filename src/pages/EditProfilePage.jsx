@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import GoBackButton from '../components/GoBackButton';
 import { IconMoreThen } from '../icons';
 
 const EditProfilePage = () => {
   return (
-    <div className="options">
+    <div className="options container">
     <GoBackButton text="Редактировать профиль" className="options__arrow"/>
     <div className="options__user options__user_edit-p">
       <div 
@@ -15,13 +16,15 @@ const EditProfilePage = () => {
 
     </div>
     <h3 className="options__subtitle text_caption">Профиль</h3>
-    <div className="item-link item-link_mb-20">
-      <div>
-        <div className="text_main-16px">Изменить ФИО</div>
-        <div className="text_second-14px">Степан Иванов</div>
+    <Link to="/options/name">
+      <div className="item-link item-link_mb-20">
+        <div>
+          <div className="text_main-16px">Изменить ФИО</div>
+          <div className="text_second-14px">Степан Иванов</div>
+        </div>
+        <IconMoreThen className="options__arrow"/>
       </div>
-      <IconMoreThen className="options__arrow"/>
-    </div>
+    </Link>
     <div className="item-link">
       <div>
         <div className="text_main-16px">Логин</div>

@@ -1,49 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import EpisodeCardList from "../components/cards/EpisodeCardList"
 import GoBackButton from '../components/GoBackButton';
 import { IconMoreThen } from '../icons';
-import { getCharacterById } from '../services/api/characters.api';
 import { defineGender, defineStatus, defineStyle } from '../utils';
+import {
+  onLoading, 
+  fetchData
+} from "../store/getRequestsSlice";
 
 const CharacterPage = ({ id }) => {
-
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
   const history = useHistory();
-  
-  useEffect(() => {
-    getCharacterById(id)
-      .then(res => {
-        console.log(res)
-        setData(res);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        setError(true);
-      })
-  }, [data.id]) 
-  
 
-  const content = (loading) ? 
+  const dispatch =useDispatch();
+  const state = useSelector(state => state.fetchData);
+
+  const { loading, error, character } = state
+
+  useEffect(() => {
+    dispatch(fetchData("character", id))
+
+    return () => {
+      onLoading();
+    }
+  }, [])  
+  
+  const content = (!character?.fullName) ? 
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
-    <View character={data} history={history}/> 
+    <View character={character} history={history}/> 
 
   return (
     <div className="char-page">
       <div className="char-page__header"
-        style={{backgroundImage:`url(${data?.imageName})`}}>
+        style={{backgroundImage:`url(${character?.imageName})`}}>
         <GoBackButton className="char-page__goBack"/>
         {(!loading) ? 
           <div 
             className="char-page__avatar"
-            style={{backgroundImage:`url(${data?.imageName})`}}>
+            style={{backgroundImage:`url(${character?.imageName})`}}>
           </div> :
           null
         }
@@ -64,7 +63,6 @@ const View = ({character, history}) => {
     placeOfBirth, 
     location
   } = character;
-
   return (
     <div className="container">
       <h1 className="char-page__title">{fullName}</h1>

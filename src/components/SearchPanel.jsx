@@ -1,6 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 
-const SearchPanel = ({filter, placeholder}) => {
+const SearchPanel = ({filter, placeholder, path}) => {
+  const history = useHistory();
+
   return (
     <div className="search-panel">
        <svg
@@ -32,7 +35,9 @@ const SearchPanel = ({filter, placeholder}) => {
       {(filter) ? 
         <>
           <div className="search-panel__divider" />
-          <button className="search-panel__btn">
+          <button
+            onClick={() => history.push(path)} 
+            className="search-panel__btn">
             <svg
             className="search-panel__filter"
             width="18"

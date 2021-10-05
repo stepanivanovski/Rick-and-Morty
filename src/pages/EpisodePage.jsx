@@ -1,44 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import GoBackButton from '../components/GoBackButton';
 import CharacterCardList from '../components/cards/CharacterCardList';
 import { IconPlay } from '../icons';
-import { getEpisodeById } from '../services/api/episodes.api';
-import { convertDate } from '../utils'; 
+import { convertDate } from '../utils';
+import {
+  onLoading, 
+  fetchData
+} from "../store/getRequestsSlice";
+
 
 const EpisodePage = ({ id }) => {
 
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const dispatch =useDispatch();
+  const state = useSelector(state => state.fetchData);
+
+  const { error, episode } = state
   
   useEffect(() => {
-    getEpisodeById(id)
-      .then(res => {
-        console.log(res)
-        setData(res);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        setError(true);
-      })
-  }, [data.id]) 
+    dispatch(fetchData("episode", id))
+    
+    return () => {
+      onLoading();
+    }
+  }, []) 
   
 
-  const content = (loading) ? 
+  const content = (!episode?.series) ? 
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
-    <View episode={data}/> 
+    <View episode={episode}/> 
 
   return (
     <div className="epis-page">
       <div className="epis-page__header"
-        style={{backgroundImage:`url(${data?.imageName})`}}>
+        style={{backgroundImage:`url(${episode?.imageName})`}}>
         <GoBackButton className="char-page__goBack"/>
-        {(!loading) ? 
+        {(episode.series) ? 
           <div className="epis-page__play">
           <IconPlay/>
           </div> :

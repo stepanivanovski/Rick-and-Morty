@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import SearchPanel from '../components/SearchPanel';
 import EpisodeCardList from '../components/cards/EpisodeCardList';
 import NavBar from '../components/NavBar';
-import { getEpisodes } from "../services/api/episodes.api";
+import { 
+  onLoading,
+  fetchData,
+} from "../store/getRequestsSlice"
 
 
-const SeasonButtons = ({ setSeason, setBtnClass, setLoading }) => {
+const SeasonButtons = ({ setSeason, setBtnClass, onLoading }) => {
   return (
     <ul className="episodes__wrapper">
       {[...Array(4)].map((item, i) => {
@@ -15,7 +19,6 @@ const SeasonButtons = ({ setSeason, setBtnClass, setLoading }) => {
           <li className="episodes__season">
             <button
               onClick={() => {
-                setLoading(true)
                 setSeason(i + 1)
               }} 
               className={setBtnClass(i + 1)}>
@@ -28,32 +31,19 @@ const SeasonButtons = ({ setSeason, setBtnClass, setLoading }) => {
     </ul>
   )
 }
-
 const EpisodesPage = () => {
+  const dispatch = useDispatch();
+  const state = useSelector(state => state.fetchData);
+
   const [season, setSeason] = useState(1)
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+
+  const { loading, error, episodes} = state;
 
   useEffect(() => {
-    getEpisodes(season)
-      .then(res => {
-        console.log(res)
-        setData(res);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        setError(true);
-      })
-  }, [season]) 
+    dispatch(fetchData("episodes", season));
+    return dispatch(onLoading());
+  },[season]) 
 
-  const content = (loading) ? 
-    <Spinner/> : 
-    (error) ? 
-    <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
-    <EpisodeCardList episodes={data}/>;
-  
   const setBtnClass = (i) => {
     if (i !== season) {
       return "episodes__button"
@@ -61,6 +51,12 @@ const EpisodesPage = () => {
     return "episodes__button episodes__button_active"
   }
 
+  const content = (loading) ? 
+    <Spinner/> : 
+    (error) ? 
+    <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
+    <EpisodeCardList episodes={episodes}/>;
+    
   return (
     <div className="episodes container">
       <div className="episodes__header">
@@ -70,7 +66,7 @@ const EpisodesPage = () => {
         <SeasonButtons 
           setSeason={setSeason} 
           setBtnClass={setBtnClass}
-          setLoading={setLoading}
+          onLoading={onLoading}
         />
       </div>
       {content}
@@ -78,6 +74,5 @@ const EpisodesPage = () => {
     </div>  
   );
 }
-
 
 export default EpisodesPage;

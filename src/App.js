@@ -45,9 +45,9 @@ function App() {
               return <EpisodePage id={id}/>
             }
           }/>
-      <Route path='/options' component={OptionsPage}/>
-      <Route path='/edit' component={EditProfilePage}/>
-      <Route path='/name' component={ChangeNamePage}/> 
+      <Route path='/options' exact component={OptionsPage}/>
+      <Route path='/options/edit' component={EditProfilePage}/>
+      <Route path='/options/name' component={ChangeNamePage}/> 
       <Route path="/filterChar" component={CharacterFilter}/>   
       <Route path="/filterLoc" exact component={LocationFilter}/>   
       <Route path="/filterLoc/:type" component={TypeFilter}/>

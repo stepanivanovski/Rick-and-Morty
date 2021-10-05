@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
 import Button from '../components/base/Button';
 import { IconMoreThen, IconPaints } from '../icons';
 import GoBackButton from '../components/GoBackButton';
 import NavBar from '../components/NavBar';
 import ThemeChanging from '../components/ThemeChanging';
+import { toggleModal } from '../utils';
 
 const OptionsPage = () => {
+  const [ modal, setModal ] = useState(false)
+  
   return (
-    <div className="options">
+    <div className="options container options_hidden">
       <GoBackButton text="Настройки" className="options__goBack"/>
       <div className="options__user">
         <div 
@@ -19,19 +23,23 @@ const OptionsPage = () => {
           <div className="text_second-14px">Rick</div>
         </div>
       </div>
-      <Button className="btn_transparent "text="Редактировать"/>
+      <Link to="options/edit">
+        <Button className="btn_transparent "text="Редактировать"/>
+      </Link>
       <hr/>
       <h3 className="options__subtitle text_caption">Внешний вид</h3>
-      <div className="item-link">
-          <div className="item-link">
+      <button 
+        onClick={() => toggleModal(modal, setModal)  }
+        className="item-link__button">
+        <div className="item-link">
             <IconPaints className="item-link__svg"/>
             <div className="item-link_ml-16" >
               <div className="text_main-16px">Темная тема</div>
               <div className="text_second-14px">Включена</div>
             </div>
-          </div>
-          <IconMoreThen className="item-link__svg"/>
-      </div>
+        </div>
+        <IconMoreThen className="item-link__svg"/>
+      </button>
       <hr/>
       <h3 className="options__subtitle text_caption">О приложении</h3>
       <p className="text_main-13px">
@@ -41,9 +49,13 @@ const OptionsPage = () => {
       <h3 className="options__subtitle text_caption">Версия приложения</h3>
       <div className="text_main-13px">Rick & Morty  v1.0.0</div>
       <NavBar/>
-      <ThemeChanging/>
+      {
+        (modal) ? 
+          <ThemeChanging modal={modal} setModal={setModal}/> : 
+          null
+      }
     </div>
   );
 };
  
-export default OptionsPage;
+export default OptionsPage; 

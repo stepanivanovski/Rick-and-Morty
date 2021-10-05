@@ -24,9 +24,23 @@ const convertDate = (premiere) => {
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
 }
 
+const toggleModal = (modal, setModal) => {
+  const setHidden = () => {
+    if (!modal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  };
+
+  setModal(!modal);
+  setHidden(modal)
+}
+
 export {
   defineStatus,
   defineGender,
   defineStyle,
-  convertDate
+  convertDate,
+  toggleModal
 } 
