@@ -5,20 +5,27 @@ import NotFound from "../components/NotFound";
 import SearchPanel from "../components/SearchPanel"
 import CharacterCardList from "../components/cards/CharacterCardList"
 import { IconListView, IconTableView } from "../icons/";
-import NavBar from "../components/NavBar"
+import NavBar from "../components/NavBar";
 import { 
   onLoading, 
   fetchData
-} from "../store/getRequestsSlice"
+} from "../store/fetchDataSlice";
 
 const CharactersPage = () => {
+
   const dispatch = useDispatch();
-  const state = useSelector(state => state.fetchData)
+  const { fetch, filter } = useSelector(state => state)
   
-  const { loading, error, characters } = state;
+  const { loading, error, characters } = fetch;
+  const { charFilter, checkbox, charAlphabet } = filter;
 
   useEffect(() => {
-    dispatch(fetchData("characters"));
+    if (!charFilter) {
+      dispatch(fetchData("characters", {localFilterData: charAlphabet}));
+    } else {
+      dispatch(fetchData("filteredChar", {removeFilterData: checkbox, localFilterData: charAlphabet}))
+    }
+    
     return dispatch(onLoading());
   },[]) 
  
@@ -27,12 +34,15 @@ const CharactersPage = () => {
   const showViewIcon = () => {
     return (view) ? <IconListView/> : <IconTableView/>
   }
-   
+
   const content = (loading) ? 
     <Spinner/> : 
     (error) ? 
-    <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
+    <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
+    (characters.length === 0) ? 
+    <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :
     <CharacterCardList characters={characters}/> 
+     
 
   return (
     <div className="characters container">

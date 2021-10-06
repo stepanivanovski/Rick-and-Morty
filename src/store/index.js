@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import fetchDataReducer from "./getRequestsSlice"
+import fetchDataReducer from "./fetchDataSlice";
+import themeReducer from "./themeSlice";
+import filterReducer from "./filterSlice";
 
 export default configureStore({
   reducer: {
-    fetchData: fetchDataReducer  
+    fetch: fetchDataReducer,
+    theme: themeReducer,
+    filter: filterReducer
   }
 })

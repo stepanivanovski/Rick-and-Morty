@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCharacters, getCharacterById } from "../services/api/characters.api";
-import { getEpisodes, getEpisodeById } from "../services/api/episodes.api";
-import { getLocations, getLocationById } from "../services/api/locations.api"
+import { configure } from '@testing-library/dom';
+import { getCharacters, getCharacterById, getFilteredCharacters } from "../services/api/characters.api";
+import { getEpisodes, getEpisodeById, getFilteredEpisode } from "../services/api/episodes.api";
+import { getLocations, getLocationById, getFilteredLocations } from "../services/api/locations.api"
+import { getUrl } from '../utils'
+import { configureData } from '../utils';
 
 const resetLoading = (state) => {
   state.loading = false;
@@ -78,13 +81,13 @@ export const {
 } = actions;
 
 
-export const fetchData = (text, Id) => (dispatch) => {
-  const getData = (fetchFunc, actionCr, id) => {
+export const fetchData = (text, { id, localFilterData, removeFilterData}) => (dispatch) => {
+  const getData = (fetchFunc, actionCr, {id='', options}) => {
     dispatch(onLoading())
     fetchFunc(id)
       .then(res => {
-        console.log(res)
-        dispatch(actionCr(res));
+        const adjustedData = configureData(res, options);
+        dispatch(actionCr(adjustedData));
       })
       .catch(error => {
         dispatch(onError())
@@ -93,23 +96,36 @@ export const fetchData = (text, Id) => (dispatch) => {
 
   switch(text) {
     case "character":
-      getData(getCharacterById, characterLoaded, Id) 
+      getData(getCharacterById, characterLoaded, {id: id}) 
       break;
     case "episode":
-      getData(getEpisodeById, episodeLoaded, Id) 
+      getData(getEpisodeById, episodeLoaded, {id: id}) 
     break;
     case "location":
-      getData(getLocationById, locationLoaded, Id) 
+      getData(getLocationById, locationLoaded, {id: id}) 
       break;
     case "locations":
-      getData(getLocations, locationsLoaded) 
+      getData(getLocations, locationsLoaded, {options: localFilterData}) 
       break;
     case "characters":
-      getData(getCharacters,  charactersLoaded) 
+      getData(getCharacters,  charactersLoaded, {options: localFilterData}) 
       break;
     case "episodes":
-      getData(getEpisodes,  episodesLoaded, Id) 
+      getData(getEpisodes,  episodesLoaded, {id: id}) 
       break;
+    case "filteredChar":
+      getData(
+        getFilteredCharacters, 
+        charactersLoaded, 
+        {id: getUrl(removeFilterData), options: localFilterData}
+      )
+      break;
+    case "filteredLoc":
+      getData(getFilteredLocations, locationsLoaded)
+      break;
+    case "filteredEpis":
+      getData(getFilteredEpisode, episodeLoaded)
+      break;    
     default:
       console.log("упс");
   }

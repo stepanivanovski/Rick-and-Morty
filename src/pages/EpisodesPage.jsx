@@ -8,7 +8,7 @@ import NavBar from '../components/NavBar';
 import { 
   onLoading,
   fetchData,
-} from "../store/getRequestsSlice"
+} from "../store/fetchDataSlice"
 
 
 const SeasonButtons = ({ setSeason, setBtnClass, onLoading }) => {
@@ -33,14 +33,14 @@ const SeasonButtons = ({ setSeason, setBtnClass, onLoading }) => {
 }
 const EpisodesPage = () => {
   const dispatch = useDispatch();
-  const state = useSelector(state => state.fetchData);
+  const state = useSelector(state => state.fetch);
 
   const [season, setSeason] = useState(1)
 
   const { loading, error, episodes} = state;
 
   useEffect(() => {
-    dispatch(fetchData("episodes", season));
+    dispatch(fetchData("episodes", {id: season}));
     return dispatch(onLoading());
   },[season]) 
 

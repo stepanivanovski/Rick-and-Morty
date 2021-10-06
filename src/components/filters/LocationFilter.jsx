@@ -1,8 +1,16 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import GoBackButton from '../GoBackButton';
 import { IconABC, IconCBA, IconMoreThen, IconRedFilter } from '../../icons';
+import { 
+  toggleCheked,
+} from '../../store/filterSlice';
 
 const LocationFilter = () => {
+  const dispatch = useDispatch();
+
+  const { checkbox, locFilter, locAlphabet } = useSelector(state => state.filter);
+
   return (
     <div className="filter">
       <div className="filter__header">
@@ -16,12 +24,14 @@ const LocationFilter = () => {
         <div className="filter__item-wrapper">
           <p className="filter__text text_main-16px">По алфавиту</p>
           <div className="filter__icons">
-            <button className="filter__button">
-              <IconABC className="filter__active-icon"/>
-            </button>
-            <button className="filter__button">
-              <IconCBA/>
-            </button>
+            {(locFilter) ?
+            <button 
+              // onClick = {() => dispatch(resetLocFilter())}
+              className="filter__button">
+              <IconRedFilter/>
+            </button> :
+            null
+          }
           </div>
         </div>
       </div>

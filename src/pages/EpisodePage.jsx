@@ -9,18 +9,18 @@ import { convertDate } from '../utils';
 import {
   onLoading, 
   fetchData
-} from "../store/getRequestsSlice";
+} from "../store/fetchDataSlice";
 
 
 const EpisodePage = ({ id }) => {
 
   const dispatch =useDispatch();
-  const state = useSelector(state => state.fetchData);
+  const state = useSelector(state => state.fetch);
 
   const { error, episode } = state
   
   useEffect(() => {
-    dispatch(fetchData("episode", id))
+    dispatch(fetchData("episode", {id}))
     
     return () => {
       onLoading();

@@ -10,4 +10,9 @@ const getLocationById = async (id) => {
   return res.data
 }
 
-export { getLocations, getLocationById };
+const getFilteredLocations = async (url) => {
+  const res = await request.get(`api/Locations/Filter?Type=&Measurements=`);
+  return res.data;
+}
+
+export { getLocations, getLocationById, getFilteredLocations };

@@ -7,19 +7,19 @@ import CharacterCardList from '../components/cards/CharacterCardList';
 import {
   onLoading, 
   fetchData,
-} from "../store/getRequestsSlice";
+} from "../store/fetchDataSlice";
 
 
 const LocationPage = ( {id} ) => {
   
   
   const dispatch =useDispatch();
-  const state = useSelector(state => state.fetchData);
+  const state = useSelector(state => state.fetch);
 
   const { error, location } = state
 
   useEffect(() => {
-    dispatch(fetchData("location", id))
+    dispatch(fetchData("location", {id}))
     
     return () => {
       onLoading();

@@ -1,4 +1,5 @@
-import { Route } from 'react-router-dom' 
+import { Route } from 'react-router-dom';
+import { useSelector } from 'react-redux'; 
 import LoginPage from './pages/LoginPage'; 
 import RegistrationPage from './pages/RegistrationPage';
 import CharactersPage from './pages/CharactersPage'
@@ -17,8 +18,10 @@ import SearchPage from './pages/SearchPage';
 
 
 function App() {
+  const themeClass = useSelector(state => state.theme.theme);
+
   return (
-    <div className='App dark'>
+    <div className={`App ${themeClass}`}>
       <Route path='/login' component={LoginPage}/>  
       <Route path='/registration' component={RegistrationPage}/>   
       <Route path='/characters' exact component={CharactersPage}/>

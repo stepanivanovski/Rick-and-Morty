@@ -1,11 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { toggleModal } from '../utils';
+import { changeTheme } from "../store/themeSlice"
 
 const ThemeChanging = ({ modal, setModal }) => {
+  const dispatch = useDispatch();
+
   const handleInput = (event) => {
-    const target = event.target;
-    // устанавливаем состояние target.value
-    console.log(target.value)
+    const value = event.target.value;
+
+    dispatch(changeTheme(value));
   } 
 
   return (
@@ -23,7 +27,7 @@ const ThemeChanging = ({ modal, setModal }) => {
           type="radio" 
           id="theme-1" 
           name="theme" 
-          value="on"/>
+          value="light"/>
         <label htmlFor="theme-1">Выключенна</label>
       </div> 
       <div className="theme__radio-wrap">
@@ -33,7 +37,7 @@ const ThemeChanging = ({ modal, setModal }) => {
           type="radio" 
           id="theme-2" 
           name="theme" 
-          value="off"/>
+          value="dark"/>
         <label htmlFor="theme-2">Включенна</label>
       </div>
       <div className="theme__radio-wrap">

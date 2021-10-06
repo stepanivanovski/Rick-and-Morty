@@ -1,3 +1,6 @@
+import { getLocations } from "./services/api/locations.api";
+import { getCharacters } from "./services/api/characters.api";
+
 const defineStatus = (status) => {
   return (status === 0) ? "Живой" : "Мертвый"
 };
@@ -37,10 +40,54 @@ const toggleModal = (modal, setModal) => {
   setHidden(modal)
 }
 
+const getUrl = ({ gender, status }) => {
+  const statusStr = "Status=0&Status=1&Status=2";
+  const genderStr = "Gender=0&Gender=1&Gender=2";
+
+  const genderArr= Object.values(gender).filter(item => item !== false);
+  const statusArr = Object.values(status).filter(item => item !== false);
+
+  const s = (statusArr.length === 0) ? statusStr : statusArr.join("&");
+  const g = (genderArr.length === 0) ? genderStr : genderArr.join("&");
+
+  return s + "&" + g
+}
+
+const configureData = (data, options) => {
+  const sortDataByName = () => {
+
+    if (data.legth === 0 || !Array.isArray(data)) {
+      console.log("Error in sortDataByName");
+      return [];
+    }
+  
+    return data.sort((a, b) => {
+      let nameA = a["fullName"].trim();
+      let nameB = b["fullName"].trim();
+      if (options === "abc") {
+        if (nameA > nameB) return 1;
+        if (nameB > nameA) return -1;
+      } else {
+        if (nameA > nameB) return -1;
+        if (nameB > nameA) return 1;
+      }
+      return 0;
+    })
+  }
+
+  if (options) {
+    sortDataByName()
+  }
+
+  return data;
+}
+
 export {
   defineStatus,
   defineGender,
   defineStyle,
   convertDate,
-  toggleModal
+  toggleModal,
+  getUrl,
+  configureData
 } 

@@ -4,20 +4,23 @@ import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import SearchPanel from "../components/SearchPanel";
 import LocationCardList from "../components/cards/LocationCardList";
-import NavBar from "../components/NavBar"
+import NavBar from "../components/NavBar";
 import { 
   onLoading,
   fetchData,
-} from "../store/getRequestsSlice"
+} from "../store/fetchDataSlice"
 
 const LocationsPage = () => {
-  const dispatch = useDispatch();
-  const state = useSelector(state => state.fetchData)
   
-  const { loading, error, locations} = state;
+  const dispatch = useDispatch();
+  const { fetch, filter } = useSelector(state => state)
+  
+  const { loading, error, locations} = fetch;
+  const { alphabet } = filter;
+
 
   useEffect(() => {
-    dispatch(fetchData("locations"));
+    dispatch(fetchData("locations", {}));
     return dispatch(onLoading());
   },[]) 
   

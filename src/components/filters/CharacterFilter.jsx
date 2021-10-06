@@ -1,35 +1,73 @@
-import React, { useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
+import React  from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import GoBackButton from '../GoBackButton'
 import { IconABC, IconCBA, IconRedFilter } from '../../icons'
+import { 
+  toggleStatusCheked,
+  toggleGenderCheked,
+  resetCharFilter,
+  setAlphabet
+} from '../../store/filterSlice';
 
 const CharacterFilter = () => {
+
+  const dispatch = useDispatch();
+
+  const { checkbox, charFilter, charAlphabet } = useSelector(state => state.filter);
+  const { status: { alive, dead, unknown}, gender: { male, female, trans }} = checkbox;
+
   const handleInput = (event) => {
     const target = event.target;
-    const name = target.id
-  
-    // setS[target.id] = false
-    // console.log(target.id, target.name, target.value); 
+    // console.log(target.name.slice(0, 6));
+    if (target.name.slice(0, 6) === "Gender") {
+
+      if (target.checked) {
+        dispatch(toggleGenderCheked({[target.id]: target.name}));
+      } else {
+        dispatch(toggleGenderCheked({[target.id]: false}))
+      }
+
+    } else {
+
+      if (target.checked) {
+        dispatch(toggleStatusCheked({[target.id]: target.name}));
+      } else {
+        dispatch(toggleStatusCheked({[target.id]: false}))
+      }
+
+    }
+
   }
 
   return (
     <div className="filter">
       <div className="filter__header">
         <GoBackButton text="Выберите тип" className="filter__goBack"/>
-        <button className="filter__button">
-          <IconRedFilter/>
-        </button>
+        {(charFilter) ?
+          <button 
+            onClick = {() => dispatch(resetCharFilter())}
+            className="filter__button">
+            <IconRedFilter/>
+          </button> :
+          null
+        }
       </div>
       <div className="filter__item container">
         <p className="filter__item-title text_caption">Сортировать</p>
         <div className="filter__item-wrapper">
           <p className="filter__text text_main-16px">По алфавиту</p>
           <div className="filter__icons">
-            <button className="filter__button">
-              <IconABC className="filter__active-icon"/>
+            <button
+              onClick={() => dispatch(setAlphabet("abc"))} 
+              className="filter__button">
+              <IconABC 
+                className={(charAlphabet === "abc") ? "filter__active-icon" : ''}/>
             </button>
-            <button className="filter__button">
-              <IconCBA/>
+            <button
+              onClick={() => dispatch(setAlphabet("cba"))}  
+              className="filter__button">
+              <IconCBA
+                className={(charAlphabet === "cba") ? "filter__active-icon" : ''}/>
             </button>
           </div>
         </div>
@@ -43,8 +81,8 @@ const CharacterFilter = () => {
             onChange={handleInput} 
             type="checkbox" 
             id="alive"
-            name="Gender=0"
-            // checked={obj.alive}\
+            name="Status=0"
+            checked={alive}
             />
           <label className="text_main-16px filter__checkbox-label" htmlFor="alive">Живой</label>
         </div>
@@ -53,8 +91,8 @@ const CharacterFilter = () => {
             onChange={handleInput} 
             type="checkbox" 
             id="dead"
-            name="Gender=1"
-            // checked={obj.dead}
+            name="Status=1"
+            checked={dead}
             />
           <label className="text_main-16px filter__checkbox-label" htmlFor="dead">Мертвый</label>
         </div>
@@ -63,8 +101,8 @@ const CharacterFilter = () => {
             onChange={handleInput} 
             type="checkbox"
             id="unknown"
-            name="Gender=2"
-            // checked={false}
+            name="Status=2"
+            checked={unknown}
           />
           <label className="text_main-16px filter__checkbox-label" htmlFor="unknown">Неизвестно</label>
         </div>
@@ -79,8 +117,8 @@ const CharacterFilter = () => {
             onChange={handleInput} 
             type="checkbox" 
             id="male"
-            name="Status=0"
-            // checked={obj.male}
+            name="Gender=0"
+            checked={male}
           />
           <label className="text_main-16px filter__checkbox-label" htmlFor="male">Мужчина</label>
         </div>
@@ -89,8 +127,8 @@ const CharacterFilter = () => {
             onChange={handleInput} 
             type="checkbox" 
             id="female"
-            name="Status=1"
-            // checked={obj.female}
+            name="Gender=1"
+            checked={female}
           />
           <label className="text_main-16px filter__checkbox-label" htmlFor="female">Женщина</label>
         </div>
@@ -99,8 +137,8 @@ const CharacterFilter = () => {
             onChange={handleInput} 
             type="checkbox"
             id="trans"
-            name="Status=2"
-            // checked={obj.trans}
+            name="Gender=2"
+            checked={trans}
           />
           <label className="text_main-16px filter__checkbox-label" htmlFor="trans">Бесполый</label>
         </div>

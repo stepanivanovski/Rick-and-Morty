@@ -10,18 +10,18 @@ import { defineGender, defineStatus, defineStyle } from '../utils';
 import {
   onLoading, 
   fetchData
-} from "../store/getRequestsSlice";
+} from "../store/fetchDataSlice";
 
 const CharacterPage = ({ id }) => {
   const history = useHistory();
 
   const dispatch =useDispatch();
-  const state = useSelector(state => state.fetchData);
+  const state = useSelector(state => state.fetch);
 
   const { loading, error, character } = state
 
   useEffect(() => {
-    dispatch(fetchData("character", id))
+    dispatch(fetchData("character", {id}))
 
     return () => {
       onLoading();

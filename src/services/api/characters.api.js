@@ -10,4 +10,9 @@ const getCharacterById = async (id) => {
   return res.data
 }
 
-export { getCharacters, getCharacterById };
+const getFilteredCharacters = async (url) => {
+  const res = await request.get(`api/characters/Filter?${url}`);
+  return res.data;
+}
+
+export { getCharacters, getCharacterById, getFilteredCharacters };
