@@ -48,12 +48,18 @@ function App() {
               return <EpisodePage id={id}/>
             }
           }/>
+      <Route path="/filterChar" component={CharacterFilter}/>   
+      <Route path="/filterLoc" exact component={LocationFilter}/>   
+      <Route path="/filterLoc/:id" render={
+            (match) => {
+              const { id } = match.match.params
+              console.log(id)
+              return <TypeFilter id={id}/>
+            }
+          }/>
       <Route path='/options' exact component={OptionsPage}/>
       <Route path='/options/edit' component={EditProfilePage}/>
       <Route path='/options/name' component={ChangeNamePage}/> 
-      <Route path="/filterChar" component={CharacterFilter}/>   
-      <Route path="/filterLoc" exact component={LocationFilter}/>   
-      <Route path="/filterLoc/:type" component={TypeFilter}/>
       <Route path="/search" component={SearchPage}/>   
     </div>
   );

@@ -14,10 +14,9 @@ import {
 const CharactersPage = () => {
 
   const dispatch = useDispatch();
-  const { fetch, filter } = useSelector(state => state)
+  const { fetch, charFilter: { charFilter, checkbox, charAlphabet } } = useSelector(state => state)
   
   const { loading, error, characters } = fetch;
-  const { charFilter, checkbox, charAlphabet } = filter;
 
   useEffect(() => {
     if (!charFilter) {

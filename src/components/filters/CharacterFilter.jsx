@@ -7,18 +7,17 @@ import {
   toggleGenderCheked,
   resetCharFilter,
   setAlphabet
-} from '../../store/filterSlice';
+} from '../../store/charFilterSlice';
 
 const CharacterFilter = () => {
 
   const dispatch = useDispatch();
 
-  const { checkbox, charFilter, charAlphabet } = useSelector(state => state.filter);
+  const { checkbox, charFilter, charAlphabet } = useSelector(state => state.charFilter);
   const { status: { alive, dead, unknown}, gender: { male, female, trans }} = checkbox;
 
   const handleInput = (event) => {
     const target = event.target;
-    // console.log(target.name.slice(0, 6));
     if (target.name.slice(0, 6) === "Gender") {
 
       if (target.checked) {

@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { configure } from '@testing-library/dom';
 import { getCharacters, getCharacterById, getFilteredCharacters } from "../services/api/characters.api";
 import { getEpisodes, getEpisodeById, getFilteredEpisode } from "../services/api/episodes.api";
 import { getLocations, getLocationById, getFilteredLocations } from "../services/api/locations.api"
-import { getUrl } from '../utils'
+import { getCharUrl, getLocUrl } from '../utils'
 import { configureData } from '../utils';
 
 const resetLoading = (state) => {
@@ -82,7 +81,7 @@ export const {
 
 
 export const fetchData = (text, { id, localFilterData, removeFilterData}) => (dispatch) => {
-  const getData = (fetchFunc, actionCr, {id='', options}) => {
+  const getData = (fetchFunc, actionCr, {id='', options=[]}) => {
     dispatch(onLoading())
     fetchFunc(id)
       .then(res => {
@@ -105,10 +104,10 @@ export const fetchData = (text, { id, localFilterData, removeFilterData}) => (di
       getData(getLocationById, locationLoaded, {id: id}) 
       break;
     case "locations":
-      getData(getLocations, locationsLoaded, {options: localFilterData}) 
+      getData(getLocations, locationsLoaded, {options: [localFilterData, "name"]}) 
       break;
     case "characters":
-      getData(getCharacters,  charactersLoaded, {options: localFilterData}) 
+      getData(getCharacters,  charactersLoaded, {options: [localFilterData, "fullName"]}) 
       break;
     case "episodes":
       getData(getEpisodes,  episodesLoaded, {id: id}) 
@@ -117,11 +116,15 @@ export const fetchData = (text, { id, localFilterData, removeFilterData}) => (di
       getData(
         getFilteredCharacters, 
         charactersLoaded, 
-        {id: getUrl(removeFilterData), options: localFilterData}
+        {id: getCharUrl(removeFilterData), options: [localFilterData, "fullName"]}
       )
       break;
     case "filteredLoc":
-      getData(getFilteredLocations, locationsLoaded)
+      getData(
+        getFilteredLocations, 
+        locationsLoaded,
+        {id: getLocUrl(removeFilterData), options: [localFilterData, "name"]}
+      )
       break;
     case "filteredEpis":
       getData(getFilteredEpisode, episodeLoaded)

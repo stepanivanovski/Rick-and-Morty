@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const filterSlice = createSlice({
-  name: 'filter',
+const charFilterSlice = createSlice({
+  name: 'charFilter',
   initialState: {
     checkbox: {
       gender: {
@@ -58,7 +58,7 @@ const filterSlice = createSlice({
   }
 });
 
-const { reducer, actions } = filterSlice;
+const { reducer, actions } = charFilterSlice;
 
 export const { 
   toggleStatusCheked, 

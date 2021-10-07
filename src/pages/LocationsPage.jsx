@@ -13,22 +13,28 @@ import {
 const LocationsPage = () => {
   
   const dispatch = useDispatch();
-  const { fetch, filter } = useSelector(state => state)
+  const { fetch, locFilter } = useSelector(state => state)
   
   const { loading, error, locations} = fetch;
-  const { alphabet } = filter;
+  const { locAlphabet, type, measurement } = locFilter;
 
 
   useEffect(() => {
-    dispatch(fetchData("locations", {}));
+    if (!locFilter) {
+      dispatch(fetchData("locations", {localFilterData: locAlphabet}));
+    } else {
+      dispatch(fetchData("filteredLoc", {removeFilterData: { type, measurement }, localFilterData: locAlphabet}))
+    }
     return dispatch(onLoading());
   },[]) 
   
-  const content = (loading ) ? 
+  const content = (loading) ? 
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так, проверьте подключение к интернету" 
       url="not-found.png"/>  : 
+    (locations.length === 0) ? 
+    <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :  
     <LocationCardList locations={locations}/> 
   
   return (

@@ -11,7 +11,7 @@ const getLocationById = async (id) => {
 }
 
 const getFilteredLocations = async (url) => {
-  const res = await request.get(`api/Locations/Filter?Type=&Measurements=`);
+  const res = await request.get(`api/Locations/Filter?${url}`);
   return res.data;
 }
 

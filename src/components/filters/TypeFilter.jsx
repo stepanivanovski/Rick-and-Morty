@@ -1,5 +1,10 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import GoBackButton from '../GoBackButton';
+import {
+  setLocType,
+  setLocMeasurement
+} from "../../store/locFilterSlice";
 
 const types = [
   'Мир',
@@ -37,10 +42,19 @@ const InputRadio = ({ label, id, handleInput, className }) => {
   )
 }
 
-const TypeFilter = ({ type }) => {
+const TypeFilter = ({ id }) => {
+  console.log(id);
+  const dispatch = useDispatch();
+  const {type, measurement} = useSelector(state => state.locFilter);
+
+  const data = (id === "type")? types : (id === "measurement")? measurements : [];
 
   const handleInput = (e) => {
-    console.log(e.target.value);
+    if (id === "type") {
+      dispatch(setLocType(e.target.value))
+    } else if (id === "measurement") {
+      dispatch(setLocMeasurement(e.target.value))
+    }
   }
 
   return (
@@ -48,13 +62,11 @@ const TypeFilter = ({ type }) => {
       <div className="filter__header">
         <GoBackButton text="Выберите тип" className="filter__goBack"/>
       </div>
-      <InputRadio 
-          className="filter__type-title"
-          label="Не выбрано" 
-          id="filter-no" 
-          handleInput={handleInput}/>
+      <div className="filter__type-title">
+        {((id === "type")? type : (id === "measurement")? measurement : null) || "Не выбрано"}          
+      </div>         
       <hr/>
-      {types.map((item, i) => 
+      {data.map((item, i) => 
         <InputRadio
           className="filter__radio-wrap" 
           label={item} 

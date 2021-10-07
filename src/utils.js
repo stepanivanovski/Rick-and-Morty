@@ -40,7 +40,7 @@ const toggleModal = (modal, setModal) => {
   setHidden(modal)
 }
 
-const getUrl = ({ gender, status }) => {
+const getCharUrl = ({ gender, status }) => {
   const statusStr = "Status=0&Status=1&Status=2";
   const genderStr = "Gender=0&Gender=1&Gender=2";
 
@@ -53,7 +53,17 @@ const getUrl = ({ gender, status }) => {
   return s + "&" + g
 }
 
+const getLocUrl = ({ type, measurement }) => {
+  const m = (measurement) ? `&Measurements=${measurement}`:"";
+  const t = (type) ? `Type=${type}`: "";
+  
+  return t + m
+}
+
 const configureData = (data, options) => {
+
+  const [alphabet, value] = options;
+
   const sortDataByName = () => {
 
     if (data.legth === 0 || !Array.isArray(data)) {
@@ -62,9 +72,10 @@ const configureData = (data, options) => {
     }
   
     return data.sort((a, b) => {
-      let nameA = a["fullName"].trim();
-      let nameB = b["fullName"].trim();
-      if (options === "abc") {
+      let nameA = a[value].trim();
+      let nameB = b[value].trim();
+
+      if (alphabet === "abc") {
         if (nameA > nameB) return 1;
         if (nameB > nameA) return -1;
       } else {
@@ -75,7 +86,7 @@ const configureData = (data, options) => {
     })
   }
 
-  if (options) {
+  if (alphabet) {
     sortDataByName()
   }
 
@@ -88,6 +99,7 @@ export {
   defineStyle,
   convertDate,
   toggleModal,
-  getUrl,
+  getCharUrl,
+  getLocUrl,
   configureData
 } 
