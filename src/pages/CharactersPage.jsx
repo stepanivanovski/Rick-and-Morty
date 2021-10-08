@@ -12,7 +12,6 @@ import {
 } from "../store/fetchDataSlice";
 
 const CharactersPage = () => {
-
   const dispatch = useDispatch();
   const { fetch, charFilter: { charFilter, checkbox, charAlphabet } } = useSelector(state => state)
   
@@ -40,15 +39,16 @@ const CharactersPage = () => {
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
     (characters.length === 0) ? 
     <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :
-    <CharacterCardList characters={characters}/> 
+    <CharacterCardList data={characters}/> 
      
 
   return (
     <div className="characters container">
       <div className="characters__header">
         <SearchPanel 
+          path="./searchChar"
           filter
-          path="/filterChar"
+          filterPath="/filterChar"
           placeholder="Найти персонажа"/>
         <div className="characters__wrapper">
           <div className="characters__total">

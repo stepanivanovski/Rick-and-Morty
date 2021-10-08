@@ -2,12 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import LocationCard from './LocationCard'
 
-const LocationCardList = ({ locations }) => {
+const LocationCardList = ({ data }) => {
   const history = useHistory();
 
   return (
     <ul className="locations__list">
-       {locations.map(item => {
+       {data.map(item => {
         return (
           <LocationCard
             onItemSelected = {(id) => history.push(`/locations/${id}`)}  

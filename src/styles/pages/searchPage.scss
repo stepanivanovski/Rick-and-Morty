@@ -1,0 +1,24 @@
+.search {
+  input.search__input {
+    position: static;
+    opacity: 1;
+    z-index: 1;
+    padding: 0;
+    width: calc(100% - 100px);
+    outline: none;
+    border: none;
+    background-color: $main-bg-color;
+    color: $main-text-color;
+  }
+
+  &__header {
+    margin: 0 -16px 24px;
+    padding: 0 16px;
+    height: 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:$main-bg-color;
+    border-bottom: 2px solid $bg-input-color;
+  }
+}

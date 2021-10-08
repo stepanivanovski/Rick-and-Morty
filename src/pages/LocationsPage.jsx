@@ -35,13 +35,14 @@ const LocationsPage = () => {
       url="not-found.png"/>  : 
     (locations.length === 0) ? 
     <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :  
-    <LocationCardList locations={locations}/> 
+    <LocationCardList data={locations}/> 
   
   return (
     <div className="locations">
       <div className="locations__header">
-        <SearchPanel 
-          path="/filterLoc"
+        <SearchPanel
+          path="./searchLoc"
+          filterPath="/filterLoc"
           placeholder={"Найти локацию"}
           filter/>
         <div className="locations__total">

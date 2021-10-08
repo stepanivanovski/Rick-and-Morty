@@ -2,12 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import EpisodeCard from './EpisodeCard';
 
-const EpisodeCardList = ({ episodes, withArrow=null }) => {
+const EpisodeCardList = ({ data, withArrow=null }) => {
   const history = useHistory();
 
   return (
     <ul className="episodes__list">
-      {episodes.map(item => {
+      {data.map(item => {
         return (
           <EpisodeCard
             onItemSelected = {(id) => history.push(`/episode/${id}`)}  

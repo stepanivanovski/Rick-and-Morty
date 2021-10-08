@@ -77,7 +77,7 @@ const View = ({ episode }) => {
         <div className="text_main-14px">{convertDate(premiere)}</div>
         <hr/>
         <h3 className="text_main-20px">Персонажи</h3>
-        <CharacterCardList characters={characters} withArrow/>
+        <CharacterCardList data={characters} withArrow/>
       </div>
     </div>
   ) 

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getCharacters, getCharacterById, getFilteredCharacters } from "../services/api/characters.api";
 import { getEpisodes, getEpisodeById, getFilteredEpisode } from "../services/api/episodes.api";
 import { getLocations, getLocationById, getFilteredLocations } from "../services/api/locations.api"
-import { getCharUrl, getLocUrl } from '../utils'
+import { getCharUrl, getLocUrl, getEpisUrl } from '../utils'
 import { configureData } from '../utils';
 
 const resetLoading = (state) => {
@@ -80,13 +80,13 @@ export const {
 } = actions;
 
 
-export const fetchData = (text, { id, localFilterData, removeFilterData}) => (dispatch) => {
-  const getData = (fetchFunc, actionCr, {id='', options=[]}) => {
+export const fetchData = (text, { id, localFilterData, removeFilterData }, nameFilter="") => (dispatch) => {
+  const getData = (fetchFunc, actionCreator, {id='', options=[]}) => {
     dispatch(onLoading())
     fetchFunc(id)
       .then(res => {
         const adjustedData = configureData(res, options);
-        dispatch(actionCr(adjustedData));
+        dispatch(actionCreator(adjustedData));
       })
       .catch(error => {
         dispatch(onError())
@@ -116,18 +116,22 @@ export const fetchData = (text, { id, localFilterData, removeFilterData}) => (di
       getData(
         getFilteredCharacters, 
         charactersLoaded, 
-        {id: getCharUrl(removeFilterData), options: [localFilterData, "fullName"]}
+        {id: getCharUrl(removeFilterData, nameFilter), options: [localFilterData, "fullName"]}
       )
       break;
     case "filteredLoc":
       getData(
         getFilteredLocations, 
         locationsLoaded,
-        {id: getLocUrl(removeFilterData), options: [localFilterData, "name"]}
+        {id: getLocUrl(removeFilterData, nameFilter), options: [localFilterData, "name"]}
       )
       break;
     case "filteredEpis":
-      getData(getFilteredEpisode, episodeLoaded)
+      getData(
+        getFilteredEpisode, 
+        episodesLoaded,
+        { id: nameFilter }
+      )
       break;    
     default:
       console.log("упс");

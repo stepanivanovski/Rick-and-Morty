@@ -103,7 +103,7 @@ const View = ({character, history}) => {
         <h3 className="text_main-20px">Эпизоды</h3>
         <div className="text_second-12px">Все эпизоды</div>
       </div>
-      <EpisodeCardList episodes={episodes} withArrow/>
+      <EpisodeCardList data={episodes} withArrow/>
     </div>
   )
 }

@@ -37,7 +37,7 @@ const EpisodesPage = () => {
 
   const [season, setSeason] = useState(1)
 
-  const { loading, error, episodes} = state;
+  const { loading, error, episodes } = state;
 
   useEffect(() => {
     dispatch(fetchData("episodes", {id: season}));
@@ -55,12 +55,13 @@ const EpisodesPage = () => {
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> : 
-    <EpisodeCardList episodes={episodes}/>;
+    <EpisodeCardList data={episodes}/>;
     
   return (
     <div className="episodes container">
       <div className="episodes__header">
         <SearchPanel
+          path="./searchEpis"
           placeholder="Найти эпизод"
         />
         <SeasonButtons 

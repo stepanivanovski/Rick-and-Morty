@@ -10,8 +10,9 @@ const getEpisodeById = async (id) => {
   return res.data
 }
 
-const getFilteredEpisode = async (id) => {
-  const res = await request.get(`api/Episodes/GetByName?Name=%D0%9F%D0%B8%D0%BB%D0%BE%D1%82`);
+const getFilteredEpisode = async (url) => {
+  const res = await request.get(`api/Episodes/GetByName?Name=${url}`);
+  console.log(res.data)
   return res.data
 }
 

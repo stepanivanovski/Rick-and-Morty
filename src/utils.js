@@ -40,24 +40,32 @@ const toggleModal = (modal, setModal) => {
   setHidden(modal)
 }
 
-const getCharUrl = ({ gender, status }) => {
+const getCharUrl = ({ gender, status }, nameFilter) => {
   const statusStr = "Status=0&Status=1&Status=2";
   const genderStr = "Gender=0&Gender=1&Gender=2";
 
   const genderArr= Object.values(gender).filter(item => item !== false);
   const statusArr = Object.values(status).filter(item => item !== false);
 
+  const name = (nameFilter) ? `Name=${nameFilter}&` : "";
   const s = (statusArr.length === 0) ? statusStr : statusArr.join("&");
   const g = (genderArr.length === 0) ? genderStr : genderArr.join("&");
 
-  return s + "&" + g
+  return name + s + "&" + g
 }
 
-const getLocUrl = ({ type, measurement }) => {
+const getLocUrl = ({ type, measurement }, nameFilter) => {
+  const name = (nameFilter) ? `Name=${nameFilter}&` : "";
   const m = (measurement) ? `&Measurements=${measurement}`:"";
   const t = (type) ? `Type=${type}`: "";
   
-  return t + m
+  return name + t + m
+}
+
+const getEpisUrl = (nameFilter) => {
+  const name = (nameFilter) ? `Name=${nameFilter}` : "";
+
+  return name;
 }
 
 const configureData = (data, options) => {
@@ -101,5 +109,6 @@ export {
   toggleModal,
   getCharUrl,
   getLocUrl,
+  getEpisUrl,
   configureData
 } 

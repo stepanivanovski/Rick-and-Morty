@@ -60,7 +60,9 @@ function App() {
       <Route path='/options' exact component={OptionsPage}/>
       <Route path='/options/edit' component={EditProfilePage}/>
       <Route path='/options/name' component={ChangeNamePage}/> 
-      <Route path="/search" component={SearchPage}/>   
+      <Route path="/searchChar" component={SearchPage}/> 
+      <Route path="/searchLoc" component={SearchPage}/>   
+      <Route path="/searchEpis" component={SearchPage}/>   
     </div>
   );
 } 
