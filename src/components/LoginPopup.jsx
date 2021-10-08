@@ -1,13 +1,23 @@
 import React from 'react';
 import Button from './base/Button';
+import { toggleModal } from '../utils';
 
-const LoginPopup = ({ active, set }) => {
+const LoginPopup = ({ modal, setModal, set }) => {
+  
+  const onModal = () => {
+    toggleModal(modal, setModal)
+  }
+
   return (
-    <div class="modal">
-      <div class="message"> 
+    <div
+      onClick={onModal}
+      className="modal">
+      <div
+        onClick={(e) => e.stopPropagation()} 
+        className="message"> 
         <h3 className="message__title">Ошибка</h3>
-        <p className="message__text">Введен  неверные логин или пароль</p>
-        <Button text="Ок" className="btn_transparent"/>
+        <p className="message__text">{ set }</p>
+        <Button onModal={onModal} text="Ок" className="btn_transparent"/>
       </div>
     </div>
   );

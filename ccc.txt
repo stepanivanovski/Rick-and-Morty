@@ -1,26 +1,19 @@
-initState = {
-  characters: [],
-  locations: [],
-  episodes: [],
-  character: {},
-  location:{},
-  loading: true,
-  error: false,
-  состояние глаза: true/false
-  состояние кнопки: "list"/"table" в зависимости от состояния меняются стили у компонентов
-  состояние 
+правильный логин неправильный пароль {
+  ошибка {
+    Message: "Wrong login or password"
+    StatusCode: 403
+  }
+}
+неправилльный логин {
+  ошибка {
+    Message: "User not found"
+    StatusCode: 404
+  }  
 }
 
-character {
-  flex-direction: column
-}
+"88bee6f9-6ccb-4e40-aa59-7662206359c3";
+"88bee6f9-6ccb-4e40-aa59-7662206359c3";
 
-characters__img {
-  flex-shrink: 0;
-  width: 120;
-  height: 120;
-}
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoid2ViQG1haWwucnUiLCJqdGkiOiI4NTY2MmJiNy1lZjg2LTQzMjctOGFiYS03MmU2N2M4YzAyYmIiLCJVc2VySWQiOiI3NWEyNmU5Ny1jNTZjLTQ0NGUtODJjNS0xNzE1YTdmY2FjNTEiLCJleHAiOjE2MzM2OTY5NjUsImlzcyI6IkF1dGhTZXJ2ZXIiLCJhdWQiOiJSZXNvdXJjZVNlcnZlciJ9.DImR57dDyXuGS5o7jRbARnMqC_3KmiWtAeLrnwxtPO8";
 
-Character__text {
-  text-align: center
-}
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoid2ViQG1haWwucnUiLCJqdGkiOiI1MGE1YzI4Yi0xZGZkLTQwNzMtODFjYy1lOWFiMGQwZGRiNTUiLCJVc2VySWQiOiI3NWEyNmU5Ny1jNTZjLTQ0NGUtODJjNS0xNzE1YTdmY2FjNTEiLCJleHAiOjE2MzM2OTcwNzYsImlzcyI6IkF1dGhTZXJ2ZXIiLCJhdWQiOiJSZXNvdXJjZVNlcnZlciJ9.AfO1i23TZbGLB7wCzEVa8LCepZczZQ-2SLfff-8Ru9E"

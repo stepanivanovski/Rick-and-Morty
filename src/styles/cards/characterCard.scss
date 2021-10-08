@@ -5,11 +5,18 @@
   width: 100%;
   min-height: 74px;
   cursor: pointer;
+  &_column {
+    flex-direction: column;
+    width: 50%;
+  }
   &__text {
     display: flex;
     width: calc(100% - 116px);
     justify-content: center;
     flex-direction: column;
+    &_column{
+      text-align: center;
+    }
   }
   &__img {
     margin-right: 18px;
@@ -17,6 +24,12 @@
     flex-basis: 74px;
     border-radius: 100%;
     background: center center/cover no-repeat;
+    &_column {
+      margin: 0 0 18px;
+      flex-basis: 120px;
+      width: 120px;
+      height: 120px;
+    }
   }
   &__status {
     margin: 0;
@@ -52,3 +65,20 @@
     stroke: $main-text-color;
   }
 }
+
+
+@media (min-width: 768px) {
+  .character_column {
+    width: 33%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .character_column {
+    width: 25%;
+  }
+}
+
+
+
+

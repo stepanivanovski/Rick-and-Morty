@@ -1,5 +1,6 @@
-import { Route } from 'react-router-dom';
-import { useSelector } from 'react-redux'; 
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import ProtectedRoute from './routes/ProtectedRoute'; 
 import LoginPage from './pages/LoginPage'; 
 import RegistrationPage from './pages/RegistrationPage';
 import CharactersPage from './pages/CharactersPage'
@@ -15,6 +16,7 @@ import CharacterFilter from './components/filters/CharacterFilter'
 import LocationFilter from './components/filters/LocationFilter';
 import TypeFilter from './components/filters/TypeFilter';
 import SearchPage from './pages/SearchPage';
+import NotFound from './components/NotFound';
 
 
 function App() {
@@ -22,47 +24,28 @@ function App() {
 
   return (
     <div className={`App ${themeClass}`}>
-      <Route path='/login' component={LoginPage}/>  
-      <Route path='/registration' component={RegistrationPage}/>   
-      <Route path='/characters' exact component={CharactersPage}/>
-      <Route path="/characters/:id" render={
-                  (match) => {
-                    const { id } = match.match.params
-                    console.log(id)
-                    return <CharacterPage id={id}/>
-                  }
-                }/>
-      <Route path='/locations' exact component={LocationsPage}/>
-      <Route path="/locations/:id" render={
-            (match) => {
-              const { id } = match.match.params
-              console.log(id)
-              return <LocationPage id={id}/>
-            }
-          }/>
-      <Route path='/episodes' component={EpisodesPage}/>
-      <Route path="/episode/:id" render={
-            (match) => {
-              const { id } = match.match.params
-              console.log(id)
-              return <EpisodePage id={id}/>
-            }
-          }/>
-      <Route path="/filterChar" component={CharacterFilter}/>   
-      <Route path="/filterLoc" exact component={LocationFilter}/>   
-      <Route path="/filterLoc/:id" render={
-            (match) => {
-              const { id } = match.match.params
-              console.log(id)
-              return <TypeFilter id={id}/>
-            }
-          }/>
-      <Route path='/options' exact component={OptionsPage}/>
-      <Route path='/options/edit' component={EditProfilePage}/>
-      <Route path='/options/name' component={ChangeNamePage}/> 
-      <Route path="/searchChar" component={SearchPage}/> 
-      <Route path="/searchLoc" component={SearchPage}/>   
-      <Route path="/searchEpis" component={SearchPage}/>   
+      <Switch>
+        <Redirect exact from="/" to="/login"/>
+        <Route path='/login' component={LoginPage}/>  
+        <Route path='/registration' component={RegistrationPage}/>  
+        <ProtectedRoute path='/characters' exact component={CharactersPage}/> 
+        <ProtectedRoute path="/characters/:id" render={({match}) =><CharacterPage id={match.params.id}/>}/>
+        <ProtectedRoute path='/locations' exact component={LocationsPage}/>
+        <ProtectedRoute path="/locations/:id" render={({match}) =><LocationPage id={match.params.id}/>}/>
+        <ProtectedRoute path='/episodes' component={EpisodesPage}/>
+        <ProtectedRoute path="/episode/:id" render={({match}) =><EpisodePage id={match.params.id}/>}/>
+        <ProtectedRoute path="/filterChar" component={CharacterFilter}/>   
+        <ProtectedRoute path="/filterLoc" exact component={LocationFilter}/>   
+        <ProtectedRoute path="/filterLoc/type" render={() => <TypeFilter id={"type"}/>}/>
+        <ProtectedRoute path="/filterLoc/measurement" render={() => <TypeFilter id={"measurement"}/>}/>
+        <ProtectedRoute path='/options' exact component={OptionsPage}/>
+        <ProtectedRoute path='/options/edit' component={EditProfilePage}/>
+        <ProtectedRoute path="/searchChar" component={SearchPage}/> 
+        <ProtectedRoute path='/options/name' component={ChangeNamePage}/> 
+        <ProtectedRoute path="/searchLoc" component={SearchPage}/>   
+        <ProtectedRoute path="/searchEpis" component={SearchPage}/> 
+        <ProtectedRoute render={() => <NotFound url="no-character.png" text="Такой страницы не существует"/>}/>  
+      </Switch> 
     </div>
   );
 } 

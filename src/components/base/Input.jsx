@@ -1,8 +1,17 @@
 import React from 'react';
-const Input = ({ Icon, title, type, id, Eye, register, errors, message, pattern }) => {
-  const showPassword = (e) => {
-    e.preventDefault();
-  }
+
+const Input = ({ 
+  Icon, 
+  title, 
+  type, 
+  id, 
+  Eye, 
+  register, 
+  errors, 
+  message, 
+  pattern,
+  showPassword,
+ }) => {
 
   const icon = Icon ? 
     <Icon className="input__icon"/> :
@@ -24,7 +33,7 @@ const Input = ({ Icon, title, type, id, Eye, register, errors, message, pattern 
           <div className="input__icon-wrapper">
             {icon}
             <input 
-              type={type}
+              type={type} 
               {...register(id, 
                 {
                   required: "Поле должно быть заполнено",

@@ -14,6 +14,7 @@ import {
 const CharactersPage = () => {
   const dispatch = useDispatch();
   const { fetch, charFilter: { charFilter, checkbox, charAlphabet } } = useSelector(state => state)
+  const [view, toggleView] = useState(true);
   
   const { loading, error, characters } = fetch;
 
@@ -27,8 +28,6 @@ const CharactersPage = () => {
     return dispatch(onLoading());
   },[]) 
  
-  const [view, toggleView] = useState(true);
-
   const showViewIcon = () => {
     return (view) ? <IconListView/> : <IconTableView/>
   }
@@ -39,9 +38,8 @@ const CharactersPage = () => {
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
     (characters.length === 0) ? 
     <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :
-    <CharacterCardList data={characters}/> 
+    <CharacterCardList columnView={view} data={characters}/> 
      
-
   return (
     <div className="characters container">
       <div className="characters__header">
