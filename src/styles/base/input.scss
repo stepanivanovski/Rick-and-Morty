@@ -12,6 +12,7 @@
   }
   &__icon-wrapper {
     display: flex;
+    flex-grow: 1;
     align-items: center;
   }
   &__icon {
@@ -24,6 +25,7 @@
     background-color: transparent;
   }
   input {
+    width: 100%;
     border: none;
     outline: none;
     background-color: $bg-input-color;

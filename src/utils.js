@@ -27,7 +27,7 @@ const convertDate = (premiere) => {
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
 }
 
-const toggleModal = (modal, setModal) => {
+const toggleModal = (modal, setModal=()=>{}) => {
   const setHidden = () => {
     if (!modal) {
       document.body.style.overflow = "hidden";
@@ -38,6 +38,14 @@ const toggleModal = (modal, setModal) => {
 
   setModal(!modal);
   setHidden(modal)
+}
+
+const showImg = (avatar) => {
+  if (avatar === "null") {
+    return "http://173.249.20.184:7001/images/Морти_Смит_001.jpg"
+  } else {
+    return avatar
+  }
 }
 
 const getCharUrl = ({ gender, status }, nameFilter) => {
@@ -110,5 +118,6 @@ export {
   getCharUrl,
   getLocUrl,
   getEpisUrl,
-  configureData
+  configureData,
+  showImg
 } 

@@ -1,45 +1,43 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router';
-import { userLogin } from '../services/api';
 import Input from '../components/base/Input';
 import Button from '../components/base/Button';
 import { IconUser, IconPassword, IconEye } from '../icons';
 import { Link } from 'react-router-dom';
-import LoginPopup from '../components/LoginPopup';
-import { toggleModal } from '../utils';
-import { setIsAuth } from '../store/authSlice';
+import Popup from '../components/Popup';
+import { 
+  userLoginThunk,
+  showLoginModal
+ } from '../store/authSlice';
 
 
 const LoginPage = () => {
-  const { register, handleSubmit, formState: {errors} } = useForm();
+  const { register, handleSubmit, formState: {errors}, reset, watch } = useForm();
+  const watchLogin = watch("userName");
 
-  const [ visibility, changeVisibility] = useState(false);
-  const [ modal, setModal ] = useState(false)
-  const dispatch = useDispatch();
   const history = useHistory();
+  const [ visibility, changeVisibility] = useState(false);
+
+  const dispatch = useDispatch();
+  const { loginModal, loginMessage } = useSelector(state => state.auth)
 
   const showPassword = (e) => {
     e.preventDefault();
     changeVisibility(!visibility)
   }
 
+  const resetForm = () => {
+    reset({
+      userName:"",
+      password:""
+    })
+  }
+
   const onSubmit = (data) => {
     const request = JSON.stringify(data);
-    userLogin(request)
-      .then(res => {
-        dispatch(setIsAuth(true))
-        history.push('./characters')
-        console.log(res)
-      })
-      .catch(error => {
-        if(error.message === "User is not found") {
-          console.dir(error);
-          toggleModal(modal, setModal)
-        }
-      }
-    );
+    dispatch(userLoginThunk(request, history, resetForm, watchLogin));
   }
 
   return (
@@ -86,8 +84,8 @@ const LoginPage = () => {
         </Link>
       </div>
       {
-        (modal) ? 
-          <LoginPopup modal={modal} setModal={setModal} set="Неверный логин или пароль"/> : 
+        (loginModal) ? 
+          <Popup title={"Ошибка"} set={loginMessage} actionCreator={showLoginModal}/> : 
           null
       }
   </div>

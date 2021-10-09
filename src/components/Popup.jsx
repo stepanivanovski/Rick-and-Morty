@@ -1,11 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Button from './base/Button';
-import { toggleModal } from '../utils';
 
-const LoginPopup = ({ modal, setModal, set }) => {
+const Popup = ({ title, set, actionCreator }) => {
+  const dispatch = useDispatch();
   
   const onModal = () => {
-    toggleModal(modal, setModal)
+    dispatch(actionCreator([]))
   }
 
   return (
@@ -15,7 +16,7 @@ const LoginPopup = ({ modal, setModal, set }) => {
       <div
         onClick={(e) => e.stopPropagation()} 
         className="message"> 
-        <h3 className="message__title">Ошибка</h3>
+        <h3 className="message__title">{title}</h3>
         <p className="message__text">{ set }</p>
         <Button onModal={onModal} text="Ок" className="btn_transparent"/>
       </div>
@@ -23,4 +24,4 @@ const LoginPopup = ({ modal, setModal, set }) => {
   );
 };
 
-export default LoginPopup;
+export default Popup;

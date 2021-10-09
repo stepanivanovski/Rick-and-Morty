@@ -5,22 +5,26 @@ import { IconMoreThen, IconPaints } from '../icons';
 import GoBackButton from '../components/GoBackButton';
 import NavBar from '../components/NavBar';
 import ThemeChanging from '../components/ThemeChanging';
-import { toggleModal } from '../utils';
+import { toggleModal, showImg } from '../utils';
 
 const OptionsPage = () => {
   const [ modal, setModal ] = useState(false)
+
+  const login = sessionStorage.getItem('login')
+  const avatar = sessionStorage.getItem('avatar')
+  const fullName = sessionStorage.getItem('fullName')
   
   return (
     <div className="options container options_hidden">
       <GoBackButton text="Настройки" className="options__goBack"/>
       <div className="options__user">
         <div 
-          style={{backgroundImage:`url("http://173.249.20.184:7001/images/Пилот_001.jpg")`}}
+          style={{backgroundImage:`url(${showImg(avatar)})`}}
           className="options__img">
         </div>
         <div className="options__user-info">
-          <div className="text_main-16px">Oleg Belotserkovsky</div>
-          <div className="text_second-14px">Rick</div>
+          <div className="text_main-16px">{`${fullName}`}</div>
+          <div className="text_second-14px">{login}</div>
         </div>
       </div>
       <Link to="options/edit">

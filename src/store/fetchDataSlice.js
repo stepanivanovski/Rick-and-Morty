@@ -5,7 +5,7 @@ import { getLocations, getLocationById, getFilteredLocations } from "../services
 import { getCharUrl, getLocUrl, getEpisUrl } from '../utils'
 import { configureData } from '../utils';
 
-const resetLoading = (state) => {
+export const resetLoading = (state) => {
   state.loading = false;
   state.error = false;
 }
@@ -48,15 +48,17 @@ const fetchDataSlice = createSlice({
       state.episode = action.payload;
       resetLoading(state)
     },
-    onLoading(state) {
-      state.loading = true;
+    resetAllData(state) {
       state.characters = [];
       state.episodes = [];
       state.locations = [];
       state.character = {};
       state.location = {};
       state.episode = {};
-      state.error = false; 
+    },
+    onLoading(state) {
+      state.loading = true;
+      state.error = false
     },
     onError(state) {
       state.error = true;
@@ -76,12 +78,14 @@ export const {
   locationLoaded,
   episodeLoaded,
   onLoading, 
-  onError 
+  onError,
+  resetAllData 
 } = actions;
 
 
 export const fetchData = (text, { id, localFilterData, removeFilterData }, nameFilter="") => (dispatch) => {
   const getData = (fetchFunc, actionCreator, {id='', options=[]}) => {
+    dispatch(resetAllData())
     dispatch(onLoading())
     fetchFunc(id)
       .then(res => {

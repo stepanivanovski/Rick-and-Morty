@@ -25,7 +25,7 @@ function App() {
   return (
     <div className={`App ${themeClass}`}>
       <Switch>
-        <Redirect exact from="/" to="/login"/>
+        <Redirect exact from="/" to="/characters"/>
         <Route path='/login' component={LoginPage}/>  
         <Route path='/registration' component={RegistrationPage}/>  
         <ProtectedRoute path='/characters' exact component={CharactersPage}/> 
