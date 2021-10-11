@@ -12,33 +12,36 @@ const getProfile = async () => {
 }
 
 const userLogin = async (data) => {
-  const res = await request.post(`${apiVersion}/${route}/Login`, data);
-
-  if (res?.StatusCode === 404 || res?.StatusCode === 403) {
-    throw new Error("User is not found");
-  }
+  const res = await request.post(`${apiVersion}/${route}/Login`, data, "headers");
   
   return res;
 };
 
 const createProfile = async (data) => {
-  const res = await request.post(`${apiVersion}/${route}/Register`, data);
-
-  if (res?.message !== "User Created Successfully") {
-    throw new Error("Error in createProfile");
-  }
+  const res = await request.post(`${apiVersion}/${route}/Register`, data, "headers");
 
   return res;
 }
 
 const updateProfile = async (data) => {
-  const res = await request.put(`${apiVersion}/${route}/UpdateProfile`, data)
-
-  if (res?.message !== "User updated successfully") {
-    throw new Error("Error in updateProfile");
-  }
+  const res = await request.put(`${apiVersion}/${route}/UpdateProfile`, data, "headers")
 
   return res;
 }
 
-export { getProfile, updateProfile, createProfile, userLogin };
+const updateAvatar = async (files) => {
+  console.log(files);
+  const file = files[0];
+
+  const formData = new FormData();
+
+  formData.append('file', file);
+
+  console.log(formData);
+
+  const res = await request.post(`${apiVersion}/ImageUpload/Upload`, formData)
+
+  return res;
+}
+
+export { getProfile, updateProfile, createProfile, userLogin, updateAvatar };

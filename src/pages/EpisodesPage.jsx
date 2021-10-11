@@ -16,7 +16,7 @@ const SeasonButtons = ({ setSeason, setBtnClass, onLoading }) => {
     <ul className="episodes__wrapper">
       {[...Array(4)].map((item, i) => {
         return (
-          <li className="episodes__season">
+          <li className="episodes__season" key={i}>
             <button
               onClick={() => {
                 setSeason(i + 1)
@@ -50,6 +50,7 @@ const EpisodesPage = () => {
     }
     return "episodes__button episodes__button_active"
   }
+
 
   const content = (loading) ? 
     <Spinner/> : 

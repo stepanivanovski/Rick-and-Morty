@@ -36,10 +36,17 @@ const CharacterPage = ({ id }) => {
 
   return (
     <div className="char-page">
-      <div className="char-page__header"
-        style={{backgroundImage:`url(${character?.imageName})`}}>
+      <div className="char-page__header">
+        <div className="char-page__header-img">
+          {(character?.fullName) ?
+            <img
+              src={character?.imageName} 
+              alt={character?.fullName}/> :
+              null
+          }    
+        </div>
         <GoBackButton className="char-page__goBack"/>
-        {(!loading) ? 
+        {(character?.fullName) ? 
           <div 
             className="char-page__avatar"
             style={{backgroundImage:`url(${character?.imageName})`}}>

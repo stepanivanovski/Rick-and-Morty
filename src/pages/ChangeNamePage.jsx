@@ -16,8 +16,8 @@ const ChangeNamePage = () => {
 
   const dispatch = useDispatch();
   const { updModal, updMessage: [mesTitle, mesText] } = useSelector(state => state.auth)
+
   const userId = sessionStorage.getItem("userId")
-  console.log(userId);
 
   const onSubmit = (data) => {
     const request = {

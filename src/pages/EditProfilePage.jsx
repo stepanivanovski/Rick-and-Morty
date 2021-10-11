@@ -1,16 +1,22 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import GoBackButton from '../components/GoBackButton';
 import { IconMoreThen } from '../icons';
 import { showImg } from '../utils';
+import { updateAvatarThunk } from '../store/authSlice';
 
 
 const EditProfilePage = () => {
+  const dispatch = useDispatch();
 
-   
   const login = sessionStorage.getItem('login')
   const avatar = sessionStorage.getItem('avatar')
   const fullName = sessionStorage.getItem('fullName')
+
+  const handleInput = (e) => {
+    dispatch(updateAvatarThunk(e.target.files));
+  }
 
   return (
     <div className="options container">
@@ -20,13 +26,20 @@ const EditProfilePage = () => {
         style={{backgroundImage:`url(${showImg(avatar)})`}}
         className="options__img options__img_edit-p">
       </div>
-      <div className="options__link">
+
+      <form>
+        <div className="options__link">
         <label htmlFor="input-file">
           Изменить фото
         </label>
-        <input id="input-file" type="file" accept="image/x-png,image/gif,image/jpeg"/>
+        <input 
+          onChange={handleInput}
+          id="input-file" 
+          type="file" 
+          accept="image/x-png,image/gif,image/jpeg"/>
       </div>
-
+      </form>
+      
     </div>
     <h3 className="options__subtitle text_caption">Профиль</h3>
     <Link to="/options/name">

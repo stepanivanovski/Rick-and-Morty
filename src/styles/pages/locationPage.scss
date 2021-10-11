@@ -1,10 +1,26 @@
 .loc-page {
   position: relative;
   &__header {
+    position: relative;
     padding: 20px 16px 0;
     height: 300px;
-    background-color: $second-bg-color!important;
-    background: center center/cover no-repeat;
+    background-color: rgba(0,0,0,.9) !important;
+    &-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      overflow: hidden;
+      filter: brightness(40%);
+      img {
+        min-width: 100%;
+        min-height: 100%;
+      }
+    }
   }
   &__content {
     position: absolute;

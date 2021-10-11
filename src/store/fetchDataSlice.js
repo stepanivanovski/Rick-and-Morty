@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getCharacters, getCharacterById, getFilteredCharacters } from "../services/api/characters.api";
 import { getEpisodes, getEpisodeById, getFilteredEpisode } from "../services/api/episodes.api";
 import { getLocations, getLocationById, getFilteredLocations } from "../services/api/locations.api"
-import { getCharUrl, getLocUrl, getEpisUrl } from '../utils'
+import { getCharUrl, getLocUrl } from '../utils'
 import { configureData } from '../utils';
 
 export const resetLoading = (state) => {
@@ -13,9 +13,9 @@ export const resetLoading = (state) => {
 const fetchDataSlice = createSlice({
   name: 'request',
   initialState: {
-    characters: [],
+    characters: null,
     episodes: [],
-    locations: [],
+    locations: null,
     character: {},
     location: {},
     episode: {},
@@ -33,7 +33,13 @@ const fetchDataSlice = createSlice({
       resetLoading(state)
     },
     episodesLoaded(state, action) {
-      state.episodes = action.payload;
+      state.episodes = action.payload.sort((a, b) => {
+        let seriesA = a["series"];
+        let seriesB = b["series"];
+        if (seriesA > seriesB) return 1;
+        if (seriesB > seriesA) return -1;
+        return 0
+        } );
       resetLoading(state)
     },
     characterLoaded(state, action) {
@@ -49,9 +55,9 @@ const fetchDataSlice = createSlice({
       resetLoading(state)
     },
     resetAllData(state) {
-      state.characters = [];
+      state.characters = null;
       state.episodes = [];
-      state.locations = [];
+      state.locations = null;
       state.character = {};
       state.location = {};
       state.episode = {};
@@ -66,7 +72,6 @@ const fetchDataSlice = createSlice({
     },
   }
 });
-
 
 const { reducer, actions } = fetchDataSlice;
 

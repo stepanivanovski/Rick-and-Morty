@@ -25,7 +25,7 @@ const CharactersPage = () => {
       dispatch(fetchData("filteredChar", {removeFilterData: checkbox, localFilterData: charAlphabet}))
     }
     
-    return dispatch(onLoading());
+    return () => dispatch(onLoading());
   },[]) 
  
   const showViewIcon = () => {
@@ -36,6 +36,8 @@ const CharactersPage = () => {
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
+    (characters === null) ? 
+    null :
     (characters.length === 0) ? 
     <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :
     <CharacterCardList columnView={view} data={characters}/> 
@@ -50,7 +52,7 @@ const CharactersPage = () => {
           placeholder="Найти персонажа"/>
         <div className="characters__wrapper">
           <div className="characters__total">
-            Всего персонажей: {characters.length}
+            Всего персонажей: {characters?.length}
           </div>
           <button 
             className="characters__view-switch"

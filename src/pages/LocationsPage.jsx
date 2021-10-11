@@ -13,8 +13,7 @@ import {
 const LocationsPage = () => {
   
   const dispatch = useDispatch();
-  const { fetch, locFilter } = useSelector(state => state)
-  
+  const { fetch, locFilter } = useSelector(state => state);
   const { loading, error, locations} = fetch;
   const { locAlphabet, type, measurement } = locFilter;
 
@@ -33,6 +32,8 @@ const LocationsPage = () => {
     (error) ? 
     <NotFound text="Упс, что-то пошло не так, проверьте подключение к интернету" 
       url="not-found.png"/>  : 
+    (locations === null) ? 
+    null :
     (locations.length === 0) ? 
     <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :  
     <LocationCardList data={locations}/> 
@@ -46,7 +47,7 @@ const LocationsPage = () => {
           placeholder={"Найти локацию"}
           filter/>
         <div className="locations__total">
-          Всего локаций: {locations.length}
+          Всего локаций: {locations?.length}
         </div>
       </div>
       {content}

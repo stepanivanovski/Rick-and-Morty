@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getProfile, userLogin, createProfile, updateProfile } from '../services/api';
+import { getProfile, userLogin, createProfile, updateProfile, updateAvatar } from '../services/api';
 import { toggleModal } from '../utils';
 
 const configSessionStorage = (name, id, avatar) => {
-  console.log(id);
-  sessionStorage.setItem("fullName", name)
+  sessionStorage.setItem("fullName", name);
+
+  if (id) {
+    sessionStorage.setItem("userId", id)
+  }
+
   sessionStorage.setItem("avatar", avatar)
-  sessionStorage.setItem("userId", id)
 }
 
 const authSlice = createSlice({
@@ -49,19 +52,20 @@ const authSlice = createSlice({
     },
     updateUser(state, action) {
       const {
-        userId,
         firstName,
         lastName,
         patronymic
       } = action.payload;
 
-      state.user.id = userId;
-      state.user.firstName = firstName;
-      state.user.lastName = lastName;
-      state.user.patronymic = patronymic;  
-      state.user.fullName = `${firstName} ${lastName} ${patronymic}`;
-
-      configSessionStorage(state.user.fullName, userId, state.user.avatar); 
+      state.user = {
+        ...state.user,
+        firstName,
+        lastName,
+        patronymic,
+        fullName: `${firstName} ${lastName} ${patronymic}`
+      }
+      
+      configSessionStorage(state.user.fullName); 
     }
   }
 });
@@ -76,8 +80,9 @@ export const userLoginThunk = (body, history, reset, watch) => (dispatch) => {
     dispatch(getProfileThunk(watch))
   })
   .catch(error => {
-    if(error.message === "User is not found") {
-      console.dir(error);
+    const status = error.message.slice(-3);
+    console.error(error);
+    if( status === "403" || status === "404" ) {
       dispatch(showLoginModal("Неверный логин или пароль"))
     } else {
       dispatch(showLoginModal("Что-то пошло не так, пожалуйста проверьте подключение к интернету"))
@@ -95,7 +100,7 @@ export const createProfileThunk = (body, reset) => (dispatch) => {
     dispatch(showRegModal(["Успех", "Регистрация прошла успешно"]))
   })
   .catch(error => {
-    console.dir(error);
+    console.error(error);
       dispatch(showRegModal(["Ошибка", "Что-то пошло не так, пожалуйста попробуйте позже"]))
   })
   .finally(
@@ -127,6 +132,24 @@ export const getProfileThunk = (id) => (dispatch) => {
   .catch(error => {
     console.log("Error in getProfileThunk");
   });
+}
+
+export const updateAvatarThunk = (body) => (dispatch) => {
+  console.log('Загрузка');
+  updateAvatar(body)
+  .then(res => {
+    console.log("Все ок");
+    // sessionStorage.setItem("avatar", body)
+    console.log(res);
+
+    // dispatch(setUser(res))
+  })
+  .catch(error => {
+    console.log("Error in getProfileThunk");
+  })
+  .finally(
+    console.log("Конуц")
+  )
 }
 
 const { reducer, actions } = authSlice;

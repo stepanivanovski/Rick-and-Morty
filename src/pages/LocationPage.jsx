@@ -35,8 +35,15 @@ const LocationPage = ( {id} ) => {
 
   return (
     <div className="loc-page">
-      <div className="loc-page__header"
-        style={{backgroundImage:`url(${location?.imageName})`}}>
+      <div className="loc-page__header">
+        <div className="loc-page__header-img">
+          {(location?.name) ?
+            <img
+              src={location?.imageName} 
+              alt={location?.name}/> :
+              null
+          } 
+        </div>
         <GoBackButton className="char-page__goBack"/>
       </div>
       {content}
@@ -46,10 +53,8 @@ const LocationPage = ( {id} ) => {
 
 const View = ({location}) => {
   const {
-    id, 
     name, 
     type,
-    imageName, 
     measurements,
     about,
     characters

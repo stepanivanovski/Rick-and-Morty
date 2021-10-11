@@ -1,6 +1,3 @@
-import { getLocations } from "./services/api/locations.api";
-import { getCharacters } from "./services/api/characters.api";
-
 const defineStatus = (status) => {
   return (status === 0) ? "Живой" : "Мертвый"
 };
@@ -41,7 +38,7 @@ const toggleModal = (modal, setModal=()=>{}) => {
 }
 
 const showImg = (avatar) => {
-  if (avatar === "null") {
+  if (avatar === "null" || avatar === "undefined") {
     return "http://173.249.20.184:7001/images/Морти_Смит_001.jpg"
   } else {
     return avatar
@@ -70,11 +67,6 @@ const getLocUrl = ({ type, measurement }, nameFilter) => {
   return name + t + m
 }
 
-const getEpisUrl = (nameFilter) => {
-  const name = (nameFilter) ? `Name=${nameFilter}` : "";
-
-  return name;
-}
 
 const configureData = (data, options) => {
 
@@ -117,7 +109,6 @@ export {
   toggleModal,
   getCharUrl,
   getLocUrl,
-  getEpisUrl,
   configureData,
   showImg
 } 

@@ -36,8 +36,15 @@ const EpisodePage = ({ id }) => {
 
   return (
     <div className="epis-page">
-      <div className="epis-page__header"
-        style={{backgroundImage:`url(${episode?.imageName})`}}>
+      <div className="epis-page__header">
+        <div className="epis-page__header-img">
+         {(episode?.series) ?
+            <img
+              src={episode?.imageName} 
+              alt={episode?.series}/> :
+              null
+          } 
+        </div>
         <GoBackButton className="char-page__goBack"/>
         {(episode.series) ? 
           <div className="epis-page__play">
@@ -54,8 +61,7 @@ const EpisodePage = ({ id }) => {
 const View = ({ episode }) => {
   const { 
     premiere, 
-    series, 
-    id, 
+    series,  
     name,
     plot="нет данных",
     characters
