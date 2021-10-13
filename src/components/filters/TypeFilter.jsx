@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GoBackButton from '../GoBackButton';
 import {
-  setLocType,
-  setLocMeasurement
-} from "../../store/locFilterSlice";
+  setType,
+  setMeasurement,
+  resetLocations
+} from "../../store/locationsSlice";
 
 const types = [
   'Мир',
@@ -45,15 +46,19 @@ const InputRadio = ({ label, id, handleInput, className }) => {
 const TypeFilter = ({ id }) => {
   console.log(id);
   const dispatch = useDispatch();
-  const {type, measurement} = useSelector(state => state.locFilter);
+  const {type, measurement} = useSelector(state => state.locations);
 
   const data = (id === "type")? types : (id === "measurement")? measurements : [];
 
+  useEffect(() => {
+    dispatch(resetLocations())
+  }, [])
+
   const handleInput = (e) => {
     if (id === "type") {
-      dispatch(setLocType(e.target.value))
+      dispatch(setType(e.target.value))
     } else if (id === "measurement") {
-      dispatch(setLocMeasurement(e.target.value))
+      dispatch(setMeasurement(e.target.value))
     }
   }
 

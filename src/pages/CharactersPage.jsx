@@ -6,33 +6,35 @@ import SearchPanel from "../components/SearchPanel"
 import CharacterCardList from "../components/cards/CharacterCardList"
 import { IconListView, IconTableView } from "../icons/";
 import NavBar from "../components/NavBar";
+import { getCharactersSelector } from '../selectors/charactersSelector';
 import { 
-  onLoading, 
-  fetchData
-} from "../store/fetchDataSlice";
+  getCharactersThunk,
+  getFilteredCharactersThunk,
+} from "../store/charactersSlice";
 
 const CharactersPage = () => {
   const dispatch = useDispatch();
-  const { fetch, charFilter: { charFilter, checkbox, charAlphabet } } = useSelector(state => state)
+  const { characters: { loading, error, filterState, checkbox } } = useSelector(state => state);
+  const characters = useSelector(getCharactersSelector);
+
   const [view, toggleView] = useState(true);
   
-  const { loading, error, characters } = fetch;
 
   useEffect(() => {
-    if (!charFilter) {
-      dispatch(fetchData("characters", {localFilterData: charAlphabet}));
-    } else {
-      dispatch(fetchData("filteredChar", {removeFilterData: checkbox, localFilterData: charAlphabet}))
+    if (!characters) {
+      if (!filterState) {
+        dispatch(getCharactersThunk());
+      } else {
+        dispatch(getFilteredCharactersThunk(checkbox))
+      }
     }
-    
-    return () => dispatch(onLoading());
   },[]) 
  
   const showViewIcon = () => {
     return (view) ? <IconListView/> : <IconTableView/>
   }
 
-  const content = (loading) ? 
+  const content = (!characters) ? 
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :

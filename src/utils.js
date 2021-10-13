@@ -45,7 +45,7 @@ const showImg = (avatar) => {
   }
 }
 
-const getCharUrl = ({ gender, status }, nameFilter) => {
+const getCharactersUrl = ({ gender, status }, nameFilter) => {
   const statusStr = "Status=0&Status=1&Status=2";
   const genderStr = "Gender=0&Gender=1&Gender=2";
 
@@ -59,7 +59,7 @@ const getCharUrl = ({ gender, status }, nameFilter) => {
   return name + s + "&" + g
 }
 
-const getLocUrl = ({ type, measurement }, nameFilter) => {
+const getLocationsUrl = ({ type, measurement }, nameFilter) => {
   const name = (nameFilter) ? `Name=${nameFilter}&` : "";
   const m = (measurement) ? `&Measurements=${measurement}`:"";
   const t = (type) ? `Type=${type}`: "";
@@ -107,8 +107,8 @@ export {
   defineStyle,
   convertDate,
   toggleModal,
-  getCharUrl,
-  getLocUrl,
+  getCharactersUrl,
+  getLocationsUrl,
   configureData,
   showImg
 } 

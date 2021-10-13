@@ -7,23 +7,24 @@ import CharacterCardList from '../components/cards/CharacterCardList';
 import { IconPlay } from '../icons';
 import { convertDate } from '../utils';
 import {
-  onLoading, 
-  fetchData
-} from "../store/fetchDataSlice";
+  resetEpisode, 
+  onLoading,
+  getEpisodeByIdThunk
+} from "../store/episodesSlice";
 
 
 const EpisodePage = ({ id }) => {
 
-  const dispatch =useDispatch();
-  const state = useSelector(state => state.fetch);
+  const dispatch = useDispatch();
 
-  const { error, episode } = state
+  const { error, episode } = useSelector(state => state.episodes);
   
   useEffect(() => {
-    dispatch(fetchData("episode", {id}))
+    dispatch(getEpisodeByIdThunk(id))
     
     return () => {
-      onLoading();
+      dispatch(resetEpisode());
+      dispatch(onLoading())
     }
   }, []) 
   

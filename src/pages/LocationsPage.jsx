@@ -5,29 +5,32 @@ import NotFound from "../components/NotFound";
 import SearchPanel from "../components/SearchPanel";
 import LocationCardList from "../components/cards/LocationCardList";
 import NavBar from "../components/NavBar";
+import { getLocationsSelector } from '../selectors/locationsSelector';
 import { 
   onLoading,
-  fetchData,
-} from "../store/fetchDataSlice"
+  resetLocations,
+  getLocationsThunk,
+  getFilteredLocationsThunk
+} from "../store/locationsSlice"
 
 const LocationsPage = () => {
   
   const dispatch = useDispatch();
-  const { fetch, locFilter } = useSelector(state => state);
-  const { loading, error, locations} = fetch;
-  const { locAlphabet, type, measurement } = locFilter;
+  const {  loading, error, filterState, type, measurement } = useSelector(state => state.locations);
 
+  const locations = useSelector(getLocationsSelector)
 
   useEffect(() => {
-    if (!locFilter) {
-      dispatch(fetchData("locations", {localFilterData: locAlphabet}));
-    } else {
-      dispatch(fetchData("filteredLoc", {removeFilterData: { type, measurement }, localFilterData: locAlphabet}))
+    if (!locations) {
+      if (!filterState) {
+        dispatch(getLocationsThunk());
+      } else {
+        dispatch(getFilteredLocationsThunk({  type, measurement }))
+      }
     }
-    return dispatch(onLoading());
   },[]) 
   
-  const content = (loading) ? 
+  const content = (!locations) ? 
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так, проверьте подключение к интернету" 

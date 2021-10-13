@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCharacters, getCharacterById, getFilteredCharacters } from "../services/api/characters.api";
-import { getEpisodes, getEpisodeById, getFilteredEpisode } from "../services/api/episodes.api";
+import { getEpisodes, getEpisodeById, getEpisodeByName } from "../services/api/episodes.api";
 import { getLocations, getLocationById, getFilteredLocations } from "../services/api/locations.api"
-import { getCharUrl, getLocUrl } from '../utils'
+import {  getLocationsUrl } from '../utils'
 import { configureData } from '../utils';
 
 export const resetLoading = (state) => {
@@ -125,19 +125,19 @@ export const fetchData = (text, { id, localFilterData, removeFilterData }, nameF
       getData(
         getFilteredCharacters, 
         charactersLoaded, 
-        {id: getCharUrl(removeFilterData, nameFilter), options: [localFilterData, "fullName"]}
+        // {id: getCharUrl(removeFilterData, nameFilter), options: [localFilterData, "fullName"]}
       )
       break;
     case "filteredLoc":
       getData(
         getFilteredLocations, 
         locationsLoaded,
-        {id: getLocUrl(removeFilterData, nameFilter), options: [localFilterData, "name"]}
+        {id: getLocationsUrl(removeFilterData, nameFilter), options: [localFilterData, "name"]}
       )
       break;
     case "filteredEpis":
       getData(
-        getFilteredEpisode, 
+        getEpisodeById, 
         episodesLoaded,
         { id: nameFilter }
       )

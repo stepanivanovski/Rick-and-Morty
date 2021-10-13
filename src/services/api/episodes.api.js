@@ -10,10 +10,10 @@ const getEpisodeById = async (id) => {
   return res.data
 }
 
-const getFilteredEpisode = async (url) => {
+const getEpisodeByName = async (url) => {
   const res = await request.get(`api/Episodes/GetByName?Name=${url}`);
   console.log(res.data)
   return res.data
 }
 
-export { getEpisodes, getEpisodeById, getFilteredEpisode };
+export { getEpisodes, getEpisodeById, getEpisodeByName };

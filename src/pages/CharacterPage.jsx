@@ -8,23 +8,23 @@ import GoBackButton from '../components/GoBackButton';
 import { IconMoreThen } from '../icons';
 import { defineGender, defineStatus, defineStyle } from '../utils';
 import {
-  onLoading, 
-  fetchData
-} from "../store/fetchDataSlice";
+  onLoading,
+  resetCharacter,
+  getCharacterByIdThunk
+} from "../store/charactersSlice";
 
 const CharacterPage = ({ id }) => {
   const history = useHistory();
 
   const dispatch =useDispatch();
-  const state = useSelector(state => state.fetch);
+  const { loading, error, character } = useSelector(state => state.characters);
 
-  const { loading, error, character } = state
 
   useEffect(() => {
-    dispatch(fetchData("character", {id}))
+    dispatch(getCharacterByIdThunk(id))
 
     return () => {
-      onLoading();
+      dispatch(resetCharacter());
     }
   }, [])  
   

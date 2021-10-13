@@ -15,7 +15,9 @@ import ChangeNamePage from './pages/ChangeNamePage';
 import CharacterFilter from './components/filters/CharacterFilter'
 import LocationFilter from './components/filters/LocationFilter';
 import TypeFilter from './components/filters/TypeFilter';
-import SearchPage from './pages/SearchPage';
+import CharactersSearchPage from './pages/CharactersSearchPage';
+import LocationsSearchPage from './pages/LocationsSearchPage';
+import EpisodesSearchPage from './pages/EpisodesSearchPage';
 import NotFound from './components/NotFound';
 
 
@@ -40,10 +42,10 @@ function App() {
         <ProtectedRoute path="/filterLoc/measurement" render={() => <TypeFilter id={"measurement"}/>}/>
         <ProtectedRoute path='/options' exact component={OptionsPage}/>
         <ProtectedRoute path='/options/edit' component={EditProfilePage}/>
-        <ProtectedRoute path="/searchChar" component={SearchPage}/> 
+        <ProtectedRoute path="/searchChar" component={CharactersSearchPage}/> 
         <ProtectedRoute path='/options/name' component={ChangeNamePage}/> 
-        <ProtectedRoute path="/searchLoc" component={SearchPage}/>   
-        <ProtectedRoute path="/searchEpis" component={SearchPage}/> 
+        <ProtectedRoute path="/searchLoc" component={LocationsSearchPage}/>   
+        <ProtectedRoute path="/searchEpis" component={EpisodesSearchPage}/> 
         <ProtectedRoute render={() => <NotFound url="no-character.png" text="Такой страницы не существует"/>}/>  
       </Switch> 
     </div>

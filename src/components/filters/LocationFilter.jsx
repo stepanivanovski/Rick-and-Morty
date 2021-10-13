@@ -4,23 +4,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import GoBackButton from '../GoBackButton';
 import { IconABC, IconCBA, IconMoreThen, IconRedFilter } from '../../icons';
 import { 
-  resetLocFilter, 
+  resetFilter, 
   setAlphabet
-} from '../../store/locFilterSlice';
+} from '../../store/locationsSlice';
 
 const LocationFilter = () => {
   const history = useHistory(); 
   const dispatch = useDispatch();
 
-  const { locFilter, locAlphabet, type, measurement } = useSelector(state => state.locFilter);
+  const { filterState, alphabetFilterState, type, measurement } = useSelector(state => state.locations);
 
   return (
     <div className="filter">
       <div className="filter__header">
         <GoBackButton text="Фильтры" className="filter__goBack"/>
-        {(locFilter) ?
+        {(filterState) ?
           <button 
-            onClick = {() => dispatch(resetLocFilter())}
+            onClick = {() => dispatch(resetFilter())}
             className="filter__button">
             <IconRedFilter/>
           </button> :
@@ -36,13 +36,13 @@ const LocationFilter = () => {
               onClick={() => dispatch(setAlphabet("abc"))} 
               className="filter__button">
               <IconABC 
-                className={(locAlphabet === "abc") ? "filter__active-icon" : ''}/>
+                className={(alphabetFilterState === "abc") ? "filter__active-icon" : ''}/>
             </button>
             <button
               onClick={() => dispatch(setAlphabet("cba"))}  
               className="filter__button">
               <IconCBA
-                className={(locAlphabet === "cba") ? "filter__active-icon" : ''}/>
+                className={(alphabetFilterState === "cba") ? "filter__active-icon" : ''}/>
             </button>
           </div>
         </div>

@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
-import fetchDataReducer from "./fetchDataSlice";
 import themeReducer from "./themeSlice";
-import charFilterReducer from "./charFilterSlice";
-import locFilterReducer from "./locFilterSlice";
+import charactersReducer from "./charactersSlice";
+import locationsReducer from "./locationsSlice";
+import episodesReducer from "./episodesSlice";
 import authSlice from "./authSlice";
 
 export default configureStore({
   reducer: {
     auth: authSlice,
-    fetch: fetchDataReducer,
     theme: themeReducer,
-    charFilter: charFilterReducer,
-    locFilter: locFilterReducer
+    characters: charactersReducer,
+    locations: locationsReducer,
+    episodes: episodesReducer
   }
 })

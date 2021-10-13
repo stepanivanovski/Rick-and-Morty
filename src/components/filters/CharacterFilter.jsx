@@ -1,50 +1,55 @@
-import React  from 'react';
+import React, { useEffect }  from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import GoBackButton from '../GoBackButton'
 import { IconABC, IconCBA, IconRedFilter } from '../../icons'
 import { 
-  toggleStatusCheked,
-  toggleGenderCheked,
-  resetCharFilter,
-  setAlphabet
-} from '../../store/charFilterSlice';
+  toggleStatus,
+  toggleGender,
+  resetCharactersFilter,
+  setAlphabet,
+  resetCharacters
+} from '../../store/charactersSlice';
 
 const CharacterFilter = () => {
 
   const dispatch = useDispatch();
 
-  const { checkbox, charFilter, charAlphabet } = useSelector(state => state.charFilter);
+  const { checkbox, filterState, alphabetFilterState } = useSelector(state => state.characters);
   const { status: { alive, dead, unknown}, gender: { male, female, trans }} = checkbox;
+  
+  useEffect(() => {
+    dispatch(resetCharacters())
+  }, [])
 
   const handleInput = (event) => {
     const target = event.target;
+
     if (target.name.slice(0, 6) === "Gender") {
 
       if (target.checked) {
-        dispatch(toggleGenderCheked({[target.id]: target.name}));
+        dispatch(toggleGender({[target.id]: target.name}));
       } else {
-        dispatch(toggleGenderCheked({[target.id]: false}))
+        dispatch(toggleGender({[target.id]: false}))
       }
 
     } else {
 
       if (target.checked) {
-        dispatch(toggleStatusCheked({[target.id]: target.name}));
+        dispatch(toggleStatus({[target.id]: target.name}));
       } else {
-        dispatch(toggleStatusCheked({[target.id]: false}))
+        dispatch(toggleStatus({[target.id]: false}))
       }
 
     }
-
   }
 
   return (
     <div className="filter">
       <div className="filter__header">
         <GoBackButton text="Выберите тип" className="filter__goBack"/>
-        {(charFilter) ?
+        {(filterState) ?
           <button 
-            onClick = {() => dispatch(resetCharFilter())}
+            onClick = {() => dispatch(resetCharactersFilter())}
             className="filter__button">
             <IconRedFilter/>
           </button> :
@@ -60,13 +65,13 @@ const CharacterFilter = () => {
               onClick={() => dispatch(setAlphabet("abc"))} 
               className="filter__button">
               <IconABC 
-                className={(charAlphabet === "abc") ? "filter__active-icon" : ''}/>
+                className={(alphabetFilterState === "abc") ? "filter__active-icon" : ''}/>
             </button>
             <button
               onClick={() => dispatch(setAlphabet("cba"))}  
               className="filter__button">
               <IconCBA
-                className={(charAlphabet === "cba") ? "filter__active-icon" : ''}/>
+                className={(alphabetFilterState === "cba") ? "filter__active-icon" : ''}/>
             </button>
           </div>
         </div>

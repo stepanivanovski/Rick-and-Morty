@@ -1,4 +1,5 @@
 import { request } from '../request';
+import { getLocationsUrl } from '../../utils';
 
 const getLocations = async () => {
   const res = await request.get(`api/Locations/GetAll?PageNumber=1&PageSize=100`);
@@ -10,7 +11,9 @@ const getLocationById = async (id) => {
   return res.data
 }
 
-const getFilteredLocations = async (url) => {
+const getFilteredLocations = async (options, name) => {
+  const url = getLocationsUrl(options, name);
+  
   const res = await request.get(`api/Locations/Filter?${url}`);
   return res.data;
 }

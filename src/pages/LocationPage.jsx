@@ -5,24 +5,22 @@ import NotFound from "../components/NotFound";
 import GoBackButton from '../components/GoBackButton';
 import CharacterCardList from '../components/cards/CharacterCardList';
 import {
-  onLoading, 
-  fetchData,
-} from "../store/fetchDataSlice";
+  resetLocation, 
+  getLocationByIdThunk,
+} from "../store/locationsSlice";
 
 
 const LocationPage = ( {id} ) => {
   
   
   const dispatch =useDispatch();
-  const state = useSelector(state => state.fetch);
-
-  const { error, location } = state
+  const { error, location } = useSelector(state => state.locations);
 
   useEffect(() => {
-    dispatch(fetchData("location", {id}))
+    dispatch(getLocationByIdThunk(id))
     
     return () => {
-      onLoading();
+      dispatch(resetLocation());
     }
   }, []) 
   
