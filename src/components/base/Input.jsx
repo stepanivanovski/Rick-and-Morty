@@ -1,27 +1,29 @@
 import React from 'react';
 
 const Input = ({ 
-  Icon, 
+  LeftIcon, 
   title, 
   type, 
   id, 
-  Eye, 
-  register, 
-  errors, 
-  message, 
-  pattern,
+  RightIcon, 
+  options: {
+    register, 
+    errors, 
+    message, 
+    pattern
+  },
   showPassword,
  }) => {
 
-  const icon = Icon ? 
-    <Icon className="input__icon"/> :
+  const icon = LeftIcon ? 
+    <LeftIcon className="input__icon"/> :
     null;
 
-  const eye = Eye ? 
+  const eye = RightIcon ? 
     <button 
       onClick={showPassword}
       className="input__btn">
-        <Eye/>
+        <RightIcon/>
     </button> :
     null 
 

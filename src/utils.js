@@ -67,40 +67,6 @@ const getLocationsUrl = ({ type, measurement }, nameFilter) => {
   return name + t + m
 }
 
-
-const configureData = (data, options) => {
-
-  const [alphabet, value] = options;
-
-  const sortDataByName = () => {
-
-    if (data.legth === 0 || !Array.isArray(data)) {
-      console.log("Error in sortDataByName");
-      return [];
-    }
-  
-    return data.sort((a, b) => {
-      let nameA = a[value].trim();
-      let nameB = b[value].trim();
-
-      if (alphabet === "abc") {
-        if (nameA > nameB) return 1;
-        if (nameB > nameA) return -1;
-      } else {
-        if (nameA > nameB) return -1;
-        if (nameB > nameA) return 1;
-      }
-      return 0;
-    })
-  }
-
-  if (alphabet) {
-    sortDataByName()
-  }
-
-  return data;
-}
-
 export {
   defineStatus,
   defineGender,
@@ -109,6 +75,5 @@ export {
   toggleModal,
   getCharactersUrl,
   getLocationsUrl,
-  configureData,
   showImg
 } 

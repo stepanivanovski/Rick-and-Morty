@@ -49,24 +49,24 @@ const LocationFilter = () => {
       </div>
       <hr />
       <div className="filter__item">       
-      <div
+      <button
         onClick={() => history.push(`/filterLoc/type`)} 
-        className="item-link item-link_mb-36">
+        className="item-link__button item-link_mb-36">
         <div>
           <div className="text_main-16px">{type || "Тип"}</div>
           <div className="text_second-14px">Выберите тип локации</div>
         </div>
         <IconMoreThen className="item-link__svg"/>
-      </div>
-      <div
+      </button>
+      <button
         onClick={() => history.push(`/filterLoc/measurement`)}  
-        className="item-link item-link_mb-36">
+        className="item-link__button item-link_mb-36">
         <div>
           <div className="text_main-16px">{measurement || "Измерение"}</div>
           <div className="text_second-14px">Выберите измерения локации</div>
         </div>
         <IconMoreThen  className="item-link__svg"/>
-      </div>
+      </button>
       </div>  
     </div>
   );

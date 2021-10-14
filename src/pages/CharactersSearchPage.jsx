@@ -6,7 +6,7 @@ import GoBackButton from "../components/GoBackButton"
 import CharacterCardList from "../components/cards/CharacterCardList";
 import { IconCross } from '../icons';
 
-import { getFilteredCharactersThunk, onLoading } from "../store/charactersSlice";
+import { getFilteredCharactersThunk, onLoading, getCharactersThunk, resetCharacters } from "../store/charactersSlice";
 
 const CharactersSearchPage = () => {
 
@@ -14,24 +14,27 @@ const CharactersSearchPage = () => {
   const [ inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
 
-  const { characters, error, loading, checkbox } = useSelector(state => state.characters)
+  const { characters, error, checkbox } = useSelector(state => state.characters)
 
   useEffect(() => {
     textInput.current.focus();
-    return () => dispatch(onLoading());
+    return () => {
+      dispatch(resetCharacters())
+      dispatch(getCharactersThunk())
+    };
   },[]) 
 
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
-    dispatch(getFilteredCharactersThunk(checkbox, inputValue));
+    dispatch(getFilteredCharactersThunk(checkbox, e.target.value));
   }
 
-  const content = (loading) ? 
+  const content = (!characters) ? 
     <Spinner/> : 
     (error) ? 
     <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
-    (characters.length === 0) ? 
+    (characters?.length === 0) ? 
     <NotFound text={"Персонаж с таким именем не найден"} url={"no-character.png"}/> :
     <CharacterCardList data={characters}/> 
 

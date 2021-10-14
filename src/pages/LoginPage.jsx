@@ -52,27 +52,31 @@ const LoginPage = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="login-page__form">
         <Input
-          Icon={IconUser}
+          LeftIcon={IconUser}
           id="userName"
           type="text"
           title="Логин"
-          register={register}
-          errors={errors}
-          pattern={/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/}
-          message={"Поле должно сожержать коректный e-mail"}
+          options = {{
+            register, 
+            errors, 
+            pattern: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+            message: "Поле должно сожержать коректный e-mail"
+          }}
         />
         <Input
-          Icon={IconPassword}
-          Eye={IconEye}
+          LeftIcon={IconPassword}
+          RightIcon={IconEye}
           showPassword={showPassword}
           state={visibility}
           id="password"
           type={(!visibility) ? "password" : "text"}
           title="Пароль"
-          register={register}
-          errors={errors}
-          pattern={/./}
-          message={"Поле должно содержать как минимум 8 символов, 1 латинскую букву и 1 цифру"}
+          options = {{
+            register, 
+            errors, 
+            pattern: /./,
+            message: "Поле должно содержать как минимум 8 символов, 1 латинскую букву и 1 цифру"
+          }}
         />
         <Button text="Войти" />
       </form>

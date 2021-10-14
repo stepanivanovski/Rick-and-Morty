@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
@@ -14,11 +14,18 @@ import {
 
 const CharactersPage = () => {
   const dispatch = useDispatch();
-  const { characters: { loading, error, filterState, checkbox } } = useSelector(state => state);
+  const observerElement = useRef();
+  const { characters: { loading, error, filterState, checkbox, page, prevY  } } = useSelector(state => state);
   const characters = useSelector(getCharactersSelector);
 
   const [view, toggleView] = useState(true);
   
+  const handleObserver = (entities, observer) => {
+    const y = entities[0].boundingClientRect.y;
+    // if (prevY > y) {
+      console.log(y);
+    // }
+  }
 
   useEffect(() => {
     if (!characters) {
@@ -28,6 +35,16 @@ const CharactersPage = () => {
         dispatch(getFilteredCharactersThunk(checkbox))
       }
     }
+    const options = {
+      root: null, // Page as root
+      rootMargin: "0px",
+      threshold: 1.0
+    };
+    const observer = new IntersectionObserver(
+      handleObserver, //callback
+      options
+    );
+    observer.observe(observerElement.current);
   },[]) 
  
   const showViewIcon = () => {
@@ -64,6 +81,15 @@ const CharactersPage = () => {
         </div>
       </div>
       {content}
+      <div
+        className="characters__observer"
+        ref={observerElement}>
+          {
+            (loading) ?
+              <span>Loading...</span> :
+              null 
+          }
+      </div>
       <NavBar/>
     </div>
   );

@@ -18,7 +18,10 @@ const Popup = ({ title, set, actionCreator }) => {
         className="message"> 
         <h3 className="message__title">{title}</h3>
         <p className="message__text">{ set }</p>
-        <Button onModal={onModal} text="Ок" className="btn_transparent"/>
+        <Button 
+          onClick={onModal} 
+          text="Ок" 
+          className="btn_transparent"/>
       </div>
     </div>
   );

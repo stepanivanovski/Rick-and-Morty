@@ -12,10 +12,22 @@ import {
 
 
 const ChangeNamePage = () => {
-  const { register, handleSubmit, formState: {errors}, reset } = useForm();
-
   const dispatch = useDispatch();
-  const { updModal, updMessage: [mesTitle, mesText] } = useSelector(state => state.auth)
+  const { updModal, updMessage: [mesTitle, mesText], user } = useSelector(state => state.auth)
+
+  const defaultValues = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    patronymic: user.patronymic
+  }
+
+  const { 
+    register, 
+    handleSubmit, 
+    formState: {errors}, 
+    reset 
+  } = useForm({ defaultValues });
+
 
   const userId = sessionStorage.getItem("userId")
 
@@ -42,7 +54,7 @@ const ChangeNamePage = () => {
     <form 
       className="options__form"
       onSubmit={handleSubmit(onSubmit)}>
-      <NameInputs register={register} errors={errors}/>
+      <NameInputs register={register} errors={errors} user={user}/>
       <Button className="options__button" text="Сохранить"/>
       {
         (updModal) ? 
@@ -54,35 +66,44 @@ const ChangeNamePage = () => {
   );
 };
 
-const NameInputs = ({ register, errors }) => {
+const NameInputs = ({ register, errors, user: { firstName, lastName, patronymic } }) => {
   return (
     <>
       <Input
         id="firstName"
         type="text"
         title="Имя"
-        register={register}
-        errors={errors}
-        pattern={/^([а-яё]+|[a-z]+)$/i}
-        message={"Поле должно сожержать только буквы"}
+        value={firstName}
+        options = {{
+          register, 
+          errors, 
+          pattern: /^([а-яё]+|[a-z]+)$/i,
+          message: "Поле должно сожержать только буквы"
+        }}
         />
       <Input
         id="lastName"
         type="text"
         title="Фамилия"
-        register={register}
-        errors={errors}
-        pattern={/^([а-яё]+|[a-z]+)$/i}
-        message={"Поле должно сожержать только буквы"}
+        value={lastName}
+        options = {{
+          register, 
+          errors, 
+          pattern: /^([а-яё]+|[a-z]+)$/i,
+          message: "Поле должно сожержать только буквы"
+        }}
       />
       <Input
         id="patronymic"
         type="text"
         title="Отчество"
-        register={register}
-        errors={errors}
-        pattern={/^([а-яё]+|[a-z]+)$/i}
-        message={"Поле должно сожержать только буквы"}
+        value={patronymic}
+        options = {{
+          register, 
+          errors, 
+          pattern: /^([а-яё]+|[a-z]+)$/i,
+          message: "Поле должно сожержать только буквы"
+        }}
       />
     </>
   )

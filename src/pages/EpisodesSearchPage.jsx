@@ -26,7 +26,7 @@ const LocationsSearchPage = () => {
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
-    dispatch(getEpisodeByNameThunk(inputValue));
+    dispatch(getEpisodeByNameThunk(e.target.value));
   }
 
   const content = (loading) ? 

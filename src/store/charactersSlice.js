@@ -20,6 +20,8 @@ const charactersSlice = createSlice({
         unknown: false,
       }
     },
+    page: 0,
+    prevY: 0,
     filterState: false,
     alphabetFilterState: null,
   },
@@ -110,9 +112,9 @@ export const getCharactersThunk = () => (dispatch) => {
     })
 }
 
-export const getFilteredCharactersThunk = (options) => (dispatch) => {
+export const getFilteredCharactersThunk = (options, name) => (dispatch) => {
   dispatch(resetCharacters());
-  getFilteredCharacters(options)
+  getFilteredCharacters(options,name)
     .then(res => {
       dispatch(charactersLoaded(res));
     })
