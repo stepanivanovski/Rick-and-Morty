@@ -1,9 +1,9 @@
 import { request } from '../request';
 import { getCharactersUrl } from '../../utils';
 
-const getCharacters = async () => {
-  const res = await request.get(`api/characters/GetAll?PageNumber=1&PageSize=10`);
-  return res.data;
+const getCharacters = async (pageNumber) => {
+  const res = await request.get(`api/characters/GetAll?PageNumber=${pageNumber}&PageSize=10`);
+  return res;
 }
 
 const getCharacterById = async (id) => {

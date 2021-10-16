@@ -1,19 +1,116 @@
-правильный логин неправильный пароль {
-  ошибка {
-    Message: "Wrong login or password"
-    StatusCode: 403
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from "../components/Spinner";
+import NotFound from "../components/NotFound";
+import SearchPanel from "../components/SearchPanel"
+import CharacterCardList from "../components/cards/CharacterCardList"
+import { IconListView, IconTableView } from "../icons/";
+import NavBar from "../components/NavBar";
+import { getCharactersSelector } from '../selectors/charactersSelector';
+import { 
+  getCharactersThunk,
+  getFilteredCharactersThunk,
+  onLoading
+} from "../store/charactersSlice";
+
+const CharactersPage = () => {
+  const dispatch = useDispatch();
+  const observerElement = useRef();
+  const { characters: { loading, error, filterState, checkbox, nextPage } } = useSelector(state => state);
+  const characters = useSelector(getCharactersSelector);
+
+  const [view, toggleView] = useState(true);
+  
+  function getData() {
+    if (!filterState) {
+      dispatch(getCharactersThunk(nextPage));
+    } else {
+      dispatch(getFilteredCharactersThunk(checkbox))
+    }
   }
-}
-неправилльный логин {
-  ошибка {
-    Message: "User not found"
-    StatusCode: 404
-  }  
-}
 
-"88bee6f9-6ccb-4e40-aa59-7662206359c3";
-"88bee6f9-6ccb-4e40-aa59-7662206359c3";
+  function handleObserver(entities, observer) {
+    if ( entities[0].isIntersecting ) {
+      console.log("y");
+      dispatch(onLoading())
+      getData()
+    }
+  }
 
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoid2ViQG1haWwucnUiLCJqdGkiOiI4NTY2MmJiNy1lZjg2LTQzMjctOGFiYS03MmU2N2M4YzAyYmIiLCJVc2VySWQiOiI3NWEyNmU5Ny1jNTZjLTQ0NGUtODJjNS0xNzE1YTdmY2FjNTEiLCJleHAiOjE2MzM2OTY5NjUsImlzcyI6IkF1dGhTZXJ2ZXIiLCJhdWQiOiJSZXNvdXJjZVNlcnZlciJ9.DImR57dDyXuGS5o7jRbARnMqC_3KmiWtAeLrnwxtPO8";
+  useEffect(() => {
+    if (!characters) {
+      getData();
+    } 
 
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoid2ViQG1haWwucnUiLCJqdGkiOiI1MGE1YzI4Yi0xZGZkLTQwNzMtODFjYy1lOWFiMGQwZGRiNTUiLCJVc2VySWQiOiI3NWEyNmU5Ny1jNTZjLTQ0NGUtODJjNS0xNzE1YTdmY2FjNTEiLCJleHAiOjE2MzM2OTcwNzYsImlzcyI6IkF1dGhTZXJ2ZXIiLCJhdWQiOiJSZXNvdXJjZVNlcnZlciJ9.AfO1i23TZbGLB7wCzEVa8LCepZczZQ-2SLfff-8Ru9E"
+    if (!filterState) {
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0
+      }
+  
+      const observer = new IntersectionObserver(
+        handleObserver, 
+        options
+      )
+  
+      observer.observe(observerElement.current);
+    }
+  },[]) 
+
+  const showViewIcon = () => {
+    return (view) ? <IconListView/> : <IconTableView/>
+  }
+
+  const content = (!characters) ? 
+    <Spinner/> : 
+    (error) ? 
+    <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
+    (characters === null) ? 
+    null :
+    (characters.length === 0) ? 
+    <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :
+    <CharacterCardList columnView={view} data={characters}/> 
+  
+
+  return (
+    <div className="characters container">
+      <div className="characters__header">
+        <SearchPanel 
+          path="./searchChar"
+          filter
+          filterPath="/filterChar"
+          placeholder="Найти персонажа"/>
+        <div className="characters__wrapper">
+          <div className="characters__total">
+            Всего персонажей: {characters?.length}
+          </div>
+          <button 
+            className="characters__view-switch"
+            onClick={() => toggleView(!view)}>
+            {showViewIcon()}
+          </button>
+        </div>
+      </div>
+      {content}
+      {
+        (!filterState) ?
+          <div
+            style={(!characters) ? {display: "none"} : {display: "block"}}
+            className="characters__observer"
+            ref={observerElement}>
+              {
+                (loading) ?
+                  <span>Loading...</span> :
+                  null 
+              }
+          </div> :
+          null
+      }
+      <NavBar/>
+    </div>
+  );
+};
+
+
+export default CharactersPage;

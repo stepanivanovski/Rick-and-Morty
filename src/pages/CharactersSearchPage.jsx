@@ -6,7 +6,11 @@ import GoBackButton from "../components/GoBackButton"
 import CharacterCardList from "../components/cards/CharacterCardList";
 import { IconCross } from '../icons';
 
-import { getFilteredCharactersThunk, onLoading, getCharactersThunk, resetCharacters } from "../store/charactersSlice";
+import { 
+  getFilteredCharactersThunk, 
+  getCharactersThunk, 
+  resetCharacters,
+} from "../store/charactersSlice";
 
 const CharactersSearchPage = () => {
 
@@ -20,7 +24,7 @@ const CharactersSearchPage = () => {
     textInput.current.focus();
     return () => {
       dispatch(resetCharacters())
-      dispatch(getCharactersThunk())
+      dispatch(getCharactersThunk(1))
     };
   },[]) 
 

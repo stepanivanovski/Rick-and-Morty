@@ -7,7 +7,9 @@ import {
   toggleGender,
   resetCharactersFilter,
   setAlphabet,
-  resetCharacters
+  resetCharacters,
+  setRemainingPages,
+  setNextPage
 } from '../../store/charactersSlice';
 
 const CharacterFilter = () => {
@@ -16,12 +18,12 @@ const CharacterFilter = () => {
 
   const { checkbox, filterState, alphabetFilterState } = useSelector(state => state.characters);
   const { status: { alive, dead, unknown}, gender: { male, female, trans }} = checkbox;
-  
-  useEffect(() => {
-    dispatch(resetCharacters())
-  }, [])
 
   const handleInput = (event) => {
+    dispatch(resetCharacters())
+    dispatch(setNextPage(1))
+    dispatch(setRemainingPages(1))
+
     const target = event.target;
 
     if (target.name.slice(0, 6) === "Gender") {

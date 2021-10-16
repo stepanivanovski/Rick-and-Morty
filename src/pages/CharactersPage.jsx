@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import SearchPanel from "../components/SearchPanel"
@@ -10,90 +10,144 @@ import { getCharactersSelector } from '../selectors/charactersSelector';
 import { 
   getCharactersThunk,
   getFilteredCharactersThunk,
+  onLoading,
+  setNextPage,
+  setRemainingPages
 } from "../store/charactersSlice";
 
-const CharactersPage = () => {
-  const dispatch = useDispatch();
-  const observerElement = useRef();
-  const { characters: { loading, error, filterState, checkbox, page, prevY  } } = useSelector(state => state);
-  const characters = useSelector(getCharactersSelector);
+class CharactersPage extends Component {
 
-  const [view, toggleView] = useState(true);
-  
-  const handleObserver = (entities, observer) => {
-    const y = entities[0].boundingClientRect.y;
-    // if (prevY > y) {
-      console.log(y);
-    // }
+  state = { 
+    view: true
   }
 
-  useEffect(() => {
-    if (!characters) {
-      if (!filterState) {
-        dispatch(getCharactersThunk());
-      } else {
-        dispatch(getFilteredCharactersThunk(checkbox))
-      }
+  observerElement = React.createRef(); 
+
+  getData() {
+    const { 
+      filterState, 
+      nextPage, 
+      checkbox, 
+      getCharactersThunk, 
+      getFilteredCharactersThunk
+    } = this.props
+
+    if (!filterState) {
+      getCharactersThunk(nextPage);
+    } else {
+      getFilteredCharactersThunk(checkbox)
     }
-    const options = {
-      root: null, // Page as root
-      rootMargin: "0px",
-      threshold: 1.0
-    };
-    const observer = new IntersectionObserver(
-      handleObserver, //callback
-      options
-    );
-    observer.observe(observerElement.current);
-  },[]) 
- 
-  const showViewIcon = () => {
-    return (view) ? <IconListView/> : <IconTableView/>
   }
 
-  const content = (!characters) ? 
-    <Spinner/> : 
-    (error) ? 
-    <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
-    (characters === null) ? 
-    null :
-    (characters.length === 0) ? 
-    <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :
-    <CharacterCardList columnView={view} data={characters}/> 
-     
-  return (
-    <div className="characters container">
-      <div className="characters__header">
-        <SearchPanel 
-          path="./searchChar"
-          filter
-          filterPath="/filterChar"
-          placeholder="Найти персонажа"/>
-        <div className="characters__wrapper">
-          <div className="characters__total">
-            Всего персонажей: {characters?.length}
+  handleObserver = (entities, observer) => {
+    if ( entities[0].isIntersecting ) {
+      if (this.props.remainingPages !== 0) {
+        this.props.onLoading() 
+        this.getData()
+      } 
+    }
+  }
+
+  componentDidMount() {
+    const { characters, filterState } = this.props;
+
+    if (!characters) {
+      this.getData();
+    } 
+  
+    if (!filterState) {
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0
+      }
+  
+      const observer = new IntersectionObserver(
+        this.handleObserver, 
+        options
+      )
+  
+      observer.observe(this.observerElement.current);
+    }
+  }
+
+
+  showViewIcon = () => {
+    return (this.state.view) ? <IconListView/> : <IconTableView/>
+  }
+
+  
+  render() {
+    const { characters, error, filterState, loading } = this.props
+
+    const content = (error) ?
+      <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
+     (!characters) ? 
+      <Spinner/> : 
+      (characters === null) ? 
+      null :
+      (characters.length === 0) ? 
+      <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :
+      <CharacterCardList columnView={this.state.view} data={characters}/> 
+
+    return (
+      <div className="characters container">
+        <div className="characters__header">
+          <SearchPanel 
+            path="./searchChar"
+            filter
+            filterPath="/filterChar"
+            placeholder="Найти персонажа"/>
+          <div className="characters__wrapper">
+            <div className="characters__total">
+              Всего персонажей: {characters?.length}
+            </div>
+            <button 
+              className="characters__view-switch"
+              onClick={() => this.setState({view: !this.state.view})}>
+              {this.showViewIcon()}
+            </button>
           </div>
-          <button 
-            className="characters__view-switch"
-            onClick={() => toggleView(!view)}>
-            {showViewIcon()}
-          </button>
         </div>
+        {content}
+        {
+          (!filterState) ?
+            <div
+              style={(!characters) ? {display: "none"} : {display: "block"}}
+              className={(this.props.remainingPages !== 0) ? "characters__observer" : "characters__observer_hidden" }
+              ref={this.observerElement}>
+                {
+                  (loading) ?
+                    <span>Loading...</span> :
+                    null 
+                }
+            </div> :
+            null
+        }    
+        <NavBar/>
       </div>
-      {content}
-      <div
-        className="characters__observer"
-        ref={observerElement}>
-          {
-            (loading) ?
-              <span>Loading...</span> :
-              null 
-          }
-      </div>
-      <NavBar/>
-    </div>
-  );
+    );
+  }
 };
 
+const mapStateToProps = (state) => {
+  return {
+    characters: getCharactersSelector(state), 
+    error: state.characters.error, 
+    filterState: state.characters.filterState, 
+    loading: state.characters.loading,
+    checkbox: state.characters.checkbox,
+    nextPage: state.characters.nextPage, 
+    remainingPages: state.characters.remainingPages 
+  } 
+}
 
-export default CharactersPage;
+const mapDispatchToProps = { 
+  getCharactersThunk,
+  getFilteredCharactersThunk,
+  onLoading,
+  setRemainingPages,
+  setNextPage
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CharactersPage);

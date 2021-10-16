@@ -20,14 +20,18 @@ const charactersSlice = createSlice({
         unknown: false,
       }
     },
-    page: 0,
-    prevY: 0,
+    nextPage: 1,
+    remainingPages: 1,
     filterState: false,
     alphabetFilterState: null,
   },
   reducers: {
     charactersLoaded(state, action) {
-      state.characters = action.payload;
+      if (state.characters === null) {
+        state.characters = action.payload;
+      } else {
+        state.characters = [...state.characters, ...action.payload]
+      }
       state.loading = false;
       state.error = false;
     },
@@ -74,6 +78,9 @@ const charactersSlice = createSlice({
           .map((item ) => [item[0], item[1] = false])
       );
       state.alphabetFilterState = null;
+      state.characters = null;
+      state.nextPage = 1;
+      state.remainingPages = 1;
       state.filterState = false;
     },
     
@@ -84,6 +91,12 @@ const charactersSlice = createSlice({
         state.alphabetFilterState = action.payload;
       }
     },
+    setNextPage(state, action) {
+      state.nextPage = action.payload;
+    },
+    setRemainingPages(state, action) {
+      state.remainingPages = action.payload;
+    }
   }
 });
 
@@ -99,13 +112,17 @@ export const {
   resetCharactersFilter,
   resetCharacter, 
   resetCharacters, 
-  setAlphabet
+  setAlphabet,
+  setNextPage,
+  setRemainingPages
 } = actions;
 
-export const getCharactersThunk = () => (dispatch) => {
-  getCharacters()
+export const getCharactersThunk = (page) => (dispatch) => {
+  getCharacters(page)
     .then(res => {
-      dispatch(charactersLoaded(res));
+      dispatch(charactersLoaded(res.data));
+      dispatch(setNextPage(res.nextPage))
+      dispatch(setRemainingPages(res.pages))
     })
     .catch(error => {
       dispatch(onError())
@@ -114,7 +131,7 @@ export const getCharactersThunk = () => (dispatch) => {
 
 export const getFilteredCharactersThunk = (options, name) => (dispatch) => {
   dispatch(resetCharacters());
-  getFilteredCharacters(options,name)
+  getFilteredCharacters(options, name)
     .then(res => {
       dispatch(charactersLoaded(res));
     })

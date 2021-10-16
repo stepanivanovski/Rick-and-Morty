@@ -37,5 +37,8 @@
   }
   &__observer {
     height: 100px;
+    &_hidden {
+      height: 0px;
+    }
   }
 }

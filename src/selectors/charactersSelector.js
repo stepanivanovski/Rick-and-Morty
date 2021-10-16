@@ -6,6 +6,10 @@ const getCharacters = (state) => state.characters.characters
 export const getCharactersSelector = createSelector(
   [ getFilter, getCharacters ],
   (alphabetFilterState, characters) => {
+    if ( characters === null ) {
+      return null
+    }
+    
     switch (alphabetFilterState) {
       case 'abc':
         console.log(characters, alphabetFilterState);
