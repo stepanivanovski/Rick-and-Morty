@@ -1,9 +1,9 @@
 import { request } from '../request';
 import { getLocationsUrl } from '../../utils';
 
-const getLocations = async () => {
-  const res = await request.get(`api/Locations/GetAll?PageNumber=1&PageSize=100`);
-  return res.data;
+const getLocations = async (page) => {
+  const res = await request.get(`api/Locations/GetAll?PageNumber=${page}&PageSize=10`);
+  return res;
 }
 
 const getLocationById = async (id) => {
@@ -13,7 +13,6 @@ const getLocationById = async (id) => {
 
 const getFilteredLocations = async (options, name) => {
   const url = getLocationsUrl(options, name);
-  
   const res = await request.get(`api/Locations/Filter?${url}`);
   return res.data;
 }

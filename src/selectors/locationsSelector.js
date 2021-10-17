@@ -6,6 +6,10 @@ const getLocations = (state) => state.locations.locations
 export const getLocationsSelector = createSelector(
   [ getFilter, getLocations ],
   (alphabetFilterState, locations) => {
+    if ( locations === null ) {
+      return null
+    }
+
     switch (alphabetFilterState) {
       case 'abc':
         return [...locations].sort((a, b) => {

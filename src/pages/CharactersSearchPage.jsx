@@ -18,16 +18,22 @@ const CharactersSearchPage = () => {
   const [ inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
 
-  const { characters, error, checkbox } = useSelector(state => state.characters)
+  const { characters, error, checkbox, filterState } = useSelector(state => state.characters)
 
   useEffect(() => {
     textInput.current.focus();
     return () => {
       dispatch(resetCharacters())
-      dispatch(getCharactersThunk(1))
+
+      if (!filterState) {
+        console.log(1);
+        dispatch(getCharactersThunk(1));
+      } else {
+        console.log(2);
+        dispatch(getFilteredCharactersThunk(checkbox));
+      }
     };
   },[]) 
-
 
   const handleInput = (e) => {
     setInputValue(e.target.value);

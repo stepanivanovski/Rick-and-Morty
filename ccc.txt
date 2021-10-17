@@ -1,116 +1,62 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
-import SearchPanel from "../components/SearchPanel"
-import CharacterCardList from "../components/cards/CharacterCardList"
-import { IconListView, IconTableView } from "../icons/";
+import SearchPanel from "../components/SearchPanel";
+import LocationCardList from "../components/cards/LocationCardList";
 import NavBar from "../components/NavBar";
-import { getCharactersSelector } from '../selectors/charactersSelector';
+import { getLocationsSelector } from '../selectors/locationsSelector';
 import { 
-  getCharactersThunk,
-  getFilteredCharactersThunk,
-  onLoading
-} from "../store/charactersSlice";
+  onLoading,
+  resetLocations,
+  getLocationsThunk,
+  getFilteredLocationsThunk
+} from "../store/locationsSlice"
 
-const CharactersPage = () => {
-  const dispatch = useDispatch();
-  const observerElement = useRef();
-  const { characters: { loading, error, filterState, checkbox, nextPage } } = useSelector(state => state);
-  const characters = useSelector(getCharactersSelector);
-
-  const [view, toggleView] = useState(true);
+const LocationsPage = () => {
   
-  function getData() {
-    if (!filterState) {
-      dispatch(getCharactersThunk(nextPage));
-    } else {
-      dispatch(getFilteredCharactersThunk(checkbox))
-    }
-  }
+  const dispatch = useDispatch();
+  const {  loading, error, filterState, type, measurement } = useSelector(state => state.locations);
 
-  function handleObserver(entities, observer) {
-    if ( entities[0].isIntersecting ) {
-      console.log("y");
-      dispatch(onLoading())
-      getData()
-    }
-  }
+  const locations = useSelector(getLocationsSelector)
 
   useEffect(() => {
-    if (!characters) {
-      getData();
-    } 
-
-    if (!filterState) {
-      const options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0
+    if (!locations) {
+      if (!filterState) {
+        dispatch(getLocationsThunk());
+      } else {
+        dispatch(getFilteredLocationsThunk({  type, measurement }))
       }
-  
-      const observer = new IntersectionObserver(
-        handleObserver, 
-        options
-      )
-  
-      observer.observe(observerElement.current);
     }
   },[]) 
-
-  const showViewIcon = () => {
-    return (view) ? <IconListView/> : <IconTableView/>
-  }
-
-  const content = (!characters) ? 
+  
+  const content = (!locations) ? 
     <Spinner/> : 
     (error) ? 
-    <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
-    (characters === null) ? 
+    <NotFound text="Упс, что-то пошло не так, проверьте подключение к интернету" 
+      url="not-found.png"/>  : 
+    (locations === null) ? 
     null :
-    (characters.length === 0) ? 
-    <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :
-    <CharacterCardList columnView={view} data={characters}/> 
+    (locations.length === 0) ? 
+    <NotFound text="По данным фильтра ничего не найдено" url="not-found.png"/> :  
+    <LocationCardList data={locations}/> 
   
-
   return (
-    <div className="characters container">
-      <div className="characters__header">
-        <SearchPanel 
-          path="./searchChar"
-          filter
-          filterPath="/filterChar"
-          placeholder="Найти персонажа"/>
-        <div className="characters__wrapper">
-          <div className="characters__total">
-            Всего персонажей: {characters?.length}
-          </div>
-          <button 
-            className="characters__view-switch"
-            onClick={() => toggleView(!view)}>
-            {showViewIcon()}
-          </button>
+    <div className="locations">
+      <div className="locations__header">
+        <SearchPanel
+          path="./searchLoc"
+          filterPath="/filterLoc"
+          placeholder={"Найти локацию"}
+          filter/>
+        <div className="locations__total">
+          Всего локаций: {locations?.length}
         </div>
       </div>
       {content}
-      {
-        (!filterState) ?
-          <div
-            style={(!characters) ? {display: "none"} : {display: "block"}}
-            className="characters__observer"
-            ref={observerElement}>
-              {
-                (loading) ?
-                  <span>Loading...</span> :
-                  null 
-              }
-          </div> :
-          null
-      }
       <NavBar/>
     </div>
   );
 };
 
-
-export default CharactersPage;
+export default LocationsPage;

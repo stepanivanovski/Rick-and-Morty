@@ -16,17 +16,22 @@ const LocationsSearchPage = () => {
   const [ inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
 
-  const { locations, error, type, measurement} = useSelector(state => state.locations)
-
+  const { locations, error, type, measurement, filterState} = useSelector(state => state.locations)
 
   useEffect(() => {
     textInput.current.focus();
     return () => {
       dispatch(resetLocations())
-      dispatch(getLocationsThunk())
+
+      if (!filterState) {
+        console.log(1);
+        dispatch(getLocationsThunk(1));
+      } else {
+        console.log(2);
+        dispatch(getFilteredLocationsThunk({ type, measurement }));
+      }
     };
   },[]) 
-
 
   const handleInput = (e) => {
     setInputValue(e.target.value);

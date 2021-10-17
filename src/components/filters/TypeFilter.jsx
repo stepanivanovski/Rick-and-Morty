@@ -50,11 +50,9 @@ const TypeFilter = ({ id }) => {
 
   const data = (id === "type")? types : (id === "measurement")? measurements : [];
 
-  useEffect(() => {
-    dispatch(resetLocations())
-  }, [])
-
   const handleInput = (e) => {
+    dispatch(resetLocations())
+
     if (id === "type") {
       dispatch(setType(e.target.value))
     } else if (id === "measurement") {

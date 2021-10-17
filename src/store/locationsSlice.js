@@ -11,11 +11,17 @@ const locationsSlice = createSlice({
     filterState: false,
     alphabetFilterState: null,
     type:"",
-    measurement:""
+    measurement:"",
+    nextPage: 1,
+    remainingPages: 1
   },
   reducers: {
     locationsLoaded(state, action) {
-      state.locations = action.payload;
+      if (state.locations === null) {
+        state.locations = action.payload;
+      } else {
+        state.locations = [...state.locations, ...action.payload]
+      }
       state.loading = false;
       state.error = false;
     },
@@ -37,6 +43,9 @@ const locationsSlice = createSlice({
       state.filterState = false;
       state.measurement = "";
       state.type = "";
+      state.locations = null;
+      state.nextPage = 1;
+      state.remainingPages = 1;
     },
     resetLocation(state) {
       state.location = {}
@@ -60,6 +69,12 @@ const locationsSlice = createSlice({
       } else {
         state.alphabetFilterState = action.payload;
       }
+    },
+    setNextPage(state, action) {
+      state.nextPage = action.payload;
+    },
+    setRemainingPages(state, action) {
+      state.remainingPages = action.payload;
     }
   }
 });
@@ -76,13 +91,17 @@ export const {
   resetFilter, 
   setAlphabet,
   setType,
-  setMeasurement
+  setMeasurement,
+  setNextPage,
+  setRemainingPages
 } = actions;
 
-export const getLocationsThunk = () => (dispatch) => {
-  getLocations()
+export const getLocationsThunk = (page) => (dispatch) => {
+  getLocations(page)
     .then(res => {
-      dispatch(locationsLoaded(res));
+      dispatch(locationsLoaded(res.data));
+      dispatch(setNextPage(res.nextPage))
+      dispatch(setRemainingPages(res.pages))
     })
     .catch(error => {
       dispatch(onError())

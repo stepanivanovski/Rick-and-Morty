@@ -71,7 +71,6 @@ class CharactersPage extends Component {
     }
   }
 
-
   showViewIcon = () => {
     return (this.state.view) ? <IconListView/> : <IconTableView/>
   }
