@@ -1,21 +1,20 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { observer } from "mobx-react-lite";
 import { Link } from 'react-router-dom';
 import GoBackButton from '../components/GoBackButton';
 import { IconMoreThen } from '../icons';
 import { showImg } from '../utils';
-import { updateAvatarThunk } from '../store/authSlice';
+import authStore from '../store/authStore';
 
 
-const EditProfilePage = () => {
-  const dispatch = useDispatch();
+const EditProfilePage = observer(() => {
 
   const login = sessionStorage.getItem('login')
   const avatar = sessionStorage.getItem('avatar')
   const fullName = sessionStorage.getItem('fullName')
 
   const handleInput = (e) => {
-    dispatch(updateAvatarThunk(e.target.files));
+    authStore.updateAvatar(e.target.files);
   }
 
   return (
@@ -60,6 +59,6 @@ const EditProfilePage = () => {
     </div>
   </div>
   );
-};
+});
 
 export default EditProfilePage;

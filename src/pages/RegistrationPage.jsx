@@ -1,22 +1,23 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
+import { observer } from "mobx-react-lite";
 import Input from '../components/base/Input';
 import Button from '../components/base/Button';
 import GoBackButton from '../components/GoBackButton';
 import { IconUser, IconPassword } from '../icons';
 import Popup from '../components/Popup';
-import { 
-  createProfileThunk,
-  showRegModal
- } from '../store/authSlice';
+import authStore from '../store/authStore';
 
   
-const RegistrationPage = () => {
+const RegistrationPage = observer(() => {
   const { register, handleSubmit, formState: {errors}, reset } = useForm();
 
-  const dispatch = useDispatch();
-  const { regModal, regMessage: [mesTitle, mesText] } = useSelector(state => state.auth)
+  const { 
+    registrationModal,
+    createProfile,
+    showRegistrationModal, 
+    registrationMessage: [mesTitle, mesText] 
+  } = authStore
 
   const resetForm = () => {
     reset({
@@ -31,7 +32,7 @@ const RegistrationPage = () => {
   const onSubmit = (data) => {
     console.log(data)
     const request = JSON.stringify(data);
-    dispatch(createProfileThunk(request, resetForm))
+    createProfile(request, resetForm);
   }
 
 
@@ -103,12 +104,12 @@ const RegistrationPage = () => {
         <Button text="Отправить" />
       </form>
       {
-        (regModal) ? 
-          <Popup title={mesTitle} set={mesText} actionCreator={showRegModal}/> : 
+        (registrationModal) ? 
+          <Popup title={mesTitle} set={mesText} actionCreator={showRegistrationModal}/> : 
           null
       }
     </div>
   );
-};
+});
 
 export default RegistrationPage;

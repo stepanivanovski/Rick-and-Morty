@@ -1,19 +1,21 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
+import { observer } from "mobx-react-lite";
 import GoBackButton from '../components/GoBackButton';
 import Button from '../components/base/Button';
 import Input from '../components/base/Input';
 import Popup from '../components/Popup';
-import { 
-  updateProfileThunk,
-  showUpdModal
- } from '../store/authSlice';
+import authStore from '../store/authStore';
 
 
-const ChangeNamePage = () => {
-  const dispatch = useDispatch();
-  const { updModal, updMessage: [mesTitle, mesText], user } = useSelector(state => state.auth)
+const ChangeNamePage = observer(() => {
+  const { 
+    updateModal, 
+    updateMessage: [mesTitle, mesText], 
+    user,
+    updateProfile,
+    showUpdateModal 
+  } = authStore
 
   const defaultValues = {
     firstName: user.firstName,
@@ -37,7 +39,7 @@ const ChangeNamePage = () => {
       userId
     }
 
-    dispatch(updateProfileThunk(request, resetForm))
+    updateProfile(request, resetForm)
   }
 
   const resetForm = () => {
@@ -57,14 +59,14 @@ const ChangeNamePage = () => {
       <NameInputs register={register} errors={errors} user={user}/>
       <Button className="options__button" text="Сохранить"/>
       {
-        (updModal) ? 
-          <Popup title={mesTitle} set={mesText} actionCreator={showUpdModal}/> : 
+        (updateModal) ? 
+          <Popup title={mesTitle} set={mesText} actionCreator={showUpdateModal}/> : 
           null
       }
     </form>  
   </div>  
   );
-};
+});
 
 const NameInputs = ({ register, errors, user: { firstName, lastName, patronymic } }) => {
   return (

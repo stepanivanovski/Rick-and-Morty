@@ -1,12 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import Button from './base/Button';
 
 const Popup = ({ title, set, actionCreator }) => {
-  const dispatch = useDispatch();
   
   const onModal = () => {
-    dispatch(actionCreator([]))
+    actionCreator([])
   }
 
   return (
