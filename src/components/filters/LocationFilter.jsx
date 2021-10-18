@@ -1,18 +1,21 @@
 import React from 'react';
+import { observer } from "mobx-react-lite";
 import { useHistory } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
 import GoBackButton from '../GoBackButton';
 import { IconABC, IconCBA, IconMoreThen, IconRedFilter } from '../../icons';
-import { 
-  resetFilter, 
-  setAlphabet
-} from '../../store/locationsSlice';
+import locationsStore from '../../store/locationsStore';
 
-const LocationFilter = () => {
+const LocationFilter = observer(() => {
   const history = useHistory(); 
-  const dispatch = useDispatch();
 
-  const { filterState, alphabetFilterState, type, measurement } = useSelector(state => state.locations);
+  const { 
+    filterState, 
+    alphabetFilterState, 
+    type, 
+    measurement,
+    resetFilter, 
+    setAlphabet
+  } = locationsStore;
 
   return (
     <div className="filter">
@@ -20,7 +23,7 @@ const LocationFilter = () => {
         <GoBackButton text="Фильтры" className="filter__goBack"/>
         {(filterState) ?
           <button 
-            onClick = {() => dispatch(resetFilter())}
+            onClick = {() => resetFilter()}
             className="filter__button">
             <IconRedFilter/>
           </button> :
@@ -33,13 +36,13 @@ const LocationFilter = () => {
           <p className="filter__text text_main-16px">По алфавиту</p>
           <div className="filter__icons">
             <button
-              onClick={() => dispatch(setAlphabet("abc"))} 
+              onClick={() => setAlphabet("abc")} 
               className="filter__button">
               <IconABC 
                 className={(alphabetFilterState === "abc") ? "filter__active-icon" : ''}/>
             </button>
             <button
-              onClick={() => dispatch(setAlphabet("cba"))}  
+              onClick={() => setAlphabet("cba")}  
               className="filter__button">
               <IconCBA
                 className={(alphabetFilterState === "cba") ? "filter__active-icon" : ''}/>
@@ -70,6 +73,6 @@ const LocationFilter = () => {
       </div>  
     </div>
   );
-};
+});
 
 export default LocationFilter;

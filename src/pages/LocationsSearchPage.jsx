@@ -1,41 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { observer } from "mobx-react-lite";
 import Spinner from '../components/Spinner';
 import NotFound from '../components/NotFound';
 import GoBackButton from "../components/GoBackButton"
 import LocationCardList from '../components/cards/LocationCardList';
 import { IconCross } from '../icons';
-import { 
-  getFilteredLocationsThunk,
-  getLocationsThunk,
-  resetLocations, 
-} from "../store/locationsSlice";
+import locationsStore from "../store/locationsStore";
 
-const LocationsSearchPage = () => {
+const LocationsSearchPage = observer(() => {
   const textInput = useRef();
   const [ inputValue, setInputValue] = useState('');
-  const dispatch = useDispatch();
 
-  const { locations, error, type, measurement, filterState} = useSelector(state => state.locations)
+  const { 
+    locations, 
+    error, 
+    type, 
+    measurement, 
+    filterState,
+    getFilteredLocations,
+    getLocations,
+    resetLocations
+  } = locationsStore
 
   useEffect(() => {
     textInput.current.focus();
     return () => {
-      dispatch(resetLocations())
+      resetLocations()
 
       if (!filterState) {
-        console.log(1);
-        dispatch(getLocationsThunk(1));
+        getLocations(1);
       } else {
-        console.log(2);
-        dispatch(getFilteredLocationsThunk({ type, measurement }));
+        getFilteredLocations({ type, measurement });
       }
     };
   },[]) 
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
-    dispatch(getFilteredLocationsThunk({ type, measurement }, e.target.value));
+    getFilteredLocations({ type, measurement }, e.target.value);
   }
 
   const content = (!locations) ? 
@@ -59,7 +61,7 @@ const LocationsSearchPage = () => {
         <button className="filter__button"
           onClick = {() => {
             setInputValue('')
-            dispatch(getFilteredLocationsThunk({ type, measurement }))}}>
+            getFilteredLocations({ type, measurement })}}>
           <IconCross className="filter__goBack"/>
         </button>
       </div>
@@ -69,6 +71,6 @@ const LocationsSearchPage = () => {
       </div>
     </div>
   );
-};
+});
 
 export default LocationsSearchPage;

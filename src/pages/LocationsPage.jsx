@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { observer, inject } from "mobx-react";
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import SearchPanel from "../components/SearchPanel";
 import LocationCardList from "../components/cards/LocationCardList";
 import NavBar from "../components/NavBar";
-import { getLocationsSelector } from '../selectors/locationsSelector';
-import { 
-  onLoading,
-  getLocationsThunk,
-  getFilteredLocationsThunk,
-  setRemainingPages,
-  setNextPage
-} from "../store/locationsSlice"
 
-class LocationsPage extends Component {
+export default @inject("locationsStore") @observer class LocationsPage extends Component {
   
   observerElement = React.createRef(); 
 
@@ -24,30 +16,30 @@ class LocationsPage extends Component {
       nextPage, 
       type,
       measurement, 
-      getLocationsThunk, 
-      getFilteredLocationsThunk
-    } = this.props
+      getLocations, 
+      getFilteredLocations
+    } = this.props.locationsStore
 
     if (!filterState) {
-      getLocationsThunk(nextPage);
+      getLocations(nextPage);
       console.log(1);
     } else {
       console.log(2);
-      getFilteredLocationsThunk({ type, measurement })
+      getFilteredLocations({ type, measurement })
     }
   }
 
   handleObserver = (entities, observer) => {
     if ( entities[0].isIntersecting ) {
-      if (this.props.remainingPages !== 0) {
-        this.props.onLoading() 
+      if (this.props.locationsStore.remainingPages !== 0) {
+        this.props.locationsStore.onLoading() 
         this.getData()
       } 
     }
   }
 
   componentDidMount() {
-    const { locations, filterState } = this.props;
+    const { locations, filterState } = this.props.locationsStore;
 
     if (!locations) {
       this.getData();
@@ -75,7 +67,7 @@ class LocationsPage extends Component {
       locations,
       error,
       loading
-    } = this.props
+    } = this.props.locationsStore
 
     const content = (error) ?
       <NotFound text="Упс, что-то пошло не так, проверьте подключение к интернету" 
@@ -105,7 +97,7 @@ class LocationsPage extends Component {
           (!filterState) ?
             <div
               style={(!locations) ? {display: "none"} : {display: "block"}}
-              className={(this.props.remainingPages !== 0) ? "characters__observer" : "characters__observer_hidden" }
+              className={(this.props.locationsStore.remainingPages !== 0) ? "characters__observer" : "characters__observer_hidden" }
               ref={this.observerElement}>
                 {
                   (loading) ?
@@ -120,28 +112,3 @@ class LocationsPage extends Component {
      );
    } 
 };
-
-const mapStateToProps = (state) => {
-  return {
-    locations: getLocationsSelector(state), 
-    error: state.locations.error, 
-    filterState: state.locations.filterState, 
-    loading: state.locations.loading,
-    checkbox: state.locations.checkbox,
-    nextPage: state.locations.nextPage,
-    type: state.locations.type,
-    measurement: state.locations.measurement,  
-    remainingPages: state.locations.remainingPages 
-  } 
-}
-
-const mapDispatchToProps = { 
-  getLocationsThunk,
-  getFilteredLocationsThunk,
-  onLoading,
-  setRemainingPages,
-  setNextPage
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(LocationsPage);

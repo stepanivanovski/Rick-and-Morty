@@ -3,6 +3,7 @@ import { getLocationsUrl } from '../../utils';
 
 const getLocations = async (page) => {
   const res = await request.get(`api/Locations/GetAll?PageNumber=${page}&PageSize=10`);
+  console.log(res.data);
   return res;
 }
 
