@@ -3,7 +3,7 @@ import { getCharacters, getCharacterById, getFilteredCharacters } from '../servi
 
 class Characters {
 
-  characters = null
+  _characters = null
   character = {}
   loading = true
   error = false
@@ -28,54 +28,54 @@ class Characters {
     makeAutoObservable(this)
   }
 
-  charactersLoaded(characters) {
-    if (this.characters === null) {
-      this.characters = characters
+  charactersLoaded = (characters) => {
+    if (this._characters === null) {
+      this._characters = characters
     } else {
-      this.characters = this.characters.push(...characters)
-    }
+      this._characters = [...this._characters, ...characters]
 
-    this.loading = false;
-    this.error = false;
+      this.loading = false;
+      this.error = false;
+    }
   }
 
-  characterLoaded(character) {
+  characterLoaded = (character) => {
     this.character = character;
     this.loading = false;
     this.error = false;
   }
 
-  onLoading() {
+  onLoading = () => {
     this.loading = true;
     this.error = false
   }
 
-  onError() {
+  onError = () => {
     this.error = true; 
     this.loading = false;
   }
 
-  toggleGender(genderObject) {
+  toggleGender = (genderObject) => {
     this.filterState = true;
 
     this.checkbox.gender = {...this.checkbox.gender, ...genderObject}
   }
 
-  toggleStatus(statusObject) {
+  toggleStatus = (statusObject) => {
     this.filterState = true;
 
     this.checkbox.status = {...this.checkbox.status, ...statusObject}
   }
 
-  resetCharacter() {
+  resetCharacter = () => {
     this.character = {}
   }
 
-  resetCharacters() {
-    this.characters = null;
+  resetCharacters = () => {
+    this._characters = null;
   }
 
-  resetCharactersFilter() {
+  resetCharactersFilter = () => {
     this.checkbox.gender = Object.fromEntries(
       Object.entries(this.checkbox.gender)
         .map((item) => [item[0], item[1] = false])
@@ -87,13 +87,13 @@ class Characters {
     );
 
     this.alphabetFilterState = null;
-    this.characters = null;
+    this._characters = null;
     this.nextPage = 1;
     this.remainingPages = 1;
     this.filterState = false;
   }
   
-  setAlphabet(alphabetValue) {
+  setAlphabet = (alphabetValue) => {
     if (this.alphabetFilterState === alphabetValue) {
       this.alphabetFilterState = null;
     } else {
@@ -101,17 +101,18 @@ class Characters {
     }
   }
 
-  setNextPage(pageNumber) {
+  setNextPage = (pageNumber) => {
     this.nextPage = pageNumber;
   }
 
-  setRemainingPages(pagesAmount) {
+  setRemainingPages = (pagesAmount) => {
     this.remainingPages = pagesAmount;
   }
 
   getCharacters = async (page) =>  {
     getCharacters(page)
       .then(res => {
+        console.log(res);
         this.charactersLoaded(res.data);
         this.setNextPage(res.nextPage);
         this.setRemainingPages(res.pages);
@@ -141,6 +142,38 @@ class Characters {
       .catch(error => {
         this.onError()
       })
+  }
+
+  get characters() {
+    if ( this._characters === null ) {
+      return null
+    }
+    
+    switch (this.alphabetFilterState) {
+      case 'abc':
+        return [...this._characters].sort((a, b) => {
+          let nameA = a["fullName"].trim();
+          let nameB = b["fullName"].trim();
+          if (nameA > nameB) return 1;
+
+          if (nameB > nameA) return -1;
+
+          return 0;
+        })
+      case 'cba':
+        return [...this._characters].sort((a, b) => {
+          let nameA = a["fullName"].trim();
+          let nameB = b["fullName"].trim();
+      
+          if (nameA > nameB) return -1;
+
+          if (nameB > nameA) return 1;
+
+          return 0;
+        })
+      default:
+        return this._characters
+    }
   }
 }
 

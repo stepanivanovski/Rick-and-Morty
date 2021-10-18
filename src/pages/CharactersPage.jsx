@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { observer, inject } from "mobx-react";
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
@@ -7,18 +6,8 @@ import SearchPanel from "../components/SearchPanel"
 import CharacterCardList from "../components/cards/CharacterCardList"
 import { IconListView, IconTableView } from "../icons/";
 import NavBar from "../components/NavBar";
-import { getCharactersSelector } from '../selectors/charactersSelector';
-import { 
-  getCharactersThunk,
-  getFilteredCharactersThunk,
-  onLoading,
-  setNextPage,
-  setRemainingPages
-} from "../store/charactersSlice";
 
-// @inject("charactersStore")
-@observer
-export default class CharactersPage extends Component {
+export default @inject("charactersStore") @observer class CharactersPage extends Component {
 
   state = { 
     view: true
@@ -78,7 +67,6 @@ export default class CharactersPage extends Component {
     return (this.state.view) ? <IconListView/> : <IconTableView/>
   }
 
-  
   render() {
     const { characters, error, filterState, loading } = this.props.charactersStore
 
