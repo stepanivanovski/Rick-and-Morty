@@ -1,5 +1,6 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { observer } from 'mobx-react-lite'
+import themeStore  from './store/themeStore'
 import ProtectedRoute from './routes/ProtectedRoute'; 
 import LoginPage from './pages/LoginPage'; 
 import RegistrationPage from './pages/RegistrationPage';
@@ -21,8 +22,8 @@ import EpisodesSearchPage from './pages/EpisodesSearchPage';
 import NotFound from './components/NotFound';
 
 
-function App() {
-  const themeClass = useSelector(state => state.theme.theme);
+const App = observer(() => {
+  const themeClass = themeStore.theme
 
   return (
     <div className={`App ${themeClass}`}>
@@ -50,5 +51,6 @@ function App() {
       </Switch> 
     </div>
   );
-} 
+}) 
+
 export default App;

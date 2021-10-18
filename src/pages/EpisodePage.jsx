@@ -1,30 +1,24 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { observer } from 'mobx-react-lite'
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import GoBackButton from '../components/GoBackButton';
 import CharacterCardList from '../components/cards/CharacterCardList';
 import { IconPlay } from '../icons';
 import { convertDate } from '../utils';
-import {
-  resetEpisode, 
-  onLoading,
-  getEpisodeByIdThunk
-} from "../store/episodesSlice";
+import episodesStore from "../store/episodesStore";
 
 
-const EpisodePage = ({ id }) => {
+const EpisodePage = observer(({ id }) => {
 
-  const dispatch = useDispatch();
-
-  const { error, episode } = useSelector(state => state.episodes);
+  const { error, episode, onLoading, resetEpisode, getEpisodeById } = episodesStore;
   
   useEffect(() => {
-    dispatch(getEpisodeByIdThunk(id))
+    getEpisodeById(id)
     
     return () => {
-      dispatch(resetEpisode());
-      dispatch(onLoading())
+      resetEpisode();
+      onLoading();
     }
   }, []) 
   
@@ -57,7 +51,7 @@ const EpisodePage = ({ id }) => {
       {content}
     </div>     
   );
-};
+});
 
 const View = ({ episode }) => {
   const { 

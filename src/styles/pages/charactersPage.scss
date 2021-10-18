@@ -37,6 +37,9 @@
   }
   &__observer {
     height: 100px;
+    span {
+      color: $main-text-color;
+    }
     &_hidden {
       height: 0px;
     }

@@ -1,15 +1,14 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { observer } from 'mobx-react-lite'
 import { toggleModal } from '../utils';
-import { changeTheme } from "../store/themeSlice"
+import themeStore  from "../store/themeStore"
 
-const ThemeChanging = ({ modal, setModal }) => {
-  const dispatch = useDispatch();
+const ThemeChanging = observer(({ modal, setModal }) => {
 
   const handleInput = (event) => {
     const value = event.target.value;
 
-    dispatch(changeTheme(value));
+    themeStore.changeTheme(value);
   } 
 
   return (
@@ -68,6 +67,6 @@ const ThemeChanging = ({ modal, setModal }) => {
     </div>
     </div>
   );
-};
+});
 
 export default ThemeChanging;

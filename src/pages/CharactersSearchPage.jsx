@@ -1,43 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { observer } from "mobx-react-lite";
 import Spinner from '../components/Spinner';
 import NotFound from '../components/NotFound';
 import GoBackButton from "../components/GoBackButton"
 import CharacterCardList from "../components/cards/CharacterCardList";
 import { IconCross } from '../icons';
+import charactersStore from '../store/charactersStore';
 
-import { 
-  getFilteredCharactersThunk, 
-  getCharactersThunk, 
-  resetCharacters,
-} from "../store/charactersSlice";
-
-const CharactersSearchPage = () => {
+const CharactersSearchPage = observer(() => {
 
   const textInput = useRef();
   const [ inputValue, setInputValue] = useState('');
-  const dispatch = useDispatch();
 
-  const { characters, error, checkbox, filterState } = useSelector(state => state.characters)
+  const { 
+    characters, 
+    error, 
+    checkbox, 
+    filterState, 
+    getFilteredCharacters,  
+    getCharacters, 
+    resetCharacters, 
+  } = charactersStore; 
 
   useEffect(() => {
     textInput.current.focus();
     return () => {
-      dispatch(resetCharacters())
-
+      resetCharacters()
+      
       if (!filterState) {
-        console.log(1);
-        dispatch(getCharactersThunk(1));
+        getCharacters(1);
       } else {
-        console.log(2);
-        dispatch(getFilteredCharactersThunk(checkbox));
+        getFilteredCharacters(checkbox);
       }
-    };
+    }
   },[]) 
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
-    dispatch(getFilteredCharactersThunk(checkbox, e.target.value));
+    getFilteredCharacters(checkbox, e.target.value);
   }
 
   const content = (!characters) ? 
@@ -61,7 +61,7 @@ const CharactersSearchPage = () => {
         <button className="filter__button"
           onClick = {() => {
             setInputValue('')
-            dispatch(getFilteredCharactersThunk(checkbox))}}>
+            getFilteredCharacters(checkbox)}}>
           <IconCross className="filter__goBack"/>
         </button>
       </div>
@@ -71,7 +71,7 @@ const CharactersSearchPage = () => {
       </div>
     </div>
   );
-};
+});
 
 
 export default CharactersSearchPage;
