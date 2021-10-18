@@ -24,7 +24,7 @@ import NotFound from './components/NotFound';
 
 const App = observer(() => {
   const themeClass = themeStore.theme
-
+  console.log(window.matchMedia);
   return (
     <div className={`App ${themeClass}`}>
       <Switch>

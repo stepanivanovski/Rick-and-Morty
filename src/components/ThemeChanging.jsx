@@ -46,7 +46,7 @@ const ThemeChanging = observer(({ modal, setModal }) => {
           type="radio" 
           id="theme-3" 
           name="theme" 
-          value="option"/>
+          value="auto-theme"/>
         <label htmlFor="theme-3">Следовать настройкам системы</label>
       </div>
       <div className="theme__radio-wrap">
@@ -56,7 +56,7 @@ const ThemeChanging = observer(({ modal, setModal }) => {
           type="radio" 
           id="theme-4" 
           name="theme" 
-          value="saving"/>
+          value="light"/>
         <label htmlFor="theme-4">В режиме электросбережения</label>
       </div>
       <button

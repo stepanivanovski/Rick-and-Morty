@@ -1,10 +1,11 @@
-:root{
+:root {
   --color-red: #EB5757; 
   --color-green: #43D049; 
   --color-blue: #22A2BD;
   --color-gray:#5B6975;
+}
 
-  //light-theme
+.light {
   --color-main-bg: #FCFCFC; 
   --color-bg-input: #F2F2F2; 
   --color-second-bg: #FFF;
@@ -15,7 +16,8 @@
   --color-location-border: #E5E5E5;
   --color-page-bg: #FFF;
 }
-.dark{
+
+.dark {
   --color-main-bg: #0B1E2D;
   --color-bg-input:#152A3A; 
   --color-second-bg: #152A3A;
@@ -41,7 +43,6 @@ $icons-color: var(--color-icons);
 $active-icon-color: var(--color-active-icon);
 $page-bg-color: var(--color-page-bg);
 $location-border-color: var(--color-location-border);
-
 
 $text-default: 16px;
 $text-lg: 20px;
