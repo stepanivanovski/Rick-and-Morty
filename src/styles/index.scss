@@ -55,32 +55,4 @@
   }
 }
 
-@media (prefers-color-scheme: light) {
-  .auto-theme {
-    --color-main-bg: #FCFCFC; 
-    --color-bg-input: #F2F2F2; 
-    --color-second-bg: #FFF;
-    --color-main-text: #0B1E2D;
-    --color-second-text: #828282;
-    --color-icons: #BDBDBD;
-    --color-active-icon: #22A2BD;
-    --color-location-border: #E5E5E5;
-    --color-page-bg: #FFF;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .auto-theme {
-    --color-main-bg: #0B1E2D;
-    --color-bg-input:#152A3A; 
-    --color-second-bg: #152A3A;
-    --color-main-text: #FFF;
-    --color-second-text: #5B6975;;
-    --color-icons: #5B6975;
-    --color-active-icon: #43D049;
-    --color-location-border: #0B1E2D;
-    --color-page-bg: #0B1E2D;;
-  }
-}
-
 
