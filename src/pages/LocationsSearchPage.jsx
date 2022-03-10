@@ -1,43 +1,41 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { observer } from "mobx-react-lite";
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../components/Spinner';
 import NotFound from '../components/NotFound';
 import GoBackButton from "../components/GoBackButton"
 import LocationCardList from '../components/cards/LocationCardList';
 import { IconCross } from '../icons';
-import locationsStore from "../store/locationsStore";
+import { 
+  getFilteredLocationsThunk,
+  getLocationsThunk,
+  resetLocations, 
+} from "../store/locationsSlice";
 
-const LocationsSearchPage = observer(() => {
+const LocationsSearchPage = () => {
   const textInput = useRef();
   const [ inputValue, setInputValue] = useState('');
+  const dispatch = useDispatch();
 
-  const { 
-    locations, 
-    error, 
-    type, 
-    measurement, 
-    filterState,
-    getFilteredLocations,
-    getLocations,
-    resetLocations
-  } = locationsStore
+  const { locations, error, type, measurement, filterState} = useSelector(state => state.locations)
 
   useEffect(() => {
     textInput.current.focus();
     return () => {
-      resetLocations()
+      dispatch(resetLocations())
 
       if (!filterState) {
-        getLocations(1);
+        console.log(1);
+        dispatch(getLocationsThunk(1));
       } else {
-        getFilteredLocations({ type, measurement });
+        console.log(2);
+        dispatch(getFilteredLocationsThunk({ type, measurement }));
       }
     };
   },[]) 
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
-    getFilteredLocations({ type, measurement }, e.target.value);
+    dispatch(getFilteredLocationsThunk({ type, measurement }, e.target.value));
   }
 
   const content = (!locations) ? 
@@ -61,7 +59,7 @@ const LocationsSearchPage = observer(() => {
         <button className="filter__button"
           onClick = {() => {
             setInputValue('')
-            getFilteredLocations({ type, measurement })}}>
+            dispatch(getFilteredLocationsThunk({ type, measurement }))}}>
           <IconCross className="filter__goBack"/>
         </button>
       </div>
@@ -71,6 +69,6 @@ const LocationsSearchPage = observer(() => {
       </div>
     </div>
   );
-});
+};
 
 export default LocationsSearchPage;

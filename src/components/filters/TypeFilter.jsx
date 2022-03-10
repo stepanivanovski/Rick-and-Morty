@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import GoBackButton from '../GoBackButton';
-import locationsStore from "../../store/locationsStore";
+import {
+  setType,
+  setMeasurement,
+  resetLocations
+} from "../../store/locationsSlice";
 
 const types = [
   'Мир',
@@ -39,23 +44,19 @@ const InputRadio = ({ label, id, handleInput, className }) => {
 }
 
 const TypeFilter = ({ id }) => {
-  const {
-    type, 
-    measurement,
-    setType,
-    setMeasurement,
-    resetLocations
-  } = locationsStore;
+  console.log(id);
+  const dispatch = useDispatch();
+  const {type, measurement} = useSelector(state => state.locations);
 
   const data = (id === "type")? types : (id === "measurement")? measurements : [];
 
   const handleInput = (e) => {
-    resetLocations()
+    dispatch(resetLocations())
 
     if (id === "type") {
-      setType(e.target.value)
+      dispatch(setType(e.target.value))
     } else if (id === "measurement") {
-      setMeasurement(e.target.value)
+      dispatch(setMeasurement(e.target.value))
     }
   }
 

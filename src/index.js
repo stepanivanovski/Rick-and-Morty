@@ -7,11 +7,9 @@ import App from "./App";
 import "./styles/index.scss"
 
 import charactersStore from "./store/charactersStore";
-import locationsStore from "./store/locationsStore";
 
 const mainStore = {
-  charactersStore,
-  locationsStore
+  charactersStore
 }
 
 ReactDOM.render(

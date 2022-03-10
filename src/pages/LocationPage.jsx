@@ -1,22 +1,26 @@
 import React, { useEffect } from 'react';
-import { observer } from "mobx-react-lite";
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import GoBackButton from '../components/GoBackButton';
 import CharacterCardList from '../components/cards/CharacterCardList';
-import locationsStore from "../store/locationsStore";
+import {
+  resetLocation, 
+  getLocationByIdThunk,
+} from "../store/locationsSlice";
 
 
-const LocationPage = observer(( {id} ) => {
+const LocationPage = ( {id} ) => {
   
   
-  const { error, location, resetLocation, getLocationById } = locationsStore;
+  const dispatch =useDispatch();
+  const { error, location } = useSelector(state => state.locations);
 
   useEffect(() => {
-    getLocationById(id)
+    dispatch(getLocationByIdThunk(id))
     
     return () => {
-      resetLocation();
+      dispatch(resetLocation());
     }
   }, []) 
   
@@ -43,7 +47,7 @@ const LocationPage = observer(( {id} ) => {
       {content}
     </div>
   );
-});
+};
 
 const View = ({location}) => {
   const {

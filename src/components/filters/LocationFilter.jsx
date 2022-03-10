@@ -1,21 +1,18 @@
 import React from 'react';
-import { observer } from "mobx-react-lite";
 import { useHistory } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import GoBackButton from '../GoBackButton';
 import { IconABC, IconCBA, IconMoreThen, IconRedFilter } from '../../icons';
-import locationsStore from '../../store/locationsStore';
+import { 
+  resetFilter, 
+  setAlphabet
+} from '../../store/locationsSlice';
 
-const LocationFilter = observer(() => {
+const LocationFilter = () => {
   const history = useHistory(); 
+  const dispatch = useDispatch();
 
-  const { 
-    filterState, 
-    alphabetFilterState, 
-    type, 
-    measurement,
-    resetFilter, 
-    setAlphabet
-  } = locationsStore;
+  const { filterState, alphabetFilterState, type, measurement } = useSelector(state => state.locations);
 
   return (
     <div className="filter">
@@ -23,7 +20,7 @@ const LocationFilter = observer(() => {
         <GoBackButton text="Фильтры" className="filter__goBack"/>
         {(filterState) ?
           <button 
-            onClick = {() => resetFilter()}
+            onClick = {() => dispatch(resetFilter())}
             className="filter__button">
             <IconRedFilter/>
           </button> :
@@ -36,13 +33,13 @@ const LocationFilter = observer(() => {
           <p className="filter__text text_main-16px">По алфавиту</p>
           <div className="filter__icons">
             <button
-              onClick={() => setAlphabet("abc")} 
+              onClick={() => dispatch(setAlphabet("abc"))} 
               className="filter__button">
               <IconABC 
                 className={(alphabetFilterState === "abc") ? "filter__active-icon" : ''}/>
             </button>
             <button
-              onClick={() => setAlphabet("cba")}  
+              onClick={() => dispatch(setAlphabet("cba"))}  
               className="filter__button">
               <IconCBA
                 className={(alphabetFilterState === "cba") ? "filter__active-icon" : ''}/>
@@ -73,6 +70,6 @@ const LocationFilter = observer(() => {
       </div>  
     </div>
   );
-});
+};
 
 export default LocationFilter;
