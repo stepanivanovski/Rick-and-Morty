@@ -8,12 +8,10 @@ import "./styles/index.scss"
 
 import charactersStore from "./store/charactersStore";
 import locationsStore from "./store/locationsStore";
-import authStore from "./store/authStore";
 
 const mainStore = {
   charactersStore,
-  locationsStore,
-  authStore
+  locationsStore
 }
 
 ReactDOM.render(

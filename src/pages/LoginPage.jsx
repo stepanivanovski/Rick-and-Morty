@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { observer } from "mobx-react-lite";
+import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Input from '../components/base/Input';
 import Button from '../components/base/Button';
 import { IconUser, IconPassword, IconEye } from '../icons';
 import { Link } from 'react-router-dom';
 import Popup from '../components/Popup';
-import authStore from '../store/authStore';
+import { 
+  userLoginThunk,
+  showLoginModal
+ } from '../store/authSlice';
 
 
-const LoginPage = observer(() => {
+const LoginPage = () => {
   const { register, handleSubmit, formState: {errors}, reset, watch } = useForm();
   const watchLogin = watch("userName");
 
   const history = useHistory();
   const [ visibility, changeVisibility] = useState(false);
 
-  const { 
-    loginModal, 
-    loginMessage,
-    loginUser,
-    showLoginModal
-   } = authStore;
+  const dispatch = useDispatch();
+  const { loginModal, loginMessage } = useSelector(state => state.auth)
 
   const showPassword = (e) => {
     e.preventDefault();
@@ -38,7 +37,7 @@ const LoginPage = observer(() => {
 
   const onSubmit = (data) => {
     const request = JSON.stringify(data);
-    loginUser(request, history, resetForm, watchLogin);
+    dispatch(userLoginThunk(request, history, resetForm, watchLogin));
   }
 
   return (
@@ -95,6 +94,6 @@ const LoginPage = observer(() => {
       }
   </div>
   );
-});
+};
 
 export default LoginPage;
