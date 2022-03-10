@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { observer } from "mobx-react-lite";
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
@@ -7,18 +7,24 @@ import EpisodeCardList from "../components/cards/EpisodeCardList"
 import GoBackButton from '../components/GoBackButton';
 import { IconMoreThen } from '../icons';
 import { defineGender, defineStatus, defineStyle } from '../utils';
-import charactersStore from "../store/charactersStore";
+import {
+  onLoading,
+  resetCharacter,
+  getCharacterByIdThunk
+} from "../store/charactersSlice";
 
-const CharacterPage = observer(({ id }) => {
+const CharacterPage = ({ id }) => {
   const history = useHistory();
 
-  const { error, character, getCharacterById, resetCharacter } = charactersStore;
+  const dispatch =useDispatch();
+  const { loading, error, character } = useSelector(state => state.characters);
+
 
   useEffect(() => {
-    getCharacterById(id)
+    dispatch(getCharacterByIdThunk(id))
 
     return () => {
-      resetCharacter();
+      dispatch(resetCharacter());
     }
   }, [])  
   
@@ -51,7 +57,7 @@ const CharacterPage = observer(({ id }) => {
       {content}
     </div>
   );
-});
+};
 
 const View = ({character, history}) => {
   const {

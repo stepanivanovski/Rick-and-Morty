@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite'
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import SearchPanel from '../components/SearchPanel';
 import EpisodeCardList from '../components/cards/EpisodeCardList';
 import NavBar from '../components/NavBar';
-import episodesStore from "../store/episodesStore"
+import { 
+  onLoading,
+  getEpisodesThunk,
+} from "../store/episodesSlice"
 
 
 const SeasonButtons = ({ setSeason, setBtnClass, onLoading }) => {
@@ -28,16 +31,15 @@ const SeasonButtons = ({ setSeason, setBtnClass, onLoading }) => {
     </ul>
   )
 }
-const EpisodesPage = observer(() => {
-  const { loading, error, episodes, getEpisodes, onLoading }  = episodesStore;
-
-  console.log(episodesStore);
+const EpisodesPage = () => {
+  const dispatch = useDispatch();
+  const { loading, error, episodes }  = useSelector(state => state.episodes);
 
   const [season, setSeason] = useState(1)
 
   useEffect(() => {
-    getEpisodes(season);
-    return onLoading();
+    dispatch(getEpisodesThunk(season));
+    return dispatch(onLoading());
   },[season]) 
 
   const setBtnClass = (i) => {
@@ -71,6 +73,6 @@ const EpisodesPage = observer(() => {
       <NavBar/>
     </div>  
   );
-})
+}
 
 export default EpisodesPage;

@@ -1,47 +1,45 @@
 import React, { useEffect }  from 'react';
-import { observer } from 'mobx-react-lite';
+import { useSelector, useDispatch } from 'react-redux';
 import GoBackButton from '../GoBackButton'
 import { IconABC, IconCBA, IconRedFilter } from '../../icons'
-import charactersStore from '../../store/charactersStore';
+import { 
+  toggleStatus,
+  toggleGender,
+  resetCharactersFilter,
+  setAlphabet,
+  resetCharacters,
+  setRemainingPages,
+  setNextPage
+} from '../../store/charactersSlice';
 
-const CharacterFilter = observer(() => {
+const CharacterFilter = () => {
 
-  const { 
-    checkbox, 
-    filterState, 
-    alphabetFilterState,
-    toggleStatus,
-    toggleGender,
-    resetCharactersFilter,
-    setAlphabet,
-    resetCharacters,
-    setRemainingPages,
-    setNextPage 
-  } = charactersStore;
+  const dispatch = useDispatch();
 
+  const { checkbox, filterState, alphabetFilterState } = useSelector(state => state.characters);
   const { status: { alive, dead, unknown}, gender: { male, female, trans }} = checkbox;
 
   const handleInput = (event) => {
-    resetCharacters()
-    setNextPage(1)
-    setRemainingPages(1)
+    dispatch(resetCharacters())
+    dispatch(setNextPage(1))
+    dispatch(setRemainingPages(1))
 
     const target = event.target;
 
     if (target.name.slice(0, 6) === "Gender") {
 
       if (target.checked) {
-        toggleGender({[target.id]: target.name});
+        dispatch(toggleGender({[target.id]: target.name}));
       } else {
-        toggleGender({[target.id]: false})
+        dispatch(toggleGender({[target.id]: false}))
       }
 
     } else {
 
       if (target.checked) {
-        toggleStatus({[target.id]: target.name});
+        dispatch(toggleStatus({[target.id]: target.name}));
       } else {
-        toggleStatus({[target.id]: false})
+        dispatch(toggleStatus({[target.id]: false}))
       }
 
     }
@@ -53,7 +51,7 @@ const CharacterFilter = observer(() => {
         <GoBackButton text="Выберите тип" className="filter__goBack"/>
         {(filterState) ?
           <button 
-            onClick = {() => resetCharactersFilter()}
+            onClick = {() => dispatch(resetCharactersFilter())}
             className="filter__button">
             <IconRedFilter/>
           </button> :
@@ -66,13 +64,13 @@ const CharacterFilter = observer(() => {
           <p className="filter__text text_main-16px">По алфавиту</p>
           <div className="filter__icons">
             <button
-              onClick={() => setAlphabet("abc")} 
+              onClick={() => dispatch(setAlphabet("abc"))} 
               className="filter__button">
               <IconABC 
                 className={(alphabetFilterState === "abc") ? "filter__active-icon" : ''}/>
             </button>
             <button
-              onClick={() => setAlphabet("cba")}  
+              onClick={() => dispatch(setAlphabet("cba"))}  
               className="filter__button">
               <IconCBA
                 className={(alphabetFilterState === "cba") ? "filter__active-icon" : ''}/>
@@ -155,6 +153,6 @@ const CharacterFilter = observer(() => {
       </div>  
     </div>
   );
-});
+};
 
 export default CharacterFilter;

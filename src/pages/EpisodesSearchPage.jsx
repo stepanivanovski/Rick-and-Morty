@@ -1,28 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { observer } from 'mobx-react-lite'
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../components/Spinner';
 import NotFound from '../components/NotFound';
 import GoBackButton from "../components/GoBackButton"
 import EpisodeCardList from '../components/cards/EpisodeCardList';
 import { IconCross } from '../icons';
-import episodesStore from "../store/episodesStore";
+import { 
+  getEpisodeByNameThunk,
+  onLoading, 
+} from "../store/episodesSlice";
 
-const LocationsSearchPage = observer(() => {
+const LocationsSearchPage = () => {
   const textInput = useRef();
   const [ inputValue, setInputValue] = useState('');
+  const dispatch = useDispatch();
 
-  const { episodes, error, loading, onLoading, getEpisodeByName } = episodesStore;
+  const { episodes, error, loading } = useSelector(state => state.episodes)
 
 
   useEffect(() => {
     textInput.current.focus();
-    return () => onLoading();
+    return () => dispatch(onLoading());
   },[]) 
 
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
-    getEpisodeByName(e.target.value);
+    dispatch(getEpisodeByNameThunk(e.target.value));
   }
 
   const content = (loading) ? 
@@ -46,7 +50,7 @@ const LocationsSearchPage = observer(() => {
         <button className="filter__button"
           onClick = {() => {
             setInputValue('')
-            getEpisodeByName()}}>
+            dispatch(getEpisodeByNameThunk())}}>
           <IconCross className="filter__goBack"/>
         </button>
       </div>
@@ -56,6 +60,6 @@ const LocationsSearchPage = observer(() => {
       </div>
     </div>
   );
-});
+};
 
 export default LocationsSearchPage;

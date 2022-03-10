@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { observer, inject } from "mobx-react";
 import Spinner from "../components/Spinner";
 import NotFound from "../components/NotFound";
 import SearchPanel from "../components/SearchPanel"
@@ -16,9 +15,7 @@ import {
   setRemainingPages
 } from "../store/charactersSlice";
 
-// @inject("charactersStore")
-@observer
-export default class CharactersPage extends Component {
+class CharactersPage extends Component {
 
   state = { 
     view: true
@@ -31,28 +28,28 @@ export default class CharactersPage extends Component {
       filterState, 
       nextPage, 
       checkbox, 
-      getCharacters, 
-      getFilteredCharacters
-    } = this.props.charactersStore
+      getCharactersThunk, 
+      getFilteredCharactersThunk
+    } = this.props
 
     if (!filterState) {
-      getCharacters(nextPage);
+      getCharactersThunk(nextPage);
     } else {
-      getFilteredCharacters(checkbox)
+      getFilteredCharactersThunk(checkbox)
     }
   }
 
   handleObserver = (entities, observer) => {
     if ( entities[0].isIntersecting ) {
-      if (this.props.charactersStore.remainingPages !== 0) {
-        this.props.charactersStore.onLoading() 
+      if (this.props.remainingPages !== 0) {
+        this.props.onLoading() 
         this.getData()
       } 
     }
   }
 
   componentDidMount() {
-    const { characters, filterState } = this.props.charactersStore;
+    const { characters, filterState } = this.props;
 
     if (!characters) {
       this.getData();
@@ -80,7 +77,7 @@ export default class CharactersPage extends Component {
 
   
   render() {
-    const { characters, error, filterState, loading } = this.props.charactersStore
+    const { characters, error, filterState, loading } = this.props
 
     const content = (error) ?
       <NotFound text="Упс, что-то пошло не так" url="not-found.png"/> :
@@ -116,7 +113,7 @@ export default class CharactersPage extends Component {
           (!filterState) ?
             <div
               style={(!characters) ? {display: "none"} : {display: "block"}}
-              className={(this.props.charactersStore.remainingPages !== 0) ? "characters__observer" : "characters__observer_hidden" }
+              className={(this.props.remainingPages !== 0) ? "characters__observer" : "characters__observer_hidden" }
               ref={this.observerElement}>
                 {
                   (loading) ?
@@ -131,3 +128,25 @@ export default class CharactersPage extends Component {
     );
   }
 };
+
+const mapStateToProps = (state) => {
+  return {
+    characters: getCharactersSelector(state), 
+    error: state.characters.error, 
+    filterState: state.characters.filterState, 
+    loading: state.characters.loading,
+    checkbox: state.characters.checkbox,
+    nextPage: state.characters.nextPage, 
+    remainingPages: state.characters.remainingPages 
+  } 
+}
+
+const mapDispatchToProps = { 
+  getCharactersThunk,
+  getFilteredCharactersThunk,
+  onLoading,
+  setRemainingPages,
+  setNextPage
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CharactersPage);
