@@ -1,5 +1,4 @@
-
-.btn{
+.btn {
   margin-top: 24px;
   width: 100%;
   height: 48px;
@@ -12,7 +11,7 @@
   &_transparent {
     height: 40px;
     border: 1px solid $blue-color;
-    background-color:transparent;
+    background-color: transparent;
     color: $blue-color;
   }
 }

@@ -1,19 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
 const themeSlice = createSlice({
   name: 'theme',
   initialState: {
-    theme: "ligth"
+    theme: 'ligth',
   },
   reducers: {
     changeTheme(state, action) {
-      state.theme = action.payload;
+      state.theme = action.payload
     },
-  }
-});
+  },
+})
 
-const { reducer, actions } = themeSlice;
+const { reducer, actions } = themeSlice
 
-export const { changeTheme } = actions;
+export const { changeTheme } = actions
 
-export default reducer;
+export default reducer

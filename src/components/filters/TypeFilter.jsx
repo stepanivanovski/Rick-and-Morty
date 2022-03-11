@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import GoBackButton from '../GoBackButton';
+import { useDispatch, useSelector } from 'react-redux'
+import GoBackButton from '../GoBackButton'
 import {
   setType,
   setMeasurement,
-  resetLocations
-} from "../../store/locationsSlice";
+  resetLocations,
+} from '../../store/locationsSlice'
 
 const types = [
   'Мир',
@@ -15,7 +14,7 @@ const types = [
   'Созданная реальность',
   'Здание',
   'Неопределенно',
-];
+]
 
 const measurements = [
   'Измерение 35-C',
@@ -24,38 +23,40 @@ const measurements = [
   'Измерение J19ζ7',
   'Измерение Дупиду',
   'Измерение подмены',
-];
+]
 
 const InputRadio = ({ label, id, handleInput, className }) => {
-  const Id = `filter-${id}`;
+  const Id = `filter-${id}`
 
   return (
     <div className={className}>
-      <input 
-        onChange={handleInput} 
-        type="radio" 
-        id={Id} 
-        name="filter" 
+      <input
+        onChange={handleInput}
+        type="radio"
+        id={Id}
+        name="filter"
         value={label}
       />
-      <label className="filter__option-label"htmlFor={Id}>{label}</label>
-    </div> 
+      <label className="filter__option-label" htmlFor={Id}>
+        {label}
+      </label>
+    </div>
   )
 }
 
 const TypeFilter = ({ id }) => {
-  console.log(id);
-  const dispatch = useDispatch();
-  const {type, measurement} = useSelector(state => state.locations);
+  console.log(id)
+  const dispatch = useDispatch()
+  const { type, measurement } = useSelector((state) => state.locations)
 
-  const data = (id === "type")? types : (id === "measurement")? measurements : [];
+  const data = id === 'type' ? types : id === 'measurement' ? measurements : []
 
   const handleInput = (e) => {
     dispatch(resetLocations())
 
-    if (id === "type") {
+    if (id === 'type') {
       dispatch(setType(e.target.value))
-    } else if (id === "measurement") {
+    } else if (id === 'measurement') {
       dispatch(setMeasurement(e.target.value))
     }
   }
@@ -63,21 +64,24 @@ const TypeFilter = ({ id }) => {
   return (
     <div className="filter">
       <div className="filter__header">
-        <GoBackButton text="Выберите тип" className="filter__goBack"/>
+        <GoBackButton text="Выберите тип" className="filter__goBack" />
       </div>
       <div className="filter__type-title">
-        {((id === "type")? type : (id === "measurement")? measurement : null) || "Не выбрано"}          
-      </div>         
-      <hr/>
-      {data.map((item, i) => 
+        {(id === 'type' ? type : id === 'measurement' ? measurement : null) ||
+          'Не выбрано'}
+      </div>
+      <hr />
+      {data.map((item, i) => (
         <InputRadio
-          className="filter__radio-wrap" 
-          label={item} 
-          key={i} 
-          id={i} 
-          handleInput={handleInput}/>)}
+          className="filter__radio-wrap"
+          label={item}
+          key={i}
+          id={i}
+          handleInput={handleInput}
+        />
+      ))}
     </div>
-  );
-};
+  )
+}
 
-export default TypeFilter;
+export default TypeFilter

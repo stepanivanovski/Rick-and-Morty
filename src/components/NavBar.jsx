@@ -1,6 +1,9 @@
-import React from 'react';
-import { IconCharacters, IconLocations, IconSettings, IconEpisodes } from '../icons';
-import { NavLink } from 'react-router-dom';
+import {
+  IconCharacters,
+  IconLocations,
+  IconEpisodes
+} from '../icons'
+import { NavLink } from 'react-router-dom'
 
 const NavBar = () => {
   return (
@@ -8,7 +11,7 @@ const NavBar = () => {
       <li>
         <NavLink to="/characters" activeClassName="navbar__active">
           <div className="navbar__item">
-            <IconCharacters className="navbar__char-icon"/>
+            <IconCharacters className="navbar__char-icon" />
             <div className="navbar__item-title">Персонажи</div>
           </div>
         </NavLink>
@@ -16,7 +19,7 @@ const NavBar = () => {
       <li>
         <NavLink to="/locations" activeClassName="navbar__active">
           <div className="navbar__item">
-            <IconLocations className="navbar__icon"/>
+            <IconLocations className="navbar__icon" />
             <div className="navbar__item-title">Локации</div>
           </div>
         </NavLink>
@@ -24,21 +27,13 @@ const NavBar = () => {
       <li>
         <NavLink to="/episodes" activeClassName="navbar__active">
           <div className="navbar__item">
-            <IconEpisodes className="navbar__icon"/>
+            <IconEpisodes className="navbar__icon" />
             <div className="navbar__item-title">Эпизоды</div>
           </div>
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/options" activeClassName="navbar__active">
-          <div className="navbar__item">
-            <IconSettings className="navbar__icon"/>
-            <div className="navbar__item-title">Настройки</div>
-          </div>
-        </NavLink>
-      </li>
     </ul>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar

@@ -1,5 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getEpisodes, getEpisodeById, getEpisodeByName } from '../services/api/episodes.api';
+import { createSlice } from '@reduxjs/toolkit'
+import {
+  getEpisodes,
+  getEpisodeById,
+  getEpisodeByName,
+} from '../services/api/episodes.api'
 
 const episodesSlice = createSlice({
   name: 'episodes',
@@ -7,60 +11,60 @@ const episodesSlice = createSlice({
     episodes: null,
     episode: {},
     loading: true,
-    error: false
+    error: false,
   },
   reducers: {
     episodesLoaded(state, action) {
-      state.episodes = action.payload;
-      state.loading = false;
-      state.error = false;
+      state.episodes = action.payload
+      state.loading = false
+      state.error = false
     },
     episodeLoaded(state, action) {
-      state.episode = action.payload;
-      state.loading = false;
-      state.error = false;
+      state.episode = action.payload
+      state.loading = false
+      state.error = false
     },
     resetEpisode(state) {
       state.episode = {}
     },
     onLoading(state) {
-      state.loading = true;
+      state.loading = true
       state.error = false
     },
     onError(state) {
-      state.error = true;
-      state.loading= false;
+      state.error = true
+      state.loading = false
     },
-  }
-});
+  },
+})
 
-const { reducer, actions } = episodesSlice;
+const { reducer, actions } = episodesSlice
 
-export const { 
+export const {
   onLoading,
   onError,
   episodesLoaded,
   episodeLoaded,
-  resetEpisode
-} = actions;
+  resetEpisode,
+} = actions
 
 export const getEpisodesThunk = (season) => (dispatch) => {
   dispatch(onLoading())
   getEpisodes(season)
-    .then(res => {
-      dispatch(episodesLoaded(res));
+    .then((res) => {
+      dispatch(episodesLoaded(res))
     })
-    .catch(error => {
+    .catch(() => {
       dispatch(onError())
     })
 }
 
 export const getEpisodeByNameThunk = (name) => (dispatch) => {
   getEpisodeByName(name)
-    .then(res => {
-      dispatch(episodesLoaded(res));
+    .then((res) => {
+      dispatch(episodesLoaded(res))
     })
-    .catch(error => {
+    .catch(() => {
       dispatch(onError())
     })
 }
@@ -68,12 +72,12 @@ export const getEpisodeByNameThunk = (name) => (dispatch) => {
 export const getEpisodeByIdThunk = (id) => (dispatch) => {
   dispatch(onLoading())
   getEpisodeById(id)
-    .then(res => {
-      dispatch(episodeLoaded(res));
+    .then((res) => {
+      dispatch(episodeLoaded(res))
     })
-    .catch(error => {
+    .catch(() => {
       dispatch(onError())
     })
 }
 
-export default reducer;
+export default reducer
