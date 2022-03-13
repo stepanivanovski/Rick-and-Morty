@@ -14,8 +14,8 @@ export const getCharactersSelector = createSelector(
       case 'abc':
         console.log(characters, alphabetFilterState)
         return [...characters].sort((a, b) => {
-          let nameA = a['fullName'].trim()
-          let nameB = b['fullName'].trim()
+          let nameA = a['name'].trim()
+          let nameB = b['name'].trim()
           if (nameA > nameB) return 1
 
           if (nameB > nameA) return -1
@@ -24,8 +24,8 @@ export const getCharactersSelector = createSelector(
         })
       case 'cba':
         return [...characters].sort((a, b) => {
-          let nameA = a['fullName'].trim()
-          let nameB = b['fullName'].trim()
+          let nameA = a['name'].trim()
+          let nameB = b['name'].trim()
 
           if (nameA > nameB) return -1
 

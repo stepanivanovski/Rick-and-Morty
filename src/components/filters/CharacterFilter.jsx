@@ -5,42 +5,26 @@ import {
   toggleStatus,
   toggleGender,
   resetCharactersFilter,
-  setAlphabet,
+  setAlphabetFilter,
   resetCharacters,
-  setRemainingPages,
-  setNextPage,
 } from '../../store/charactersSlice'
 
 const CharacterFilter = () => {
   const dispatch = useDispatch()
 
-  const { checkbox, filterState, alphabetFilterState } = useSelector(
+  const { isFilterOn, alphabetFilterState, filter } = useSelector(
     (state) => state.characters
   )
-  const {
-    status: { alive, dead, unknown },
-    gender: { male, female, trans },
-  } = checkbox
 
-  const handleInput = (event) => {
+  const handleChange = (event) => {
     dispatch(resetCharacters())
-    dispatch(setNextPage(1))
-    dispatch(setRemainingPages(1))
 
     const target = event.target
 
-    if (target.name.slice(0, 6) === 'Gender') {
-      if (target.checked) {
-        dispatch(toggleGender({ [target.id]: target.name }))
-      } else {
-        dispatch(toggleGender({ [target.id]: false }))
-      }
+    if (target.name === 'gender') {
+      dispatch(toggleGender(target.value))
     } else {
-      if (target.checked) {
-        dispatch(toggleStatus({ [target.id]: target.name }))
-      } else {
-        dispatch(toggleStatus({ [target.id]: false }))
-      }
+      dispatch(toggleStatus(target.value))
     }
   }
 
@@ -48,7 +32,7 @@ const CharacterFilter = () => {
     <div className="filter">
       <div className="filter__header">
         <GoBackButton text="Выберите тип" className="filter__goBack" />
-        {filterState ? (
+        {isFilterOn ? (
           <button
             onClick={() => dispatch(resetCharactersFilter())}
             className="filter__button"
@@ -63,7 +47,7 @@ const CharacterFilter = () => {
           <p className="filter__text text_main-16px">По алфавиту</p>
           <div className="filter__icons">
             <button
-              onClick={() => dispatch(setAlphabet('abc'))}
+              onClick={() => dispatch(setAlphabetFilter('abc'))}
               className="filter__button"
             >
               <IconABC
@@ -73,7 +57,7 @@ const CharacterFilter = () => {
               />
             </button>
             <button
-              onClick={() => dispatch(setAlphabet('cba'))}
+              onClick={() => dispatch(setAlphabetFilter('cba'))}
               className="filter__button"
             >
               <IconCBA
@@ -88,103 +72,25 @@ const CharacterFilter = () => {
       <hr />
       <div className="filter__item container">
         <p className="filter__item-title text_caption">Статус</p>
-
-        <div className="check">
-          <input
-            onChange={handleInput}
-            type="checkbox"
-            id="alive"
-            name="Status=0"
-            checked={alive}
-          />
-          <label
-            className="text_main-16px filter__checkbox-label"
-            htmlFor="alive"
-          >
-            Живой
-          </label>
-        </div>
-        <div className="check">
-          <input
-            onChange={handleInput}
-            type="checkbox"
-            id="dead"
-            name="Status=1"
-            checked={dead}
-          />
-          <label
-            className="text_main-16px filter__checkbox-label"
-            htmlFor="dead"
-          >
-            Мертвый
-          </label>
-        </div>
-        <div className="check">
-          <input
-            onChange={handleInput}
-            type="checkbox"
-            id="unknown"
-            name="Status=2"
-            checked={unknown}
-          />
-          <label
-            className="text_main-16px filter__checkbox-label"
-            htmlFor="unknown"
-          >
-            Неизвестно
-          </label>
-        </div>
+        <select name="status" value={filter.status} onChange={handleChange}>
+          <option value="" disabled>Выберите из списка</option>
+          <option value="alive">Живой</option>
+          <option value="dead">Мертвый</option>
+          <option value="unknown">Неизвестно</option>
+        </select>
       </div>
       <hr />
-      <div className="filter__item filter__item_pb16 container">
+      <div className="filter__item container">
         <p className="filter__item-title text_caption">Пол</p>
-
-        <div className="check">
-          <input
-            onChange={handleInput}
-            type="checkbox"
-            id="male"
-            name="Gender=0"
-            checked={male}
-          />
-          <label
-            className="text_main-16px filter__checkbox-label"
-            htmlFor="male"
-          >
-            Мужчина
-          </label>
-        </div>
-        <div className="check small-title">
-          <input
-            onChange={handleInput}
-            type="checkbox"
-            id="female"
-            name="Gender=1"
-            checked={female}
-          />
-          <label
-            className="text_main-16px filter__checkbox-label"
-            htmlFor="female"
-          >
-            Женщина
-          </label>
-        </div>
-        <div className="check">
-          <input
-            onChange={handleInput}
-            type="checkbox"
-            id="trans"
-            name="Gender=2"
-            checked={trans}
-          />
-          <label
-            className="text_main-16px filter__checkbox-label"
-            htmlFor="trans"
-          >
-            Бесполый
-          </label>
-        </div>
+        <select name="gender" value={filter.gender} onChange={handleChange}>
+          <option value="" disabled>Выберите из списка</option>
+          <option value="male">Мужской</option>
+          <option value="female">Женский</option>
+          <option value="genderless">Бесполый</option>
+          <option value="unknown">Неизвестно</option>
+        </select>
       </div>
+      <hr />
     </div>
   )
 }

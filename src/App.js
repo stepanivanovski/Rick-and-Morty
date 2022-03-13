@@ -1,24 +1,25 @@
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import CharactersPage from './pages/CharactersPage'
 import CharacterPage from './pages/CharacterPage'
-import EpisodesPage from './pages/EpisodesPage'
+// import EpisodesPage from './pages/EpisodesPage'
 import LocationsPage from './pages/LocationsPage'
-import LocationPage from './pages/LocationPage'
-import EpisodePage from './pages/EpisodePage'
+// import LocationPage from './pages/LocationPage'
+// import EpisodePage from './pages/EpisodePage'
 import CharacterFilter from './components/filters/CharacterFilter'
-import LocationFilter from './components/filters/LocationFilter'
-import TypeFilter from './components/filters/TypeFilter'
+// import LocationFilter from './components/filters/LocationFilter'
+// import TypeFilter from './components/filters/TypeFilter'
 import CharactersSearchPage from './pages/CharactersSearchPage'
-import LocationsSearchPage from './pages/LocationsSearchPage'
-import EpisodesSearchPage from './pages/EpisodesSearchPage'
+// import LocationsSearchPage from './pages/LocationsSearchPage'
+// import EpisodesSearchPage from './pages/EpisodesSearchPage'
 import NotFound from './components/NotFound'
 
 function App() {
-  const themeClass = useSelector((state) => state.theme.theme)
+  // const themeClass = useSelector((state) => state.theme.theme)
 
   return (
-    <div className={`App ${themeClass}`}>
+    // <div className={`App ${themeClass}`}>
+    <div className={`App `}>
       <Switch>
         <Redirect exact from="/" to="/characters" />
         <Route path="/characters" exact component={CharactersPage} />
@@ -27,7 +28,7 @@ function App() {
           render={({ match }) => <CharacterPage id={match.params.id} />}
         />
         <Route path="/locations" exact component={LocationsPage} />
-        <Route
+        {/* <Route
           path="/locations/:id"
           render={({ match }) => <LocationPage id={match.params.id} />}
         />
@@ -35,9 +36,9 @@ function App() {
         <Route
           path="/episode/:id"
           render={({ match }) => <EpisodePage id={match.params.id} />}
-        />
+        /> */}
         <Route path="/filterChar" component={CharacterFilter} />
-        <Route path="/filterLoc" exact component={LocationFilter} />
+        {/* <Route path="/filterLoc" exact component={LocationFilter} />
         <Route
           path="/filterLoc/type"
           render={() => <TypeFilter id={'type'} />}
@@ -45,10 +46,10 @@ function App() {
         <Route
           path="/filterLoc/measurement"
           render={() => <TypeFilter id={'measurement'} />}
-        />
+        /> */}
         <Route path="/searchChar" component={CharactersSearchPage} />
-        <Route path="/searchLoc" component={LocationsSearchPage} />
-        <Route path="/searchEpis" component={EpisodesSearchPage} />
+        {/* <Route path="/searchLoc" component={LocationsSearchPage} />
+        <Route path="/searchEpis" component={EpisodesSearchPage} /> */}
         <Route
           render={() => (
             <NotFound
@@ -62,3 +63,4 @@ function App() {
   )
 }
 export default App
+

@@ -1,13 +1,13 @@
 import { IconMoreThen } from '../../icons'
-import { defineGender, defineStatus, defineStyle } from '../../utils'
+import { defineStyle } from '../../utils'
 
 const CharacterCard = ({
-  race,
+  species,
   id,
   status,
   gender,
-  imageName,
-  fullName,
+  image,
+  name,
   withArrow,
   onItemSelected,
   columnView = false,
@@ -16,24 +16,24 @@ const CharacterCard = ({
 
   return (
     <li
-      className={`character ${columnView ? 'character_column' : ''}`}
+      className={`character ${columnView === 'table' ? 'character_column' : ''}`}
       onClick={() => onItemSelected(id)}
     >
       <div
         className={`character__img ${
-          columnView ? 'character__img_column' : ''
+          columnView === 'table' ? 'character__img_column' : ''
         }`}
-        style={{ backgroundImage: `url(${imageName})` }}
+        style={{ backgroundImage: `url(${image})` }}
       />
       <div
         className={`character__text ${
-          columnView ? 'character__text_column' : ''
+          columnView === 'table' ? 'character__text_column' : ''
         }`}
       >
-        <p className={defineStyle(status)}>{defineStatus(status)}</p>
-        <p className="character__title">{fullName}</p>
+        <p className={defineStyle(status)}>{status}</p>
+        <p className="character__title">{name}</p>
         <p className="character__descr">
-          {race}, {defineGender(gender)}
+          {species}, {gender}
         </p>
       </div>
       {arrow}

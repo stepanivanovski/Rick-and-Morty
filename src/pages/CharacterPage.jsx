@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import Spinner from '../components/Spinner'
 import NotFound from '../components/NotFound'
-import EpisodeCardList from '../components/cards/EpisodeCardList'
+// import EpisodeCardList from '../components/cards/EpisodeCardList'
 import GoBackButton from '../components/GoBackButton'
 import { IconMoreThen } from '../icons'
 import { defineGender, defineStatus, defineStyle } from '../utils'
@@ -23,7 +23,7 @@ const CharacterPage = ({ id }) => {
     }
   }, [])
 
-  const content = !character?.fullName ? (
+  const content = !character?.name ? (
     <Spinner />
   ) : error ? (
     <NotFound text="Упс, что-то пошло не так" url="not-found.png" />
@@ -35,15 +35,15 @@ const CharacterPage = ({ id }) => {
     <div className="char-page">
       <div className="char-page__header">
         <div className="char-page__header-img">
-          {character?.fullName ? (
-            <img src={character?.imageName} alt={character?.fullName} />
+          {character?.name ? (
+            <img src={character?.image} alt={character?.fullname} />
           ) : null}
         </div>
         <GoBackButton className="char-page__goBack" />
         {character?.fullName ? (
           <div
             className="char-page__avatar"
-            style={{ backgroundImage: `url(${character?.imageName})` }}
+            style={{ backgroundImage: `url(${character?.image})` }}
           ></div>
         ) : null}
       </div>
@@ -54,18 +54,18 @@ const CharacterPage = ({ id }) => {
 
 const View = ({ character, history }) => {
   const {
-    fullName,
+    name,
     status,
     gender,
-    race,
+    species,
     about,
-    episodes,
-    placeOfBirth,
+    // episodes,
+    origin,
     location,
   } = character
   return (
     <div className="container">
-      <h1 className="char-page__title">{fullName}</h1>
+      <h1 className="char-page__title">{name}</h1>
       <div className={`character__status_center ${defineStyle(status)}`}>
         {defineStatus(status)}
       </div>
@@ -77,17 +77,17 @@ const View = ({ character, history }) => {
         </div>
         <div>
           <div className="text_second-12px">Расса</div>
-          <div className="text_main-14px">{race}</div>
+          <div className="text_main-14px">{species}</div>
         </div>
       </div>
       <div
-        onClick={() => history.push(`/locations/${placeOfBirth?.id}`)}
+        onClick={() => history.push(`/locations/${origin?.id}`)}
         className="item-link item-link_mb-24"
       >
         <div>
           <div className="text_second-12px">Место рождения</div>
           <div className="text_main-14px">
-            {placeOfBirth?.name || 'нет данных'}
+            {origin?.name || 'нет данных'}
           </div>
         </div>
         <IconMoreThen className="item-link__svg" />
@@ -102,12 +102,12 @@ const View = ({ character, history }) => {
         </div>
         <IconMoreThen className="item-link__svg" />
       </div>
-      <hr />
+      {/* <hr />
       <div className="char-page__subtitle-wrapper">
         <h3 className="text_main-20px">Эпизоды</h3>
         <div className="text_second-12px">Все эпизоды</div>
-      </div>
-      <EpisodeCardList data={episodes} withArrow />
+      </div> */}
+      {/* <EpisodeCardList data={episode} withArrow /> */}
     </div>
   )
 }

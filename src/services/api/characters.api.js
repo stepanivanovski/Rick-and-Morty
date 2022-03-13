@@ -1,7 +1,7 @@
 import { request } from '../request'
 
-const getCharacters = async (pageNumber) => {
-  return await request.get(`character`, { params: { page: pageNumber } })
+const getCharacters = async (pageNumber, queryString) => {
+  return await request.get(`character${queryString}`, { params: { page: pageNumber } })
 }
 
 const getCharacterById = async (id) => {

@@ -1,73 +1,102 @@
+import queryString from 'query-string'
+
+const getQueryString = (filter) => {
+  // перебрать объект и убрать из него все свойства с пустой строкой
+  // добавить объект в queryString
+
+  let parsed = Object.fromEntries(
+    Object.entries(filter).filter((item) => item[1] !== '')
+  )
+
+  // let obj = {}
+  // for (let value in filter) {
+  //   if(filter[value] !== '') {
+  //     obj[value] = filter[value]
+  //   }
+  // }
+  console.log(queryString.stringify(parsed));
+  return '?'  + queryString.stringify(parsed)
+}
+
 const defineStatus = (status) => {
-  return (status === 0) ? "Живой" : "Мертвый"
-};
+  return status === 0 ? 'Живой' : 'Мертвый'
+}
 
 const defineGender = (gender) => {
- return (
-   (gender === 0) ? "Мужской" : (gender === 1) ? "Женский" : "Неопределенно"
- )  
+  return gender === 0 ? 'Мужской' : gender === 1 ? 'Женский' : 'Неопределенно'
 }
 
 const defineStyle = (status) => {
-  return`character__status  ${!status ? "character__status_green" : "character__status_red" }`
-} ;
+  return `character__status  ${
+    status !== "Dead" ? 'character__status_green' : 'character__status_red'
+  }`
+}
 
 const convertDate = (premiere) => {
-  const date = new Date(premiere);
+  const date = new Date(premiere)
   const months = [
-    'января', 'февраля', 'марта',
-    'апреля', 'мая', 'июня',
-    'июля', 'августа', 'сентября',
-    'октября', 'ноября', 'декабря'
-  ];
+    'января',
+    'февраля',
+    'марта',
+    'апреля',
+    'мая',
+    'июня',
+    'июля',
+    'августа',
+    'сентября',
+    'октября',
+    'ноября',
+    'декабря',
+  ]
 
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
 }
 
-const toggleModal = (modal, setModal=()=>{}) => {
+const toggleModal = (modal, setModal = () => {}) => {
   const setHidden = () => {
     if (!modal) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto'
     }
-  };
+  }
 
-  setModal(!modal);
+  setModal(!modal)
   setHidden(modal)
 }
 
 const showImg = (avatar) => {
-  if (avatar === "null" || avatar === "undefined") {
-    return "http://173.249.20.184:7001/images/Морти_Смит_001.jpg"
+  if (avatar === 'null' || avatar === 'undefined') {
+    return 'http://173.249.20.184:7001/images/Морти_Смит_001.jpg'
   } else {
     return avatar
   }
 }
 
 const getCharactersUrl = ({ gender, status }, nameFilter) => {
-  const statusStr = "Status=0&Status=1&Status=2";
-  const genderStr = "Gender=0&Gender=1&Gender=2";
+  const statusStr = 'Status=0&Status=1&Status=2'
+  const genderStr = 'Gender=0&Gender=1&Gender=2'
 
-  const genderArr= Object.values(gender).filter(item => item !== false);
-  const statusArr = Object.values(status).filter(item => item !== false);
+  const genderArr = Object.values(gender).filter((item) => item !== false)
+  const statusArr = Object.values(status).filter((item) => item !== false)
 
-  const name = (nameFilter) ? `Name=${nameFilter}&` : "";
-  const s = (statusArr.length === 0) ? statusStr : statusArr.join("&");
-  const g = (genderArr.length === 0) ? genderStr : genderArr.join("&");
+  const name = nameFilter ? `Name=${nameFilter}&` : ''
+  const s = statusArr.length === 0 ? statusStr : statusArr.join('&')
+  const g = genderArr.length === 0 ? genderStr : genderArr.join('&')
 
-  return name + s + "&" + g
+  return name + s + '&' + g
 }
 
 const getLocationsUrl = ({ type, measurement }, nameFilter) => {
-  const name = (nameFilter) ? `Name=${nameFilter}&` : "";
-  const m = (measurement) ? `&Measurements=${measurement}`:"";
-  const t = (type) ? `Type=${type}`: "";
-  
+  const name = nameFilter ? `Name=${nameFilter}&` : ''
+  const m = measurement ? `&Measurements=${measurement}` : ''
+  const t = type ? `Type=${type}` : ''
+
   return name + t + m
 }
 
 export {
+  getQueryString,
   defineStatus,
   defineGender,
   defineStyle,
@@ -75,5 +104,5 @@ export {
   toggleModal,
   getCharactersUrl,
   getLocationsUrl,
-  showImg
-} 
+  showImg,
+}

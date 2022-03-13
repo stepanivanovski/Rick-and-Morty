@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  getEpisodes,
-  getEpisodeById,
-  getEpisodeByName,
-} from '../services/api/episodes.api'
+import { getEpisodes, getEpisodeById } from '../services/api/episodes.api'
 
 const episodesSlice = createSlice({
   name: 'episodes',
@@ -51,16 +47,6 @@ export const {
 export const getEpisodesThunk = (season) => (dispatch) => {
   dispatch(onLoading())
   getEpisodes(season)
-    .then((res) => {
-      dispatch(episodesLoaded(res))
-    })
-    .catch(() => {
-      dispatch(onError())
-    })
-}
-
-export const getEpisodeByNameThunk = (name) => (dispatch) => {
-  getEpisodeByName(name)
     .then((res) => {
       dispatch(episodesLoaded(res))
     })

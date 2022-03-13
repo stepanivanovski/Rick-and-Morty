@@ -9,7 +9,6 @@ import { getLocationsSelector } from '../selectors/locationsSelector'
 import {
   onLoading,
   getLocationsThunk,
-  getFilteredLocationsThunk,
   setRemainingPages,
   setNextPage,
 } from '../store/locationsSlice'
@@ -133,7 +132,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getLocationsThunk,
-  getFilteredLocationsThunk,
   onLoading,
   setRemainingPages,
   setNextPage,

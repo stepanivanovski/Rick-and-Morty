@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   getLocations,
   getLocationById,
-  getFilteredLocations,
 } from '../services/api/locations.api'
 
 const locationsSlice = createSlice({
@@ -112,16 +111,6 @@ export const getLocationsThunk = (page) => (dispatch) => {
     })
 }
 
-export const getFilteredLocationsThunk = (options, name) => (dispatch) => {
-  dispatch(resetLocations())
-  getFilteredLocations(options, name)
-    .then((res) => {
-      dispatch(locationsLoaded(res))
-    })
-    .catch(() => {
-      dispatch(onError())
-    })
-}
 
 export const getLocationByIdThunk = (id) => (dispatch) => {
   dispatch(onLoading())

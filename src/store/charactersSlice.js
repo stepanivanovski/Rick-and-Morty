@@ -1,161 +1,145 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  getCharacters,
-  getCharacterById,
-  getFilteredCharacters,
-} from '../services/api/characters.api'
+import { getQueryString } from '../utils'
+import { getCharacters, getCharacterById } from '../services/api/characters.api'
 
 const charactersSlice = createSlice({
   name: 'characters',
   initialState: {
     characters: null,
     character: {},
-    loading: true,
+    loading: false,
     error: false,
-    checkbox: {
-      gender: {
-        male: false,
-        female: false,
-        trans: false,
-      },
-      status: {
-        alive: false,
-        dead: false,
-        unknown: false,
-      },
+    filter: {
+      name: '',
+      gender: '',
+      status: '',
     },
-    nextPage: 1,
-    remainingPages: 1,
-    filterState: false,
+    isFilterOn: false,
+    page: 1,
+    totalPages: 1,
     alphabetFilterState: null,
   },
   reducers: {
-    charactersLoaded(state, action) {
+    getCharactersStart(state) {
+      state.loading = true
+      state.error = false
+    },
+    getCharactersSuccess(state, action) {
       if (state.characters === null) {
-        state.characters = action.payload
+        state.characters = action.payload.results
+        state.totalPages = action.payload.info.pages
       } else {
-        state.characters = [...state.characters, ...action.payload]
+        state.characters = [...state.characters, ...action.payload.results]
       }
       state.loading = false
       state.error = false
     },
-    characterLoaded(state, action) {
+    getCharacterSuccess(state, action) {
       state.character = action.payload
       state.loading = false
       state.error = false
     },
-    onLoading(state) {
-      state.loading = true
-      state.error = false
-    },
-    onError(state) {
+    getCharactersFailure(state) {
       state.error = true
       state.loading = false
     },
     toggleGender(state, action) {
-      state.filterState = true
-
-      const obj = action.payload
-      state.checkbox.gender = { ...state.checkbox.gender, ...obj }
+      state.isFilterOn = true
+      state.filter.gender = action.payload
     },
-
     toggleStatus(state, action) {
-      state.filterState = true
-
-      const obj = action.payload
-      state.checkbox.status = { ...state.checkbox.status, ...obj }
+      state.isFilterOn = true
+      state.filter.status = action.payload
+    },
+    setSerachQuery(state, action) {
+      state.page = 1
+      state.filter.name = action.payload
     },
     resetCharacter(state) {
       state.character = {}
     },
     resetCharacters(state) {
+      console.log('reset сработало');
       state.characters = null
+      state.page = 1
+      state.totalPages = 1
     },
-
     resetCharactersFilter(state) {
-      state.checkbox.gender = Object.fromEntries(
-        Object.entries(state.checkbox.gender).map((item) => [
-          item[0],
-          (item[1] = false),
-        ])
-      )
-      state.checkbox.status = Object.fromEntries(
-        Object.entries(state.checkbox.status).map((item) => [
-          item[0],
-          (item[1] = false),
-        ])
-      )
+      state.filter.gender = ''
+      state.filter.status = ''
       state.alphabetFilterState = null
       state.characters = null
-      state.nextPage = 1
-      state.remainingPages = 1
-      state.filterState = false
+      state.page = 1
+      state.totalPages = 1
+      state.isFilterOn = false
     },
-
-    setAlphabet(state, action) {
+    setAlphabetFilter(state, action) {
       if (state.alphabetFilterState === action.payload) {
         state.alphabetFilterState = null
       } else {
         state.alphabetFilterState = action.payload
       }
     },
-    setNextPage(state, action) {
-      state.nextPage = action.payload
-    },
-    setRemainingPages(state, action) {
-      state.remainingPages = action.payload
-    },
+    setPage(state) {
+      state.page++
+    }
   },
 })
 
 const { reducer, actions } = charactersSlice
 
 export const {
-  onLoading,
-  onError,
-  charactersLoaded,
-  characterLoaded,
+  getCharactersStart,
+  getCharactersFailure,
+  getCharactersSuccess,
+  getCharacterSuccess,
   toggleStatus,
   toggleGender,
+  setSerachQuery,
   resetCharactersFilter,
   resetCharacter,
   resetCharacters,
-  setAlphabet,
-  setNextPage,
-  setRemainingPages,
+  setAlphabetFilter,
+  setPage
 } = actions
 
-export const getCharactersThunk = (page) => (dispatch) => {
-  getCharacters(page)
-    .then((res) => {
-      dispatch(charactersLoaded(res.data))
-      dispatch(setNextPage(res.nextPage))
-      dispatch(setRemainingPages(res.pages))
-    })
-    .catch(() => {
-      dispatch(onError())
-    })
-}
+export const getCharactersThunk =
+  ({ page, filter }) =>
+  (dispatch) => {
+    dispatch(getCharactersStart())
+    getCharacters(page, getQueryString(filter))
+      .then((response) => {
+        dispatch(getCharactersSuccess(response))
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(getCharactersFailure())
+      })
+  }
 
-export const getFilteredCharactersThunk = (options, name) => (dispatch) => {
-  dispatch(resetCharacters())
-  getFilteredCharacters(options, name)
-    .then((res) => {
-      dispatch(charactersLoaded(res))
-    })
-    .catch(() => {
-      dispatch(onError())
-    })
-}
+export const getCharactersByNameThunk =
+  ({ page, filter, name }) =>
+  (dispatch) => {
+    dispatch(resetCharacters())
+    dispatch(getCharactersStart())
+    getCharacters(page, getQueryString({...filter, name}))
+      .then((response) => {
+        dispatch(getCharactersSuccess(response))
+      })
+      .catch((error) => {
+        console.dir(error);
+        dispatch(getCharactersFailure())
+      })
+  }
 
 export const getCharacterByIdThunk = (id) => (dispatch) => {
-  dispatch(onLoading())
+  dispatch(getCharactersStart())
   getCharacterById(id)
     .then((res) => {
-      dispatch(characterLoaded(res))
+      dispatch(getCharacterSuccess(res))
     })
     .catch(() => {
-      dispatch(onError())
+      dispatch(getCharactersFailure())
     })
 }
 

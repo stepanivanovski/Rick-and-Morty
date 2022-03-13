@@ -7,49 +7,41 @@ import CharacterCardList from '../components/cards/CharacterCardList'
 import { IconCross } from '../icons'
 
 import {
-  getFilteredCharactersThunk,
   getCharactersThunk,
+  getCharactersByNameThunk,
   resetCharacters,
 } from '../store/charactersSlice'
 
 const CharactersSearchPage = () => {
   const textInput = useRef()
-  const [inputValue, setInputValue] = useState('')
   const dispatch = useDispatch()
+  const [searchQuery, setSerachQuery] = useState('')
 
-  const { characters, error, checkbox, filterState } = useSelector(
+  const { characters, error, filter } = useSelector(
     (state) => state.characters
   )
 
   useEffect(() => {
     textInput.current.focus()
+    dispatch(getCharactersThunk({page: 1, filter}))
     return () => {
       dispatch(resetCharacters())
-
-      if (!filterState) {
-        console.log(1)
-        dispatch(getCharactersThunk(1))
-      } else {
-        console.log(2)
-        dispatch(getFilteredCharactersThunk(checkbox))
-      }
+      dispatch(getCharactersThunk({page: 1, filter}))
     }
   }, [])
 
   const handleInput = (e) => {
-    setInputValue(e.target.value)
-    dispatch(getFilteredCharactersThunk(checkbox, e.target.value))
+    setSerachQuery(e.target.value)
+    dispatch(getCharactersByNameThunk({ page: 1, filter, name: e.target.value }))
   }
 
-  const content = !characters ? (
-    <Spinner />
-  ) : error ? (
-    <NotFound text="Упс, что-то пошло не так" url="not-found.png" />
-  ) : characters?.length === 0 ? (
+  const content = error ? (
     <NotFound
       text={'Персонаж с таким именем не найден'}
       url={'no-character.png'}
     />
+  ) : !characters ? (
+    <Spinner />
   ) : (
     <CharacterCardList data={characters} />
   )
@@ -63,13 +55,13 @@ const CharactersSearchPage = () => {
           ref={textInput}
           className="search__input"
           type="text"
-          value={inputValue}
+          value={searchQuery}
         />
         <button
           className="filter__button"
           onClick={() => {
-            setInputValue('')
-            dispatch(getFilteredCharactersThunk(checkbox))
+            setSerachQuery('')
+            dispatch(getCharactersByNameThunk({ page: 1, filter, name: '' }))
           }}
         >
           <IconCross className="filter__goBack" />
